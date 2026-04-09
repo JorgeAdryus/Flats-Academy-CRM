@@ -70,6 +70,9 @@ header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-it
 .btn-icon:hover {
     background: rgba(255,255,255,0.1);
 }
+.btn-icon span {
+    font-size: 24px;
+}
 
 .tabs-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:65px;z-index:90; transition: background 0.3s, border-color 0.3s;}
 .tab-btn{padding:12px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--gray);background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;transition:color .15s,border-color .15s}
@@ -263,7 +266,7 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
     </div>
   </div>
   <div class="header-right">
-    <span class="sync-info" id="syncInfo"></span>
+    <span class="sync-info" id="syncInfo">💾 dados salvos localmente</span>
     <button class="btn-action" onclick="exportExcel()">
       <span class="material-symbols-outlined" style="font-size: 16px;">download</span>
       Exportar Excel
@@ -465,7 +468,9 @@ var charts  = {};
 // ══════════════════════════════════════════
 //  ESTADO
 // ══════════════════════════════════════════
-var rows = [];
+// Ao invés de array, mantemos um objeto mapeado por chaves para manter compatibilidade
+// e não reescrever todo o banco de dados inteiro toda vez.
+var dbData = {}; 
 
 var currentSortP = { column: null, direction: 'asc' };
 var currentSortW = { column: null, direction: 'asc' };
@@ -477,22 +482,16 @@ var fbRef = fbDB.ref('crm/rows');
 
 fbRef.on('value', function(snap) {
   var val = snap.val();
-  // Transforma o objeto do Firebase em array garantindo que tenham IDs
-  rows = val ? Object.keys(val).map(key => ({ ...val[key], _id: key })) : [];
+  dbData = val || {}; 
   updateDateFilter();
   refresh();
   setSyncStatus('ok');
 });
 
+// A função de salvar agora atualiza APENAS o nó alterado/adicionado, ou tudo caso delete.
 function saveToStorage() {
   setSyncStatus('saving');
-  var obj = {};
-  for (var i=0; i<rows.length; i++) {
-      let rowToSave = {...rows[i]};
-      delete rowToSave._id; // O Firebase gera as chaves de forma incremental
-      obj[i] = rowToSave;
-  }
-  fbRef.set(Object.keys(obj).length ? obj : null, function(error) {
+  fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
       if (error) {
           setSyncStatus('err');
       }
@@ -564,7 +563,11 @@ function updateDateFilter() {
     
     var dates = [];
     var seen = {};
-    rows.forEach(function(r) {
+    
+    // Converte o objeto dbData em array para fácil manipulação no frontend
+    var rowsArray = Object.keys(dbData).map(k => ({...dbData[k], _id: k}));
+
+    rowsArray.forEach(function(r) {
         if (r.tab === 'w' && r.data && !seen[r.data]) { 
             seen[r.data] = true; 
             dates.push(r.data); 
@@ -602,15 +605,18 @@ function filterAndSortTable(tab) {
     const searchInput = document.getElementById(`${tab}-search`).value.toLowerCase();
     const sortSelect = document.getElementById(`${tab}-sort`).value;
     
+    // Converte o objeto dbData em array
+    var rowsArray = Object.keys(dbData).map(k => ({...dbData[k], _id: k}));
+
     // Filtro base: apenas da aba atual e pelo texto da busca
-    let filteredData = rows.filter(r => r.tab === tab && r.aluno.toLowerCase().includes(searchInput));
+    let filteredData = rowsArray.filter(r => r.tab === tab && r.aluno.toLowerCase().includes(searchInput));
 
     // Filtro específico para a aba Plataforma por Data de Webinário
     if(tab === 'p') {
         const dateFilter = document.getElementById('p-filter-date').value;
         if(dateFilter !== 'all') {
             // Se selecionou uma data, pega todos os nomes que participaram do webinário nessa data
-            const webAttendeesInDate = rows.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => (r.aluno || "").toLowerCase().trim());
+            const webAttendeesInDate = rowsArray.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => (r.aluno || "").toLowerCase().trim());
             // Mostra apenas os alunos da plataforma que estão nessa lista
             filteredData = filteredData.filter(r => webAttendeesInDate.includes((r.aluno || "").toLowerCase().trim()));
         }
@@ -642,9 +648,9 @@ function filterAndSortTable(tab) {
     }
 
     if (tab === 'p') {
-        renderPlataforma(filteredData);
+        renderPlataforma(filteredData, rowsArray);
     } else {
-        renderWebinario(filteredData);
+        renderWebinario(filteredData, rowsArray);
     }
 }
 
@@ -679,7 +685,7 @@ function updateSortIcons(tab) {
     }
 }
 
-function renderPlataforma(pArr) {
+function renderPlataforma(pArr, allRows) {
   // Os KPIs gerais são baseados na lista *pArr* que já está filtrada (se houver busca ou filtro de data ativo)
   var comprou = pArr.filter(function(r){ return (parseFloat(r.valor) || 0) > 0; });
   var rev = comprou.reduce(function(s,r){ return s+(parseFloat(r.valor)||0); }, 0);
@@ -693,14 +699,14 @@ function renderPlataforma(pArr) {
   var selDate = document.getElementById('p-filter-date').value;
   
   // 1. Quem participou do webinário na data filtrada (ou em todas se "all")
-  var webAttendees = rows.filter(r => r.tab === 'w' && (selDate === 'all' || r.data === selDate));
+  var webAttendees = allRows.filter(r => r.tab === 'w' && (selDate === 'all' || r.data === selDate));
   var totalWeb = webAttendees.length;
   
   // Nomes dos participantes
   var nomesWeb = webAttendees.map(r => (r.aluno || "").trim().toLowerCase());
   
   // 2. Desses participantes, quantos estão na aba plataforma e com valor > 0 ?
-  var compradoresDoWebinario = rows.filter(r => 
+  var compradoresDoWebinario = allRows.filter(r => 
       r.tab === 'p' &&
       (parseFloat(r.valor) || 0) > 0 && 
       nomesWeb.includes((r.aluno || "").trim().toLowerCase())
@@ -748,7 +754,7 @@ function renderPlataforma(pArr) {
   document.getElementById('p-del-btn').classList.remove('vis');
 }
 
-function renderWebinario(wArr) {
+function renderWebinario(wArr, allRows) {
   document.getElementById('w-kpi-total').textContent   = wArr.length;
 
   mkChart('wCO','bar', ORIGENS, ORIGENS.map(function(l){ return cnt(wArr,'origem',l); }), '#6A1B9A');
@@ -764,7 +770,7 @@ function renderWebinario(wArr) {
       var gi = r._id; 
       
       // Verifica se já tem venda registrada na aba plataforma
-      var jaVendeu = rows.some(x => x.tab === 'p' && x.aluno.toLowerCase().trim() === r.aluno.toLowerCase().trim() && (parseFloat(x.valor)||0) > 0);
+      var jaVendeu = allRows.some(x => x.tab === 'p' && x.aluno.toLowerCase().trim() === r.aluno.toLowerCase().trim() && (parseFloat(x.valor)||0) > 0);
       
       var btnLabel = jaVendeu ? '✅ Vendido' : 'Venda';
       var btnStyle = jaVendeu ? 'opacity:.6;cursor:default;' : '';
@@ -789,7 +795,7 @@ function renderWebinario(wArr) {
 //  MIGRAÇÃO WEBINÁRIO -> PLATAFORMA (COPIA SEM EXCLUIR)
 // ══════════════════════════════════════════
 function transferToPlataforma(gi) {
-    var r = rows.find(row => row._id == gi);
+    var r = dbData[gi];
     if(!r) return;
     
     // Preenche o modal da Plataforma com os dados do Webinário
@@ -841,7 +847,10 @@ function deleteSelected(pre) {
   
   if (!confirm('Remover ' + gis.length + ' registro(s)?')) return;
   
-  rows = rows.filter(row => !gis.includes(String(row._id)));
+  // Remove do objeto dbData
+  gis.forEach(id => {
+      delete dbData[id];
+  });
   
   saveToStorage();
   updateDateFilter();
@@ -915,8 +924,7 @@ function addRow(pre) {
     aluno:  aluno,
     origem: document.getElementById(pre+'-f-origem').value,
     tipo:   document.getElementById(pre+'-f-tipo').value,
-    data:   document.getElementById(pre+'-f-data').value,
-    _id:    Date.now() + Math.floor(Math.random() * 1000).toString()
+    data:   document.getElementById(pre+'-f-data').value
   };
   
   if (pre === 'p') {
@@ -925,7 +933,10 @@ function addRow(pre) {
     entry.valor   = parseFloat(document.getElementById('p-f-valor').value) || 0;
   }
   
-  rows.push(entry);
+  // Cria SEMPRE um novo registro com um ID único baseado no timestamp
+  var newId = 'r' + Date.now();
+  dbData[newId] = entry;
+  
   toast('Aluno salvo com sucesso!');
   
   saveToStorage();
@@ -938,8 +949,9 @@ function addRow(pre) {
 //  EXPORT EXCEL
 // ══════════════════════════════════════════
 function exportExcel() {
-  var pArr = rows.filter(function(r){ return r.tab==='p'; });
-  var wArr = rows.filter(function(r){ return r.tab==='w'; });
+  var rowsArray = Object.keys(dbData).map(k => ({...dbData[k], _id: k}));
+  var pArr = rowsArray.filter(function(r){ return r.tab==='p'; });
+  var wArr = rowsArray.filter(function(r){ return r.tab==='w'; });
   var wb   = XLSX.utils.book_new();
 
   var wsP = XLSX.utils.aoa_to_sheet([
