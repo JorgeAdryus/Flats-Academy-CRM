@@ -480,8 +480,17 @@ function getRows() {
 }
 
 fbRef.on('value', function(snap) {
-  var val = snap.val();
-  dbData = val || {}; 
+  var val = snap.val() || {};
+  // Mescla: mantém entradas locais que ainda não foram confirmadas pelo servidor
+  // (chaves que existem em dbData mas não em val são entradas recém-adicionadas)
+  var merged = Object.assign({}, val);
+  Object.keys(dbData).forEach(function(k) {
+    if (!val[k]) {
+      // Entrada local ainda não confirmada pelo Firebase — mantém
+      merged[k] = dbData[k];
+    }
+  });
+  dbData = merged;
   updateDateFilter();
   refresh();
   setSyncStatus('ok');
@@ -489,9 +498,14 @@ fbRef.on('value', function(snap) {
 
 function saveToStorage() {
   setSyncStatus('saving');
-  fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
+  var dataToSave = Object.keys(dbData).length ? dbData : null;
+  fbRef.set(dataToSave, function(error) {
       if (error) {
           setSyncStatus('err');
+          toast('Erro ao salvar no servidor: ' + error.message, true);
+          console.error('Firebase save error:', error);
+      } else {
+          setSyncStatus('ok');
       }
   });
 }
@@ -915,12 +929,15 @@ function addRow(pre) {
   var newId = 'r' + Date.now() + Math.floor(Math.random() * 1000).toString(); 
   dbData[newId] = entry;
   
-  toast('Aluno salvo com sucesso!');
-  
-  saveToStorage();
-  closeModal(pre);
+  // Atualização imediata na tela (optimistic update)
   updateDateFilter();
   refresh();
+  
+  closeModal(pre);
+  toast('Aluno salvo com sucesso!');
+  
+  // Salva no Firebase em segundo plano
+  saveToStorage();
 }
 
 // ══════════════════════════════════════════
@@ -964,6 +981,7 @@ document.addEventListener('keydown', function(e) {
 // ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
+// Inicia aguardando conexão com Firebase
 setSyncStatus('saving');
 </script>
 </body>
