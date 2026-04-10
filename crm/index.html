@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flats Academy — CRM</title>
-<link rel="icon" type="image/png" href="logo.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -25,16 +24,12 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
 :root{
-  /* Azul Claro Marinho */
-  --blue:#1C5D99; 
-  --blue-md:#2A7BCA;
-  --blue-lt:#E6F0FA;
-  --blue-xlt:#F2F7FC;
-  --green:#1A7A4A;--green-lt:#E8F5EE;
-  --orange:#C55A11;--orange-lt:#FEF4EC;
-  --purple:#6A1B9A;--purple-lt:#F3E5F5;
+  --blue:#1C5D99; --blue-md:#2A7BCA; --blue-lt:#E6F0FA; --blue-xlt:#F2F7FC;
+  --green:#1A7A4A; --green-lt:#E8F5EE;
+  --orange:#C55A11; --orange-lt:#FEF4EC;
+  --purple:#6A1B9A; --purple-lt:#F3E5F5;
   --red:#c53030;
-  --gray:#595959;--gray-lt:#F7F7F5;--border:#E2E8F0;--white:#FFFFFF;
+  --gray:#595959; --gray-lt:#F7F7F5; --border:#E2E8F0; --white:#FFFFFF;
   --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(28,93,153,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -42,8 +37,6 @@ body{font-family:'DM Sans',sans-serif;background:#F0F4FA;color:#1a1a2e;min-heigh
 
 header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100; transition: background 0.3s;}
 .logo{display:flex;align-items:center;gap:12px}
-
-/* Logo em arquivo */
 .logo-img {width:38px; height:38px; object-fit: contain;}
 .logo-text-group {display:flex; flex-direction:column; gap:1px;}
 .logo-text{font-size:17px;font-weight:600;color:rgba(255,255,255,.98); line-height: 1.1;}
@@ -53,27 +46,12 @@ header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-it
 .btn-action{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer; transition: background 0.2s;}
 .btn-action:hover{background:rgba(255,255,255,.25)}
 
-/* Botão de Tema (Sol/Lua Google) */
-.btn-icon {
-    padding: 0;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.btn-icon:hover {
-    background: rgba(255,255,255,0.1);
-}
+.btn-icon { padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; color: white; cursor: pointer; transition: background 0.2s; }
+.btn-icon:hover { background: rgba(255,255,255,0.1); }
+.btn-icon span { font-size: 24px; }
 
-.tabs-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:65px;z-index:90; transition: background 0.3s, border-color 0.3s;}
-.tab-btn{padding:12px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--gray);background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;transition:color .15s,border-color .15s}
+.tabs-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:65px;z-index:90; transition: background 0.3s, border-color 0.3s; overflow-x: auto;}
+.tab-btn{padding:12px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--gray);background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;transition:color .15s,border-color .15s; white-space: nowrap;}
 .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
 .tab-btn:hover:not(.active){color:var(--blue-md)}
 .tab-pane{display:none}
@@ -93,7 +71,6 @@ main{max-width:1320px;margin:0 auto;padding:1.2rem 1.2rem 4rem}
 
 .grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
 .card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;box-shadow:var(--shadow); transition: background 0.3s, border-color 0.3s;}
 .card-title{font-size:12px;font-weight:600;color:var(--blue);margin-bottom:.8rem;display:flex;align-items:center;gap:6px}
@@ -103,35 +80,36 @@ main{max-width:1320px;margin:0 auto;padding:1.2rem 1.2rem 4rem}
 .table-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow); transition: background 0.3s, border-color 0.3s;}
 .table-toolbar{padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px; transition: border-color 0.3s;}
 .toolbar-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
-.search-box {
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 13px;
-  outline: none;
-  width: 200px;
-  transition: border-color 0.2s, background 0.3s, color 0.3s;
-}
+.search-box { padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; width: 200px; transition: border-color 0.2s, background 0.3s, color 0.3s; }
 .search-box:focus { border-color: var(--blue); }
-.sort-box {
-  padding: 6px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 13px;
-  background-color: var(--white);
-  cursor: pointer;
-  outline: none;
-  transition: border-color 0.2s, background 0.3s, color 0.3s;
-}
+.sort-box { padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background-color: var(--white); cursor: pointer; outline: none; transition: border-color 0.2s, background 0.3s, color 0.3s; }
 .toolbar-right{display:flex;align-items:center;gap:8px}
 
 .btn-primary{padding:7px 15px;border:none;border-radius:7px;background:var(--blue);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:5px; transition: background 0.2s;}
 .btn-primary:hover{background:var(--blue-md)}
 .btn-primary.small {font-size: 10px; padding: 5px 10px; border-radius: 5px; background: var(--blue-md);}
 .btn-primary.small:hover {background: var(--blue);}
+.btn-primary.outline {background: transparent; border: 1.5px solid var(--blue); color: var(--blue);}
+.btn-primary.outline:hover {background: var(--blue-lt);}
 .btn-danger{padding:7px 15px;border:none;border-radius:7px;background:var(--red);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;align-items:center;gap:5px;display:none}
 .btn-danger.vis{display:inline-flex}
 .btn-danger:hover{background:#9b2c2c}
+
+/* Estilos Kanban */
+.kanban-wrapper { width: 100%; overflow-x: auto; padding-bottom: 15px; }
+.kanban-board { display: flex; gap: 15px; min-width: max-content; align-items: flex-start; }
+.kanban-col { background: var(--gray-lt); border-radius: 12px; width: 280px; padding: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; transition: background 0.3s, border-color 0.3s;}
+.kanban-col-header { font-weight: 600; font-size: 13px; color: var(--blue); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.kanban-cards-container { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; min-height: 100px; padding-bottom: 20px;}
+.kanban-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: grab; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background 0.3s, border-color 0.3s; position: relative;}
+.kanban-card:active { cursor: grabbing; opacity: 0.8;}
+.kanban-card h4 { margin: 0 0 5px 0; font-size: 14px; color: var(--blue); }
+.kanban-card p { margin: 0 0 6px 0; font-size: 11px; color: var(--gray); display: flex; align-items: center; gap: 4px;}
+.termometro-wrap { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; margin-top: 6px; width: 100%; }
+.termometro-fill { height: 100%; transition: width 0.3s, background 0.3s; }
+.k-actions { display: flex; gap: 5px; margin-top: 12px; }
+.k-delete { position: absolute; top: 10px; right: 10px; color: #aaa; cursor: pointer; font-size: 16px; }
+.k-delete:hover { color: var(--red); }
 
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;background:var(--white);font-size:12px; transition: background 0.3s;}
@@ -140,14 +118,7 @@ thead th{padding:9px 11px;text-align:left;font-size:10px;font-weight:600;color:r
 thead th:hover { background-color: var(--blue-md); }
 thead th.chk-col{width:36px;text-align:center; cursor: default;}
 thead th.chk-col:hover { background-color: var(--blue); }
-
-/* Estilo para o ícone de ordenação na tabela */
-.sort-icon {
-  font-size: 14px;
-  vertical-align: middle;
-  margin-left: 4px;
-  color: rgba(255,255,255,0.6);
-}
+.sort-icon { font-size: 14px; vertical-align: middle; margin-left: 4px; color: rgba(255,255,255,0.6); }
 
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s, border-color 0.3s;}
 tbody tr:last-child{border-bottom:none}
@@ -178,8 +149,10 @@ input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--bl
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fgrp{display:flex;flex-direction:column;gap:5px}
 .fgrp.full{grid-column:1/-1}
-.fgrp label{font-size:10px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.04em; transition: color 0.3s;}
+.fgrp label{font-size:10px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.04em; transition: color 0.3s; display:flex; justify-content:space-between;}
 .fgrp input,.fgrp select{height:36px;border:1.5px solid var(--border);border-radius:7px;padding:0 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:#1a1a2e;outline:none;transition:border-color .15s, background 0.3s, color 0.3s;background:var(--white)}
+.fgrp input[type=file] { padding: 6px 10px; font-size: 11px; }
+.fgrp input[type=range] { padding: 0; height: 15px; cursor: pointer; }
 .fgrp input:focus,.fgrp select:focus{border-color:var(--blue-md);box-shadow:0 0 0 3px rgba(42,123,202,.12)}
 .modal-footer{padding:.6rem 1.4rem 1.1rem;display:flex;gap:9px;justify-content:flex-end}
 .btn-cancel{padding:7px 15px;border:1.5px solid var(--border);border-radius:7px;background:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--gray);cursor:pointer; transition: border-color 0.3s, color 0.3s;}
@@ -192,34 +165,18 @@ input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--bl
 .sync-info{font-size:11px;color:rgba(255,255,255,.6)}
 
 /* DARK MODE STYLES */
-body.dark-mode {
-  background: #0f172a;
-  color: #f1f5f9;
-}
-body.dark-mode header {
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
-  box-shadow: none;
-}
+body.dark-mode { background: #0f172a; color: #f1f5f9; }
+body.dark-mode header { background: #0f172a; border-bottom: 1px solid #1e293b; box-shadow: none; }
 body.dark-mode .logo-text { color: #f8fafc; }
-body.dark-mode .tabs-bar {
-  background: #1e293b;
-  border-bottom: 2px solid #334155;
-}
+body.dark-mode .tabs-bar { background: #1e293b; border-bottom: 2px solid #334155; }
 body.dark-mode .tab-btn { color: #94a3b8; }
-body.dark-mode .tab-btn.active {
-  color: #38bdf8;
-  border-bottom-color: #38bdf8;
-}
-body.dark-mode .kpi, body.dark-mode .card, body.dark-mode .table-card, body.dark-mode .modal {
-  background: #1e293b;
-  border-color: #334155;
-}
-body.dark-mode .kpi-label, body.dark-mode .kpi-sub { color: #94a3b8; }
+body.dark-mode .tab-btn.active { color: #38bdf8; border-bottom-color: #38bdf8; }
+body.dark-mode .kpi, body.dark-mode .card, body.dark-mode .table-card, body.dark-mode .modal { background: #1e293b; border-color: #334155; }
+body.dark-mode .kpi-label, body.dark-mode .kpi-sub, body.dark-mode .kanban-card p { color: #94a3b8; }
 body.dark-mode .kpi-value { color: #e2e8f0; }
 body.dark-mode .kpi-value.green { color: #4ade80; }
 body.dark-mode .kpi-value.purple { color: #c084fc; }
-body.dark-mode .card-title { color: #f8fafc; }
+body.dark-mode .card-title, body.dark-mode .kanban-col-header, body.dark-mode .kanban-card h4 { color: #f8fafc; }
 body.dark-mode .card-title::before { background: #38bdf8; }
 body.dark-mode table { background: #1e293b; }
 body.dark-mode thead tr { background: #334155; }
@@ -233,18 +190,14 @@ body.dark-mode td.nc { color: #38bdf8; }
 body.dark-mode .table-toolbar, body.dark-mode .modal-header { border-bottom-color: #334155; }
 body.dark-mode .modal-title { color: #f8fafc; }
 body.dark-mode .fgrp label { color: #cbd5e1; }
-body.dark-mode .fgrp input, body.dark-mode .fgrp select, body.dark-mode .search-box, body.dark-mode .sort-box {
-  background: #0f172a;
-  color: #f8fafc;
-  border-color: #475569;
-}
-body.dark-mode .btn-cancel {
-  color: #cbd5e1;
-  border-color: #475569;
-}
+body.dark-mode .fgrp input, body.dark-mode .fgrp select, body.dark-mode .search-box, body.dark-mode .sort-box { background: #0f172a; color: #f8fafc; border-color: #475569; }
+body.dark-mode .btn-cancel { color: #cbd5e1; border-color: #475569; }
 body.dark-mode .btn-cancel:hover { background: #334155; }
 body.dark-mode .empty-row td { color: #64748b; }
 body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
+body.dark-mode .kanban-col { background: #1e293b; border-color: #334155; }
+body.dark-mode .kanban-card { background: #0f172a; border-color: #475569; }
+body.dark-mode .termometro-wrap { background: #334155; }
 
 @media(max-width:960px){
   .kpis5,.kpis4, .kpis3{grid-template-columns:repeat(2,1fr)}
@@ -276,13 +229,37 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
 </header>
 
 <div class="tabs-bar">
-  <button class="tab-btn active" id="tab-btn-p" onclick="switchTab('p')">📊 Plataforma</button>
+  <button class="tab-btn active" id="tab-btn-k" onclick="switchTab('k')">🗂️ Funil Kanban</button>
+  <button class="tab-btn" id="tab-btn-p" onclick="switchTab('p')">📊 Plataforma</button>
   <button class="tab-btn" id="tab-btn-w" onclick="switchTab('w')">🎥 Webinário</button>
 </div>
 
+<datalist id="leads-list"></datalist>
+
 <main>
 
-  <div class="tab-pane active" id="tab-p">
+  <div class="tab-pane active" id="tab-k">
+    <div class="table-card" style="background: transparent; border: none; box-shadow: none;">
+      <div class="table-toolbar" style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px; box-shadow: var(--shadow);">
+         <div class="toolbar-left">
+            <div class="card-title" style="margin:0">Funil de Oportunidades</div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn-primary" onclick="openModal('k')">
+            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+            Adicionar Oportunidade
+          </button>
+        </div>
+      </div>
+      
+      <div class="kanban-wrapper">
+         <div class="kanban-board" id="kanban-board">
+            </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-p">
     <div class="kpis5">
       <div class="kpi"><div class="kpi-label">Total Registros</div><div class="kpi-value" id="p-kpi-total">0</div><div class="kpi-sub">plataforma</div></div>
       <div class="kpi"><div class="kpi-label">Compraram</div><div class="kpi-value green" id="p-kpi-compra">0</div><div class="kpi-sub">vendas efetuadas</div></div>
@@ -315,9 +292,6 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
             </select>
-            <select id="p-filter-month" class="sort-box" onchange="filterAndSortTable('p')" style="min-width:140px;">
-                <option value="all">Todos os Meses</option>
-            </select>
         </div>
         <div class="toolbar-right">
           <button class="btn-danger" id="p-del-btn" onclick="deleteSelected('p')">
@@ -341,7 +315,6 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
             <th onclick="toggleSort('p', 'web')">Webinário <span class="material-symbols-outlined sort-icon" id="sort-icon-p-web">unfold_more</span></th>
             <th onclick="toggleSort('p', 'valor')">Valor <span class="material-symbols-outlined sort-icon" id="sort-icon-p-valor">unfold_more</span></th>
             <th onclick="toggleSort('p', 'data')">Data da Venda <span class="material-symbols-outlined sort-icon" id="sort-icon-p-data">unfold_more</span></th>
-            <th style="text-align:right;">Ações</th>
           </tr></thead>
           <tbody id="p-tbody"></tbody>
         </table>
@@ -366,9 +339,6 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
                 <option value="default">Ordem Padrão</option>
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
-            </select>
-            <select id="w-filter-month" class="sort-box" onchange="filterAndSortTable('w')" style="min-width:140px;">
-                <option value="all">Todos os Meses</option>
             </select>
         </div>
         <div class="toolbar-right">
@@ -400,6 +370,51 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
 
 </main>
 
+<div class="overlay" id="ov-k" onclick="ovClick(event,'k')">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nova Oportunidade</span>
+      <button class="modal-close" onclick="closeModal('k')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg">
+        <div class="fgrp"><label>Nome</label><input id="k-f-nome" type="text" placeholder="Nome"></div>
+        <div class="fgrp"><label>Sobrenome</label><input id="k-f-sobrenome" type="text" placeholder="Sobrenome"></div>
+        <div class="fgrp full"><label>Telefone</label><input id="k-f-telefone" type="text" placeholder="(00) 00000-0000"></div>
+        
+        <div class="fgrp"><label>Origem</label>
+          <select id="k-f-origem">
+            <option value="">Selecione</option>
+            <option>ADS</option><option>Instagram</option><option>WhatsApp</option>
+            <option>Indicação Interna</option><option>Indicação Externa</option>
+          </select>
+        </div>
+        <div class="fgrp"><label>Produto de Interesse</label>
+          <select id="k-f-produto">
+            <option value="">Selecione</option>
+            <option>Downsell</option><option>Flats Academy</option>
+            <option>Flats Academy VIT</option><option>Webinário</option><option>Flats Academy Web</option>
+          </select>
+        </div>
+        
+        <div class="fgrp full">
+            <label>Temperatura da Oportunidade <span id="k-temp-val" style="color:var(--blue);">0</span></label>
+            <input id="k-f-temperatura" type="range" min="0" max="80" value="0" oninput="document.getElementById('k-temp-val').textContent=this.value">
+        </div>
+        
+        <div class="fgrp full">
+            <label>Anexos (Notas, Prints)</label>
+            <input id="k-f-arquivo" type="file" multiple accept="image/*,.pdf">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('k')">Cancelar</button>
+      <button class="btn-primary" onclick="addRow('k')">Salvar Oportunidade</button>
+    </div>
+  </div>
+</div>
+
 <div class="overlay" id="ov-p" onclick="ovClick(event,'p')">
   <div class="modal">
     <div class="modal-header">
@@ -408,15 +423,16 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
     </div>
     <div class="modal-body">
       <div class="fg">
-        <div class="fgrp full"><label>Nome do Aluno</label><input id="p-f-aluno" type="text" placeholder="Dr(a). Nome completo"></div>
+        <div class="fgrp full"><label>Nome do Aluno</label><input id="p-f-aluno" list="leads-list" type="text" placeholder="Dr(a). Nome completo" onchange="checkAutoFill('p')"></div>
+        
         <div class="fgrp"><label>Origem</label>
-          <select id="p-f-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>Carrinho abandonado</option></select>
+          <select id="p-f-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>WhatsApp</option><option>Carrinho abandonado</option></select>
         </div>
         <div class="fgrp"><label>Tipo</label>
           <select id="p-f-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
         </div>
         <div class="fgrp"><label>Produto</label>
-          <select id="p-f-produto"><option value="">Selecione</option><option>Plataforma Vitalícia</option><option>Plataforma Anual</option><option>Plataforma Mensal</option><option>Downsell</option></select>
+          <select id="p-f-produto"><option value="">Selecione</option><option>Plataforma Vitalícia</option><option>Plataforma Anual</option><option>Plataforma Mensal</option><option>Downsell</option><option>Flats Academy</option><option>Flats Academy VIT</option><option>Flats Academy Web</option></select>
         </div>
         <div class="fgrp"><label>Webinário</label>
           <select id="p-f-web"><option value="">Selecione</option><option>Participou</option><option>Não participou</option><option>Não houve webinário</option></select>
@@ -440,9 +456,9 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
     </div>
     <div class="modal-body">
       <div class="fg">
-        <div class="fgrp full"><label>Nome do Aluno</label><input id="w-f-aluno" type="text" placeholder="Dr(a). Nome completo"></div>
+        <div class="fgrp full"><label>Nome do Aluno</label><input id="w-f-aluno" list="leads-list" type="text" placeholder="Dr(a). Nome completo" onchange="checkAutoFill('w')"></div>
         <div class="fgrp"><label>Origem</label>
-          <select id="w-f-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>Carrinho abandonado</option></select>
+          <select id="w-f-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>WhatsApp</option><option>Carrinho abandonado</option></select>
         </div>
         <div class="fgrp"><label>Tipo</label>
           <select id="w-f-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
@@ -459,135 +475,41 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
 
 <div class="toast" id="toast"></div>
 
-<!-- Modal Editar — Plataforma -->
-<div class="overlay" id="ov-edit-p" onclick="ovClickEdit(event,'p')">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">✏️ Editar Aluno — Plataforma</span>
-      <button class="modal-close" onclick="closeEditModal('p')">×</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="edit-p-id">
-      <div class="fg">
-        <div class="fgrp full"><label>Nome do Aluno</label><input id="edit-p-aluno" type="text" placeholder="Dr(a). Nome completo"></div>
-        <div class="fgrp"><label>Origem</label>
-          <select id="edit-p-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>Carrinho abandonado</option></select>
-        </div>
-        <div class="fgrp"><label>Tipo</label>
-          <select id="edit-p-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
-        </div>
-        <div class="fgrp"><label>Produto</label>
-          <select id="edit-p-produto"><option value="">Selecione</option><option>Plataforma Vitalícia</option><option>Plataforma Anual</option><option>Plataforma Mensal</option><option>Downsell</option></select>
-        </div>
-        <div class="fgrp"><label>Webinário</label>
-          <select id="edit-p-web"><option value="">Selecione</option><option>Participou</option><option>Não participou</option><option>Não houve webinário</option></select>
-        </div>
-        <div class="fgrp"><label>Valor (R$)</label><input id="edit-p-valor" type="number" step="0.01" min="0" placeholder="0,00"></div>
-        <div class="fgrp"><label>Data da Venda</label><input id="edit-p-data" type="date"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeEditModal('p')">Cancelar</button>
-      <button class="btn-primary" onclick="saveEdit('p')">
-        <span class="material-symbols-outlined" style="font-size:16px">save</span>
-        Salvar alterações
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Editar — Webinário -->
-<div class="overlay" id="ov-edit-w" onclick="ovClickEdit(event,'w')">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">✏️ Editar Aluno — Webinário</span>
-      <button class="modal-close" onclick="closeEditModal('w')">×</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="edit-w-id">
-      <div class="fg">
-        <div class="fgrp full"><label>Nome do Aluno</label><input id="edit-w-aluno" type="text" placeholder="Dr(a). Nome completo"></div>
-        <div class="fgrp"><label>Origem</label>
-          <select id="edit-w-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>Carrinho abandonado</option></select>
-        </div>
-        <div class="fgrp"><label>Tipo</label>
-          <select id="edit-w-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
-        </div>
-        <div class="fgrp full"><label>Data do Webinário</label><input id="edit-w-data" type="date"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeEditModal('w')">Cancelar</button>
-      <button class="btn-primary" onclick="saveEdit('w')">
-        <span class="material-symbols-outlined" style="font-size:16px">save</span>
-        Salvar alterações
-      </button>
-    </div>
-  </div>
-</div>
-
 <script>
 // ══════════════════════════════════════════
 //  CONSTANTES 
 // ══════════════════════════════════════════
-var ORIGENS = ["Lista de clientes","Social Selling","Post Instagram","Indicação Interna","Indicação Externa","ADS","Carrinho abandonado"];
+var ORIGENS = ["Lista de clientes","Social Selling","Post Instagram","Indicação Interna","Indicação Externa","ADS","WhatsApp","Carrinho abandonado"];
 var TIPOS_P = ["Prospecção Ativa (Outbound)","Lead de ADS (Inbound)","Kiwify"];
 var TIPOS_W = ["Prospecção Ativa (Outbound)","Lead de ADS (Inbound)","Kiwify"];
-var PRODS   = ["Plataforma Vitalícia","Plataforma Anual","Plataforma Mensal","Downsell"];
+var PRODS   = ["Plataforma Vitalícia","Plataforma Anual","Plataforma Mensal","Downsell", "Flats Academy", "Flats Academy VIT", "Flats Academy Web"];
 var WEBS    = ["Participou","Não participou","Não houve webinário"];
+var KANBAN_COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By", "Fechado"];
 var charts  = {};
 
 // ══════════════════════════════════════════
-//  TOAST (notificação)
-// ══════════════════════════════════════════
-function toast(msg, isErr) {
-  var el = document.getElementById('toast');
-  if (!el) return;
-  el.textContent = msg;
-  el.className = 'toast' + (isErr ? ' err' : '');
-  el.classList.add('show');
-  setTimeout(function(){ el.classList.remove('show'); }, 2800);
-}
-
-// ══════════════════════════════════════════
-//  ESTADO
+//  ESTADO & FIREBASE
 // ══════════════════════════════════════════
 var dbData = {}; 
-
 var currentSortP = { column: null, direction: 'asc' };
 var currentSortW = { column: null, direction: 'asc' };
+var fbRef = fbDB.ref('crm/rows');
 
-// ══════════════════════════════════════════
-//  FIREBASE
-// ══════════════════════════════════════════
-var fbRef = null;
-try { fbRef = fbDB.ref('crm/rows'); } catch(e) { console.warn('Firebase não disponível:', e); }
+function getRows() { return Object.keys(dbData).map(key => ({ ...dbData[key], _id: key })); }
 
-function getRows() {
-    return Object.keys(dbData).map(key => ({ ...dbData[key], _id: key }));
-}
-
-if (fbRef) {
-  fbRef.on('value', function(snap) {
-    var val = snap.val();
-    dbData = val || {}; 
-    updateDateFilter();
-    refresh();
-    setSyncStatus('ok');
-  });
-} else {
-  setSyncStatus('err');
+fbRef.on('value', function(snap) {
+  var val = snap.val();
+  dbData = val || {}; 
   updateDateFilter();
+  populateDatalist();
   refresh();
-}
+  setSyncStatus('ok');
+});
 
 function saveToStorage() {
-  if (!fbRef) { setSyncStatus('err'); return; }
   setSyncStatus('saving');
   fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
-      if (error) {
-          setSyncStatus('err');
-      }
+      if (error) setSyncStatus('err');
   });
 }
 
@@ -602,30 +524,27 @@ function setSyncStatus(s) {
 // ── Helpers ──
 function cnt(arr, f, v) { return arr.filter(function(r){ return r[f]===v; }).length; }
 function fmt(n) { return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function getFullName(r) { return r.aluno ? r.aluno : `${r.nome||''} ${r.sobrenome||''}`.trim(); }
 
 function bc(v) {
   if (v==='Participou')                                             return 'bg';
   if (v==='Não participou')                                         return 'bo';
   if (v==='Não houve webinário')                                    return 'bgy';
   if (v==='Indicação Interna'||v==='Indicação Externa'||v==='Carrinho abandonado') return 'bo';
-  if (v==='Social Selling'||v==='Post Instagram'||v==='Lista de clientes') return 'bb';
+  if (v==='Social Selling'||v==='Post Instagram'||v==='Lista de clientes' || v==='WhatsApp') return 'bb';
   if (v==='ADS'||v==='Lead de ADS (Inbound)' || v==='Kiwify')        return 'bp';
   return 'bb';
 }
 
-// ── Chart helper ──
 function mkChart(id, type, labels, data, colors) {
   var el = document.getElementById(id);
   if (!el) return;
   if (charts[id]) {
     charts[id].data.datasets[0].data = data;
-    if(id === 'pCWC') {
-      charts[id].data.labels = labels; 
-    }
+    if(id === 'pCWC') charts[id].data.labels = labels; 
     charts[id].update('none');
     return;
   }
-  
   var chartOptions = {
       responsive:true, maintainAspectRatio:false,
       plugins:{
@@ -637,13 +556,42 @@ function mkChart(id, type, labels, data, colors) {
         x:{ticks:{font:{family:'DM Sans',size:9},maxRotation:35, color: document.body.classList.contains('dark-mode') ? '#94a3b8' : '#666'},grid:{display:false}}
       } : {}
     };
-
   charts[id] = new Chart(el.getContext('2d'), {
     type: type,
-    data: { labels: labels, datasets: [{ data: data, backgroundColor: colors,
-      borderWidth: type==='pie'?2:0, borderColor: document.body.classList.contains('dark-mode') ? '#1e293b' : '#fff', borderRadius: type==='bar'?4:0 }] },
+    data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: type==='pie'?2:0, borderColor: document.body.classList.contains('dark-mode') ? '#1e293b' : '#fff', borderRadius: type==='bar'?4:0 }] },
     options: chartOptions
   });
+}
+
+// ══════════════════════════════════════════
+//  AUTO-PREENCHIMENTO
+// ══════════════════════════════════════════
+function populateDatalist() {
+    const list = document.getElementById('leads-list');
+    let names = new Set();
+    getRows().forEach(r => {
+        const name = getFullName(r);
+        if(name) names.add(name);
+    });
+    list.innerHTML = Array.from(names).map(n => `<option value="${n}">`).join('');
+}
+
+function checkAutoFill(pre) {
+    const val = document.getElementById(pre+'-f-aluno').value.toLowerCase().trim();
+    if(!val) return;
+    
+    // Procura no Kanban primeiro, depois nas outras
+    const lead = getRows().find(r => getFullName(r).toLowerCase() === val);
+    
+    if(lead) {
+        const origem = document.getElementById(pre+'-f-origem');
+        if(origem && lead.origem && origem.querySelector(`option[value="${lead.origem}"]`)) origem.value = lead.origem;
+        
+        const produto = document.getElementById(pre+'-f-produto');
+        if(produto && lead.produto && produto.querySelector(`option[value="${lead.produto}"]`)) produto.value = lead.produto;
+        
+        toast('Dados do lead puxados automaticamente!');
+    }
 }
 
 // ══════════════════════════════════════════
@@ -653,79 +601,20 @@ function updateDateFilter() {
     var sel = document.getElementById('p-filter-date');
     if (!sel) return;
     var cur = sel.value;
-    
-    var dates = [];
-    var seen = {};
-    
-    getRows().forEach(function(r) {
-        if (r.tab === 'w' && r.data && !seen[r.data]) { 
-            seen[r.data] = true; 
-            dates.push(r.data); 
-        }
-    });
-    dates.sort();
+    var dates = [...new Set(getRows().filter(r => r.tab === 'w' && r.data).map(r => r.data))].sort();
     
     var html = '<option value="all">Todas as Datas (Webinário)</option>';
-    dates.forEach(function(d) {
-        html += '<option value="'+d+'">' + d.split('-').reverse().join('/') + '</option>';
-    });
-    
+    dates.forEach(d => { html += '<option value="'+d+'">' + d.split('-').reverse().join('/') + '</option>'; });
     sel.innerHTML = html;
-    
-    if (dates.includes(cur) || cur === 'all') {
-        sel.value = cur;
-    } else {
-        sel.value = 'all';
-    }
-    
-    updateMonthFilter('p');
-    updateMonthFilter('w');
+    sel.value = (dates.includes(cur) || cur === 'all') ? cur : 'all';
 }
-
-var MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-
-function updateMonthFilter(tab) {
-    var sel = document.getElementById(tab + '-filter-month');
-    if (!sel) return;
-    var cur = sel.value;
-    
-    var months = [];
-    var seen = {};
-    
-    getRows().forEach(function(r) {
-        if (r.tab === tab && r.data) {
-            var parts = r.data.split('-');
-            if (parts.length >= 2) {
-                var key = parts[0] + '-' + parts[1]; // YYYY-MM
-                if (!seen[key]) { seen[key] = true; months.push(key); }
-            }
-        }
-    });
-    months.sort();
-    
-    var html = '<option value="all">Todos os Meses</option>';
-    months.forEach(function(m) {
-        var parts = m.split('-');
-        var label = MONTH_NAMES[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
-        html += '<option value="'+m+'">' + label + '</option>';
-    });
-    
-    sel.innerHTML = html;
-    if (months.includes(cur) || cur === 'all') {
-        sel.value = cur;
-    } else {
-        sel.value = 'all';
-    }
-}
-
-function onDateFilterChange() {
-  filterAndSortTable('p');
-}
+function onDateFilterChange() { filterAndSortTable('p'); }
 
 // ══════════════════════════════════════════
-//  REFRESH PRINCIPAL E RENDERIZAÇÃO
+//  REFRESH E TABELAS
 // ══════════════════════════════════════════
 function refresh() {
+  renderKanban();
   filterAndSortTable('p');
   filterAndSortTable('w');
 }
@@ -733,117 +622,157 @@ function refresh() {
 function filterAndSortTable(tab) {
     const searchInput = document.getElementById(`${tab}-search`).value.toLowerCase();
     const sortSelect = document.getElementById(`${tab}-sort`).value;
-    
     let allRows = getRows();
 
-    // Filtro base: apenas da aba atual e pelo texto da busca
-    let filteredData = allRows.filter(r => r.tab === tab && (r.aluno || "").toLowerCase().includes(searchInput));
+    let filteredData = allRows.filter(r => r.tab === tab && getFullName(r).toLowerCase().includes(searchInput));
 
-    // Filtro específico para a aba Plataforma por Data de Webinário
     if(tab === 'p') {
         const dateFilter = document.getElementById('p-filter-date').value;
         if(dateFilter !== 'all') {
-            const webAttendeesInDate = allRows.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => (r.aluno || "").toLowerCase().trim());
-            filteredData = filteredData.filter(r => webAttendeesInDate.includes((r.aluno || "").toLowerCase().trim()));
-        }
-        // Filtro de mês de venda (Plataforma)
-        const monthFilter = document.getElementById('p-filter-month').value;
-        if (monthFilter !== 'all') {
-            filteredData = filteredData.filter(r => r.data && r.data.substring(0, 7) === monthFilter);
+            const webAttendeesInDate = allRows.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => getFullName(r).toLowerCase());
+            filteredData = filteredData.filter(r => webAttendeesInDate.includes(getFullName(r).toLowerCase()));
         }
     }
 
-    // Filtro de mês para Webinário
-    if (tab === 'w') {
-        const monthFilter = document.getElementById('w-filter-month').value;
-        if (monthFilter !== 'all') {
-            filteredData = filteredData.filter(r => r.data && r.data.substring(0, 7) === monthFilter);
-        }
-    }
-
-    // Ordenação Dropdown
-    if (sortSelect === 'az') {
-        filteredData.sort((a, b) => (a.aluno || "").localeCompare(b.aluno || ""));
-    } else if (sortSelect === 'za') {
-        filteredData.sort((a, b) => (b.aluno || "").localeCompare(a.aluno || ""));
-    }
+    if (sortSelect === 'az') filteredData.sort((a, b) => getFullName(a).localeCompare(getFullName(b)));
+    else if (sortSelect === 'za') filteredData.sort((a, b) => getFullName(b).localeCompare(getFullName(a)));
     
-    // Ordenação Setinhas (Sobrescreve Dropdown)
     let currentSort = tab === 'p' ? currentSortP : currentSortW;
     if (currentSort.column) {
         filteredData.sort((a, b) => {
-            let valA = a[currentSort.column] || '';
-            let valB = b[currentSort.column] || '';
-            
-            if (currentSort.column === 'valor') {
-                valA = Number(valA) || 0;
-                valB = Number(valB) || 0;
-            }
-            
+            let valA = a[currentSort.column] || ''; let valB = b[currentSort.column] || '';
+            if (currentSort.column === 'aluno') { valA = getFullName(a); valB = getFullName(b); }
+            if (currentSort.column === 'valor') { valA = Number(valA)||0; valB = Number(valB)||0; }
             if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
             if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
             return 0;
         });
     }
 
-    if (tab === 'p') {
-        renderPlataforma(filteredData, allRows);
-    } else {
-        renderWebinario(filteredData, allRows);
-    }
+    if (tab === 'p') renderPlataforma(filteredData, allRows);
+    else renderWebinario(filteredData, allRows);
 }
 
 function toggleSort(tab, column) {
     let currentSort = tab === 'p' ? currentSortP : currentSortW;
-    
-    if (currentSort.column === column) {
-        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-    } else {
-        currentSort.column = column;
-        currentSort.direction = 'asc';
-    }
-    
+    currentSort.direction = (currentSort.column === column && currentSort.direction === 'asc') ? 'desc' : 'asc';
+    currentSort.column = column;
     filterAndSortTable(tab);
-    updateSortIcons(tab);
-}
-
-function updateSortIcons(tab) {
-    let icons = document.querySelectorAll(`#${tab}-table th .sort-icon`);
-    icons.forEach(icon => {
-        icon.textContent = 'unfold_more';
-        icon.style.color = 'rgba(255,255,255,0.6)'; 
-    });
     
-    let currentSort = tab === 'p' ? currentSortP : currentSortW;
-    if (currentSort.column) {
-        let activeIcon = document.getElementById(`sort-icon-${tab}-${currentSort.column}`);
-        if (activeIcon) {
-            activeIcon.textContent = currentSort.direction === 'asc' ? 'expand_less' : 'expand_more';
-            activeIcon.style.color = '#fff';
-        }
+    let icons = document.querySelectorAll(`#${tab}-table th .sort-icon`);
+    icons.forEach(icon => { icon.textContent = 'unfold_more'; icon.style.color = 'rgba(255,255,255,0.6)'; });
+    let activeIcon = document.getElementById(`sort-icon-${tab}-${column}`);
+    if (activeIcon) {
+        activeIcon.textContent = currentSort.direction === 'asc' ? 'expand_less' : 'expand_more';
+        activeIcon.style.color = '#fff';
     }
 }
 
-function renderPlataforma(pArr, allRows) {
-  
-  var comprou = pArr.filter(function(r){ return (parseFloat(r.valor) || 0) > 0; });
-  var rev = comprou.reduce(function(s,r){ return s+(parseFloat(r.valor)||0); }, 0);
+// ══════════════════════════════════════════
+//  KANBAN RENDER & LOGIC
+// ══════════════════════════════════════════
+function renderKanban() {
+    const kArr = getRows().filter(r => r.tab === 'k');
+    const board = document.getElementById('kanban-board');
+    if(!board) return;
+    let html = '';
+    
+    KANBAN_COLS.forEach(colName => {
+        const cards = kArr.filter(r => (r.status || 'Primeiro Contato') === colName);
+        html += `
+        <div class="kanban-col" ondrop="dropKanban(event, '${colName}')" ondragover="allowDropKanban(event)">
+            <div class="kanban-col-header">${colName} <span style="background:rgba(0,0,0,0.1);padding:2px 6px;border-radius:10px;">${cards.length}</span></div>
+            <div class="kanban-cards-container">
+        `;
+        cards.forEach(r => {
+            const name = getFullName(r);
+            const temp = parseInt(r.temperatura) || 0;
+            const pct = Math.min(100, (temp / 80) * 100);
+            
+            // Mix color from gray to red based on percentage
+            const colorFill = `color-mix(in srgb, #ef4444 ${pct}%, #94a3b8)`;
+            const hasFile = r.arquivo ? `📎 Anexo` : '';
 
-  // Lógica KPI e Gráfico Conversão Webinário (Considerando apenas os filtrados)
+            html += `
+            <div class="kanban-card" id="card-${r._id}" data-gi="${r._id}" draggable="true" ondragstart="dragKanban(event)">
+                <span class="material-symbols-outlined k-delete" onclick="deleteKanbanCard('${r._id}')">close</span>
+                <h4>${name}</h4>
+                <p>📞 ${r.telefone || '—'}</p>
+                <p style="margin-bottom:2px;"><span class="badge bb">${r.produto || '—'}</span> <span class="badge bp">${r.origem || '—'}</span></p>
+                <p style="font-size:9px; color:var(--blue); font-weight:600;">${hasFile}</p>
+                <div style="font-size:10px; margin-top:6px; color:var(--gray); display:flex; justify-content:space-between;">
+                    <span>Temperatura</span> <span>${temp}/80</span>
+                </div>
+                <div class="termometro-wrap">
+                    <div class="termometro-fill" style="width:${pct}%; background: ${colorFill};"></div>
+                </div>
+                <div class="k-actions">
+                    <button class="btn-primary small outline" onclick="copyFromKanban('${r._id}', 'p')" style="flex:1;">📊 Plataforma</button>
+                    <button class="btn-primary small outline" onclick="copyFromKanban('${r._id}', 'w')" style="flex:1;">🎥 Web</button>
+                </div>
+            </div>
+            `;
+        });
+        html += `</div></div>`;
+    });
+    board.innerHTML = html;
+}
+
+function allowDropKanban(ev) { ev.preventDefault(); }
+function dragKanban(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+function dropKanban(ev, status) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var card = document.getElementById(data);
+    if(!card) return;
+    var gi = card.getAttribute('data-gi');
+    if(dbData[gi]) {
+        dbData[gi].status = status;
+        saveToStorage();
+        refresh();
+    }
+}
+function deleteKanbanCard(gi) {
+    if(confirm('Excluir esta oportunidade?')) {
+        delete dbData[gi];
+        saveToStorage();
+        refresh();
+    }
+}
+function copyFromKanban(gi, targetTab) {
+    var r = dbData[gi];
+    if(!r) return;
+    
+    document.getElementById(targetTab+'-f-aluno').value = getFullName(r);
+    document.getElementById(targetTab+'-f-origem').value = r.origem || '';
+    
+    if(targetTab === 'p') {
+        document.getElementById('p-f-produto').value = r.produto || '';
+        document.getElementById('p-f-tipo').value = '';
+    } else {
+        document.getElementById('w-f-tipo').value = '';
+    }
+    
+    document.getElementById('ov-'+targetTab).classList.add('open');
+    switchTab(targetTab);
+}
+
+// ══════════════════════════════════════════
+//  PLATAFORMA E WEBINARIO RENDER
+// ══════════════════════════════════════════
+function renderPlataforma(pArr, allRows) {
+  var comprou = pArr.filter(r => (parseFloat(r.valor) || 0) > 0);
+  var rev = comprou.reduce((s,r) => s+(parseFloat(r.valor)||0), 0);
+
   var selDate = document.getElementById('p-filter-date').value;
   var webAttendees = allRows.filter(r => r.tab === 'w' && (selDate === 'all' || r.data === selDate));
   var totalWeb = webAttendees.length;
   
-  var nomesWeb = webAttendees.map(r => (r.aluno || "").trim().toLowerCase());
-  var compradoresDoWebinario = allRows.filter(r => 
-      r.tab === 'p' &&
-      (parseFloat(r.valor) || 0) > 0 && 
-      nomesWeb.includes((r.aluno || "").trim().toLowerCase())
-  );
+  var nomesWeb = webAttendees.map(r => getFullName(r).toLowerCase());
+  var compradoresDoWebinario = allRows.filter(r => r.tab === 'p' && (parseFloat(r.valor) || 0) > 0 && nomesWeb.includes(getFullName(r).toLowerCase()));
   
   var numComp = compradoresDoWebinario.length;
   var numNaoComp = Math.max(0, totalWeb - numComp);
-  
   var pct = totalWeb > 0 ? Math.round((numComp / totalWeb) * 100) : 0;
   var pctN = totalWeb > 0 ? 100 - pct : 0;
 
@@ -855,33 +784,29 @@ function renderPlataforma(pArr, allRows) {
   document.getElementById('p-kpi-web-conv').textContent = pct + '%';
   document.getElementById('p-kpi-web-sub').textContent  = numComp + ' de ' + totalWeb + ' compraram';
 
-  mkChart('pCO','bar', ORIGENS, ORIGENS.map(function(l){ return cnt(pArr,'origem',l); }), '#2A7BCA');
-  mkChart('pCT','pie', TIPOS_P, TIPOS_P.map(function(l){   return cnt(pArr,'tipo',l);   }), ['#1C5D99','#1A7A4A','#6A1B9A']);
-  mkChart('pCP','bar', PRODS,   PRODS.map(function(l){   return cnt(pArr,'produto',l); }),'#1A7A4A');
-  mkChart('pCW','pie', WEBS,    WEBS.map(function(l){    return cnt(pArr,'web',l);    }), ['#1A7A4A','#C55A11','#888']);
+  mkChart('pCO','bar', ORIGENS, ORIGENS.map(l => cnt(pArr,'origem',l)), '#2A7BCA');
+  mkChart('pCT','pie', TIPOS_P, TIPOS_P.map(l => cnt(pArr,'tipo',l)), ['#1C5D99','#1A7A4A','#6A1B9A']);
+  mkChart('pCP','bar', PRODS,   PRODS.map(l => cnt(pArr,'produto',l)),'#1A7A4A');
+  mkChart('pCW','pie', WEBS,    WEBS.map(l => cnt(pArr,'web',l)), ['#1A7A4A','#C55A11','#888']);
   mkChart('pCWC','pie', [`Compraram (${pct}%)`, `Não Compraram (${pctN}%)`], [numComp, numNaoComp], ['#1A7A4A', '#C55A11']);
-
 
   var tb = document.getElementById('p-tbody');
   if (!pArr.length) {
-    tb.innerHTML = '<tr class="empty-row"><td colspan="9">Nenhum aluno encontrado.</td></tr>';
+    tb.innerHTML = '<tr class="empty-row"><td colspan="8">Nenhum aluno encontrado.</td></tr>';
   } else {
-    var html = '';
-    for (var i=0; i<pArr.length; i++) {
-      var r   = pArr[i];
-      var gi  = r._id; 
-      html += '<tr id="row-'+gi+'">'
-        + '<td class="chk-cell"><input type="checkbox" data-gi="'+gi+'" onchange="chkChange(\'p\')"></td>'
-        + '<td class="nc">'+(r.aluno||'—')+'</td>'
-        + '<td><span class="badge '+bc(r.origem)+'">'+(r.origem||'—')+'</span></td>'
-        + '<td><span class="badge '+bc(r.tipo)+'">'+(r.tipo||'—')+'</span></td>'
-        + '<td><span class="badge bb">'+(r.produto||'—')+'</span></td>'
-        + '<td><span class="badge '+bc(r.web)+'">'+(r.web||'—')+'</span></td>'
-        + '<td style="font-weight:600;color:var(--green)">'+(r.valor?fmt(r.valor):'—')+'</td>'
-        + '<td style="color:#888">'+(r.data?r.data.split('-').reverse().join('/'):'—')+'</td>'
-        + '<td style="text-align:right;"><button class="btn-primary small" style="background:var(--blue);" onclick="openEditModal(\'p\',\''+gi+'\')"><span class="material-symbols-outlined" style="font-size:13px">edit</span> Editar</button></td>'
-        + '</tr>';
-    }
+    let html = '';
+    pArr.forEach(r => {
+      html += `<tr id="row-${r._id}">
+        <td class="chk-cell"><input type="checkbox" data-gi="${r._id}" onchange="chkChange('p')"></td>
+        <td class="nc">${getFullName(r)}</td>
+        <td><span class="badge ${bc(r.origem)}">${r.origem||'—'}</span></td>
+        <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
+        <td><span class="badge bb">${r.produto||'—'}</span></td>
+        <td><span class="badge ${bc(r.web)}">${r.web||'—'}</span></td>
+        <td style="font-weight:600;color:var(--green)">${r.valor?fmt(r.valor):'—'}</td>
+        <td style="color:#888">${r.data?r.data.split('-').reverse().join('/'):'—'}</td>
+      </tr>`;
+    });
     tb.innerHTML = html;
   }
   document.getElementById('p-chk-all').checked = false;
@@ -889,77 +814,58 @@ function renderPlataforma(pArr, allRows) {
 }
 
 function renderWebinario(wArr, allRows) {
-  document.getElementById('w-kpi-total').textContent   = wArr.length;
-
-  mkChart('wCO','bar', ORIGENS, ORIGENS.map(function(l){ return cnt(wArr,'origem',l); }), '#6A1B9A');
-  mkChart('wCT','pie', TIPOS_W, TIPOS_W.map(function(l){ return cnt(wArr,'tipo',l);   }), ['#6A1B9A','#C55A11','#1C5D99']);
+  document.getElementById('w-kpi-total').textContent = wArr.length;
+  mkChart('wCO','bar', ORIGENS, ORIGENS.map(l => cnt(wArr,'origem',l)), '#6A1B9A');
+  mkChart('wCT','pie', TIPOS_W, TIPOS_W.map(l => cnt(wArr,'tipo',l)), ['#6A1B9A','#C55A11','#1C5D99']);
 
   var tb = document.getElementById('w-tbody');
   if (!wArr.length) {
     tb.innerHTML = '<tr class="empty-row"><td colspan="6">Nenhum aluno encontrado.</td></tr>';
   } else {
-    var html = '';
-    for (var i=0; i<wArr.length; i++) {
-      var r  = wArr[i];
-      var gi = r._id; 
-      
-      var jaVendeu = allRows.some(x => x.tab === 'p' && (x.aluno || "").toLowerCase().trim() === (r.aluno || "").toLowerCase().trim() && (parseFloat(x.valor)||0) > 0);
-      
+    let html = '';
+    wArr.forEach(r => {
+      var jaVendeu = allRows.some(x => x.tab === 'p' && getFullName(x).toLowerCase() === getFullName(r).toLowerCase() && (parseFloat(x.valor)||0) > 0);
       var btnLabel = jaVendeu ? '✅ Vendido' : 'Venda';
       var btnStyle = jaVendeu ? 'opacity:.6;cursor:default;' : '';
-      var btnAction = jaVendeu ? '' : `onclick="transferToPlataforma('${gi}')"`;
+      var btnAction = jaVendeu ? '' : `onclick="transferToPlataforma('${r._id}')"`;
 
-      html += '<tr id="row-'+gi+'">'
-        + '<td class="chk-cell"><input type="checkbox" data-gi="'+gi+'" onchange="chkChange(\'w\')"></td>'
-        + '<td class="nc">'+(r.aluno||'—')+'</td>'
-        + '<td><span class="badge '+bc(r.origem)+'">'+(r.origem||'—')+'</span></td>'
-        + '<td><span class="badge '+bc(r.tipo)+'">'+(r.tipo||'—')+'</span></td>'
-        + '<td style="color:#888">'+(r.data?r.data.split('-').reverse().join('/'):'—')+'</td>'
-        + '<td style="text-align:right;display:flex;gap:5px;justify-content:flex-end;">'
-        + '<button class="btn-primary small" style="background:var(--blue);" onclick="openEditModal(\'w\',\''+gi+'\')"><span class="material-symbols-outlined" style="font-size:13px">edit</span> Editar</button>'
-        + '<button class="btn-primary small" style="'+btnStyle+'" '+btnAction+'>'+btnLabel+'</button>'
-        + '</td>'
-        + '</tr>';
-    }
+      html += `<tr id="row-${r._id}">
+        <td class="chk-cell"><input type="checkbox" data-gi="${r._id}" onchange="chkChange('w')"></td>
+        <td class="nc">${getFullName(r)}</td>
+        <td><span class="badge ${bc(r.origem)}">${r.origem||'—'}</span></td>
+        <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
+        <td style="color:#888">${r.data?r.data.split('-').reverse().join('/'):'—'}</td>
+        <td style="text-align:right;"><button class="btn-primary small" style="${btnStyle}" ${btnAction}>${btnLabel}</button></td>
+      </tr>`;
+    });
     tb.innerHTML = html;
   }
   document.getElementById('w-chk-all').checked = false;
   document.getElementById('w-del-btn').classList.remove('vis');
 }
 
-// ══════════════════════════════════════════
-//  MIGRAÇÃO WEBINÁRIO -> PLATAFORMA 
-// ══════════════════════════════════════════
 function transferToPlataforma(gi) {
     var r = dbData[gi];
     if(!r) return;
-    
-    document.getElementById('p-f-aluno').value = r.aluno || '';
+    document.getElementById('p-f-aluno').value = getFullName(r);
     document.getElementById('p-f-origem').value = r.origem || '';
-    document.getElementById('p-f-tipo').value = r.tipo || '';
     document.getElementById('p-f-data').value = new Date().toISOString().split('T')[0]; 
-    
-    document.getElementById('p-f-produto').value = '';
     document.getElementById('p-f-web').value = 'Participou'; 
-    document.getElementById('p-f-valor').value = '';
-    
     document.getElementById('ov-p').classList.add('open');
-    document.getElementById('p-f-produto').focus();
-    
     switchTab('p');
 }
 
 // ══════════════════════════════════════════
-//  CHECKBOXES + DELETE
+//  UI INTERACTIONS & DELETE
 // ══════════════════════════════════════════
 function chkChange(pre) {
   var boxes = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]');
   var sel = 0;
-  for (var i=0; i<boxes.length; i++) {
-    var tr = document.getElementById('row-'+boxes[i].getAttribute('data-gi'));
-    if (tr) tr.classList.toggle('sel', boxes[i].checked);
-    if (boxes[i].checked) sel++;
-  }
+  boxes.forEach(b => {
+    var tr = document.getElementById('row-'+b.getAttribute('data-gi'));
+    if (tr) tr.classList.toggle('sel', b.checked);
+    if (b.checked) sel++;
+  });
   var btn = document.getElementById(pre+'-del-btn');
   if (sel > 0) btn.classList.add('vis'); else btn.classList.remove('vis');
 }
@@ -967,51 +873,38 @@ function chkChange(pre) {
 function toggleAll(pre) {
   var master = document.getElementById(pre+'-chk-all');
   var boxes  = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]');
-  for (var i=0; i<boxes.length; i++) boxes[i].checked = master.checked;
+  boxes.forEach(b => b.checked = master.checked);
   chkChange(pre);
 }
 
 function deleteSelected(pre) {
   var boxes = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]:checked');
   if (!boxes.length) return;
-  var gis = [];
-  for (var i=0; i<boxes.length; i++) gis.push(boxes[i].getAttribute('data-gi'));
   
-  if (!confirm('Remover ' + gis.length + ' registro(s)?')) return;
+  if (!confirm('Remover ' + boxes.length + ' registro(s)?')) return;
   
-  gis.forEach(id => {
-      delete dbData[id];
-  });
+  boxes.forEach(b => delete dbData[b.getAttribute('data-gi')]);
   
   saveToStorage();
   updateDateFilter();
   refresh();
-  toast(gis.length + ' registro(s) removido(s).', true);
+  toast(boxes.length + ' registro(s) removido(s).', true);
 }
 
-// ══════════════════════════════════════════
-//  TABS & DARK MODE
-// ══════════════════════════════════════════
 function switchTab(t) {
-  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-btn-'+t).classList.add('active');
   document.getElementById('tab-'+t).classList.add('active');
-  setTimeout(function(){ Object.values(charts).forEach(function(c){ c.resize(); }); }, 60);
+  setTimeout(() => Object.values(charts).forEach(c => c.resize()), 60);
 }
 
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     var isDark = document.body.classList.contains('dark-mode');
+    document.getElementById('theme-icon').textContent = isDark ? 'light_mode' : 'dark_mode'; 
     
-    var icon = document.getElementById('theme-icon');
-    if (isDark) {
-        icon.textContent = 'light_mode'; 
-    } else {
-        icon.textContent = 'dark_mode'; 
-    }
-    
-    Object.values(charts).forEach(function(c){
+    Object.values(charts).forEach(c => {
         if(c.config.type === 'pie') {
             c.data.datasets[0].borderColor = isDark ? '#1e293b' : '#fff';
             c.options.plugins.legend.labels.color = isDark ? '#cbd5e1' : '#666';
@@ -1024,53 +917,66 @@ function toggleDarkMode() {
     });
 }
 
-// ══════════════════════════════════════════
-//  MODAL
-// ══════════════════════════════════════════
 function openModal(pre) {
   document.getElementById('ov-'+pre).classList.add('open');
-  document.getElementById(pre+'-f-aluno').focus();
-  document.getElementById(pre+'-f-data').value = new Date().toISOString().split('T')[0];
+  var dInput = document.getElementById(pre+'-f-data');
+  if(dInput) dInput.value = new Date().toISOString().split('T')[0];
+  
+  if(pre==='k') {
+      document.getElementById('k-temp-val').textContent = '0';
+      document.getElementById('k-f-temperatura').value = 0;
+  }
 }
+
 function closeModal(pre) {
   document.getElementById('ov-'+pre).classList.remove('open');
-  var fields = pre==='p'
-    ? ['aluno','origem','tipo','produto','web','valor','data']
-    : ['aluno','origem','tipo','data'];
-  for (var i=0; i<fields.length; i++) document.getElementById(pre+'-f-'+fields[i]).value = '';
+  const fields = ['aluno','nome','sobrenome','telefone','origem','tipo','produto','web','valor','data','arquivo','temperatura'];
+  fields.forEach(f => {
+      let el = document.getElementById(pre+'-f-'+f);
+      if(el) el.value = '';
+  });
 }
 function ovClick(e, pre) { if (e.target === document.getElementById('ov-'+pre)) closeModal(pre); }
 
 // ══════════════════════════════════════════
-//  ADD ROW
+//  ADD ROW (SALVAR NO BANCO)
 // ══════════════════════════════════════════
 function addRow(pre) {
-  var aluno = document.getElementById(pre+'-f-aluno').value.trim();
-  if (!aluno) { document.getElementById(pre+'-f-aluno').focus(); return; }
+  var entry = { tab: pre, _id: 'r' + Date.now() + Math.floor(Math.random() * 1000).toString() };
   
-  var entry = {
-    tab:    pre,
-    aluno:  aluno,
-    origem: document.getElementById(pre+'-f-origem').value,
-    tipo:   document.getElementById(pre+'-f-tipo').value,
-    data:   document.getElementById(pre+'-f-data').value
-  };
-  
-  if (pre === 'p') {
-    entry.produto = document.getElementById('p-f-produto').value;
-    entry.web     = document.getElementById('p-f-web').value;
-    entry.valor   = parseFloat(document.getElementById('p-f-valor').value) || 0;
+  if(pre === 'k') {
+      entry.nome = document.getElementById('k-f-nome').value.trim();
+      entry.sobrenome = document.getElementById('k-f-sobrenome').value.trim();
+      entry.telefone = document.getElementById('k-f-telefone').value.trim();
+      entry.origem = document.getElementById('k-f-origem').value;
+      entry.produto = document.getElementById('k-f-produto').value;
+      entry.temperatura = document.getElementById('k-f-temperatura').value;
+      entry.status = "Primeiro Contato";
+      let fileInput = document.getElementById('k-f-arquivo');
+      entry.arquivo = fileInput.files.length > 0 ? fileInput.files[0].name : '';
+      
+      if(!entry.nome) { document.getElementById('k-f-nome').focus(); return; }
+  } else {
+      entry.aluno = document.getElementById(pre+'-f-aluno').value.trim();
+      entry.origem = document.getElementById(pre+'-f-origem').value;
+      entry.tipo = document.getElementById(pre+'-f-tipo').value;
+      entry.data = document.getElementById(pre+'-f-data').value;
+      if(!entry.aluno) { document.getElementById(pre+'-f-aluno').focus(); return; }
+      
+      if (pre === 'p') {
+        entry.produto = document.getElementById('p-f-produto').value;
+        entry.web     = document.getElementById('p-f-web').value;
+        entry.valor   = parseFloat(document.getElementById('p-f-valor').value) || 0;
+      }
   }
   
-  // Cria SEMPRE um novo registro com um ID único baseado no timestamp
-  var newId = 'r' + Date.now() + Math.floor(Math.random() * 1000).toString(); 
-  dbData[newId] = entry;
-  
-  toast('Aluno salvo com sucesso!');
+  dbData[entry._id] = entry;
+  toast(pre === 'k' ? 'Oportunidade salva!' : 'Aluno salvo com sucesso!');
   
   saveToStorage();
   closeModal(pre);
   updateDateFilter();
+  populateDatalist();
   refresh();
 }
 
@@ -1079,97 +985,40 @@ function addRow(pre) {
 // ══════════════════════════════════════════
 function exportExcel() {
   var rowsArray = getRows();
-  var pArr = rowsArray.filter(function(r){ return r.tab==='p'; });
-  var wArr = rowsArray.filter(function(r){ return r.tab==='w'; });
+  var pArr = rowsArray.filter(r => r.tab==='p');
+  var wArr = rowsArray.filter(r => r.tab==='w');
+  var kArr = rowsArray.filter(r => r.tab==='k');
   var wb   = XLSX.utils.book_new();
 
   var wsP = XLSX.utils.aoa_to_sheet([
     ['Aluno','Origem','Tipo','Produto','Webinário','Valor (R$)','Data da Venda'],
-    ...pArr.map(function(r){ return [r.aluno,r.origem,r.tipo,r.produto||'',r.web||'',r.valor||0,r.data?r.data.split('-').reverse().join('/'):''] })
+    ...pArr.map(r => [getFullName(r),r.origem,r.tipo,r.produto||'',r.web||'',r.valor||0,r.data?r.data.split('-').reverse().join('/'):''])
   ]);
-  wsP['!cols'] = [28,14,22,18,18,14,13].map(function(w){ return {wch:w}; });
+  wsP['!cols'] = [28,14,22,18,18,14,13].map(w => ({wch:w}));
   XLSX.utils.book_append_sheet(wb, wsP, 'Plataforma');
 
   var wsW = XLSX.utils.aoa_to_sheet([
     ['Aluno','Origem','Tipo','Data do Webinário'],
-    ...wArr.map(function(r){ return [r.aluno,r.origem,r.tipo,r.data?r.data.split('-').reverse().join('/'):''] })
+    ...wArr.map(r => [getFullName(r),r.origem,r.tipo,r.data?r.data.split('-').reverse().join('/'):''])
   ]);
-  wsW['!cols'] = [28,14,22,13].map(function(w){ return {wch:w}; });
+  wsW['!cols'] = [28,14,22,13].map(w => ({wch:w}));
   XLSX.utils.book_append_sheet(wb, wsW, 'Webinário');
+  
+  var wsK = XLSX.utils.aoa_to_sheet([
+    ['Aluno','Telefone','Origem','Produto','Fase do Funil', 'Temperatura'],
+    ...kArr.map(r => [getFullName(r),r.telefone,r.origem,r.produto,r.status,r.temperatura])
+  ]);
+  wsK['!cols'] = [28,16,16,18,18,12].map(w => ({wch:w}));
+  XLSX.utils.book_append_sheet(wb, wsK, 'Funil Kanban');
 
   XLSX.writeFile(wb, 'FlatsAcademy_CRM_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.xlsx');
   toast('Excel exportado!');
 }
 
-// ══════════════════════════════════════════
-//  KEYBOARD
-// ══════════════════════════════════════════
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal('p'); closeModal('w'); closeEditModal('p'); closeEditModal('w'); }
-  if (e.key === 'Enter') {
-    if (document.getElementById('ov-p').classList.contains('open')) addRow('p');
-    if (document.getElementById('ov-w').classList.contains('open')) addRow('w');
-    if (document.getElementById('ov-edit-p').classList.contains('open')) saveEdit('p');
-    if (document.getElementById('ov-edit-w').classList.contains('open')) saveEdit('w');
-  }
+  if (e.key === 'Escape') { closeModal('p'); closeModal('w'); closeModal('k'); }
 });
 
-// ══════════════════════════════════════════
-//  EDITAR ALUNO
-// ══════════════════════════════════════════
-function openEditModal(pre, id) {
-    var r = dbData[id];
-    if (!r) return;
-    document.getElementById('edit-'+pre+'-id').value = id;
-    document.getElementById('edit-'+pre+'-aluno').value  = r.aluno  || '';
-    document.getElementById('edit-'+pre+'-origem').value = r.origem || '';
-    document.getElementById('edit-'+pre+'-tipo').value   = r.tipo   || '';
-    document.getElementById('edit-'+pre+'-data').value   = r.data   || '';
-    if (pre === 'p') {
-        document.getElementById('edit-p-produto').value = r.produto || '';
-        document.getElementById('edit-p-web').value     = r.web     || '';
-        document.getElementById('edit-p-valor').value   = r.valor   || '';
-    }
-    document.getElementById('ov-edit-'+pre).classList.add('open');
-    document.getElementById('edit-'+pre+'-aluno').focus();
-}
-
-function closeEditModal(pre) {
-    document.getElementById('ov-edit-'+pre).classList.remove('open');
-}
-
-function ovClickEdit(e, pre) {
-    if (e.target === document.getElementById('ov-edit-'+pre)) closeEditModal(pre);
-}
-
-function saveEdit(pre) {
-    var id = document.getElementById('edit-'+pre+'-id').value;
-    if (!id || !dbData[id]) return;
-    
-    var aluno = document.getElementById('edit-'+pre+'-aluno').value.trim();
-    if (!aluno) { document.getElementById('edit-'+pre+'-aluno').focus(); return; }
-    
-    dbData[id].aluno  = aluno;
-    dbData[id].origem = document.getElementById('edit-'+pre+'-origem').value;
-    dbData[id].tipo   = document.getElementById('edit-'+pre+'-tipo').value;
-    dbData[id].data   = document.getElementById('edit-'+pre+'-data').value;
-    
-    if (pre === 'p') {
-        dbData[id].produto = document.getElementById('edit-p-produto').value;
-        dbData[id].web     = document.getElementById('edit-p-web').value;
-        dbData[id].valor   = parseFloat(document.getElementById('edit-p-valor').value) || 0;
-    }
-    
-    saveToStorage();
-    closeEditModal(pre);
-    updateDateFilter();
-    refresh();
-    toast('Aluno atualizado com sucesso!');
-}
-
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
 setSyncStatus('saving');
 </script>
 </body>
