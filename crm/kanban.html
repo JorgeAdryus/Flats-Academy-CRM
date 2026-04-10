@@ -36,14 +36,14 @@ header { background: var(--blue); padding: 0 1.5rem; height: 65px; display: flex
 .logo-area { display: flex; align-items: center; gap: 12px; }
 .logo-img { width: 38px; height: 38px; object-fit: contain; }
 
-/* Botão padrão do site principal */
-.btn-action {
+/* Botão Redirecionamento - Laranja igual ao site principal */
+.btn-action-main {
   display: flex; align-items: center; justify-content: center; gap: 6px; 
-  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); 
+  background: var(--orange); border: 1px solid rgba(255,255,255,0.1); 
   color: #fff; padding: 6px 14px; border-radius: 7px; font-size: 12px; 
-  font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s;
+  font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s;
 }
-.btn-action:hover { background: rgba(255,255,255,0.25); }
+.btn-action-main:hover { background: #9c470d; }
 
 main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
 .kanban-board { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; }
@@ -63,19 +63,18 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
 .kanban-card h4 { font-size: 15px; margin-bottom: 5px; color: var(--blue); }
 .kanban-card p { font-size: 12px; color: var(--gray); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
 
-.therm-icon { font-size: 20px; font-variation-settings: 'FILL' 1; }
-
-/* Modal e Abas */
+/* Modal e Sub-Abas Internas */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(2px); }
 .overlay.open { display: flex; }
 .modal { background: #fff; border-radius: 16px; width: min(600px, 95vw); padding: 25px; max-height: 90vh; overflow-y: auto; }
+
 .modal-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; gap: 15px; }
-.m-tab { padding: 10px 5px; font-size: 12px; cursor: pointer; color: var(--gray); border-bottom: 3px solid transparent; font-weight: 600; text-transform: uppercase; }
+.m-tab { padding: 10px 5px; font-size: 12px; cursor: pointer; color: var(--gray); border-bottom: 3px solid transparent; font-weight: 600; text-transform: uppercase; transition: all 0.2s; }
 .m-tab.active { color: var(--blue); border-color: var(--blue); }
 
 .fgrp { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
 .fgrp label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--gray); }
-.fgrp input, .fgrp select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; }
+.fgrp input, .fgrp select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; background: #fff; }
 
 .timeline-box { background: var(--gray-lt); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); position: relative; }
 .time-stamp { font-size: 10px; color: #94a3b8; font-weight: 600; margin-bottom: 5px; }
@@ -94,7 +93,7 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
         <span style="font-size:11px; opacity:0.7;">Funil Comercial</span>
     </div>
   </div>
-  <a href="index.html" class="btn-action">
+  <a href="index.html" class="btn-action-main">
     <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
     Voltar ao Site Principal
   </a>
@@ -111,8 +110,8 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-tabs">
-      <div class="m-tab active" id="mt-dados" onclick="switchTab('dados')">Cadastro</div>
-      <div class="m-tab" id="mt-notas" onclick="switchTab('notas')">Timeline</div>
+      <div class="m-tab active" id="mt-dados" onclick="switchModalTab('dados')">Cadastro</div>
+      <div class="m-tab" id="mt-notas" onclick="switchModalTab('notas')">Timeline</div>
     </div>
 
     <input type="hidden" id="f-id">
@@ -160,7 +159,6 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
             <input type="range" id="f-temp" min="0" max="80" step="10" oninput="document.getElementById('temp-val').innerText=this.value">
           </div>
       </div>
-      <div class="fgrp"><label>Documentação (Link/Print)</label><input type="text" id="f-anexo" placeholder="Link de Notas Fiscais ou Prints"></div>
     </div>
 
     <div id="pane-notas" style="display:none">
@@ -172,8 +170,9 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
     </div>
 
     <div style="margin-top:25px; display:flex; justify-content:space-between; padding-top:15px; border-top:1px solid #eee;">
-      <button class="btn-danger" id="btn-del" style="display:none" onclick="deleteOpp()">Excluir Oportunidade</button>
+      <button class="btn-danger" id="btn-del" style="display:none" onclick="deleteOpp()">Excluir</button>
       <button class="btn-primary" onclick="saveOpp()">Salvar Alterações</button>
+      <button class="btn-primary" style="background:#64748b" onclick="closeModal()">Fechar</button>
     </div>
   </div>
 </div>
@@ -207,21 +206,28 @@ function renderKanban() {
                 return `
                 <div class="kanban-card status-${o.statusFinal} ${isAtrasado ? 'atrasado' : ''}" draggable="true" ondragstart="drag(event, '${id}')">
                     <div class="k-tools">
-                        ${isAtrasado ? `<span class="material-symbols-outlined k-btn btn-up" onclick="updateExp('${id}')">upgrade</span>` : ''}
-                        <span class="material-symbols-outlined k-btn" onclick="editOpp('${id}')">edit</span>
+                        ${isAtrasado ? `<span class="material-symbols-outlined k-btn btn-up" title="Atualizar Mês" onclick="updateExp('${id}')">upgrade</span>` : ''}
+                        <span class="material-symbols-outlined k-btn" title="Editar" onclick="editOpp('${id}')">edit</span>
                     </div>
                     <h4>${o.nome} ${o.sobrenome}</h4>
                     <p><span class="material-symbols-outlined" style="font-size:14px">call</span> ${o.tel || '---'}</p>
-                    <p><span class="material-symbols-outlined" style="font-size:14px">calendar_today</span> Exp: ${MONTHS[o.expectativa-1]}</p>
+                    <p><span class="material-symbols-outlined" style="font-size:14px">calendar_today</span> ${MONTHS[o.expectativa-1] || 'Mês'}</p>
                     <div style="display:flex; align-items:center; gap:5px; margin-top:8px;">
-                        <span class="material-symbols-outlined therm-icon" style="color:${tempColor}">thermometer</span>
+                        <span class="material-symbols-outlined" style="color:${tempColor}; font-variation-settings: 'FILL' 1; font-size:20px;">thermometer</span>
                         <span style="font-size:10px; font-weight:700;">${temp}º</span>
-                        ${o.anexo ? `<span class="material-symbols-outlined" style="font-size:14px; margin-left:auto; color:var(--blue)">attach_file</span>` : ''}
                     </div>
                 </div>`;
             }).join('')}
         </div>`;
     }).join('');
+}
+
+function switchModalTab(t) {
+    document.getElementById('pane-dados').style.display = t === 'dados' ? 'block' : 'none';
+    document.getElementById('pane-notas').style.display = t === 'notas' ? 'block' : 'none';
+    
+    document.getElementById('mt-dados').classList.toggle('active', t === 'dados');
+    document.getElementById('mt-notas').classList.toggle('active', t === 'notas');
 }
 
 function saveOpp() {
@@ -239,7 +245,6 @@ function saveOpp() {
         expectativa: document.getElementById('f-expectativa').value,
         statusFinal: document.getElementById('f-status-final').value,
         temp: document.getElementById('f-temp').value,
-        anexo: document.getElementById('f-anexo').value,
         status: dbData[id]?.status || "Primeiro Contato"
     };
     fbDB.ref('crm/kanban_v2').set(dbData);
@@ -249,19 +254,19 @@ function saveOpp() {
 function editOpp(id) {
     const o = dbData[id];
     document.getElementById('f-id').value = id;
-    document.getElementById('f-nome').value = o.nome;
-    document.getElementById('f-sobrenome').value = o.sobrenome;
-    document.getElementById('f-tel').value = o.tel;
-    document.getElementById('f-origem').value = o.origem;
-    document.getElementById('f-produto').value = o.produto;
-    document.getElementById('f-expectativa').value = o.expectativa;
-    document.getElementById('f-status-final').value = o.statusFinal;
-    document.getElementById('f-temp').value = o.temp;
-    document.getElementById('temp-val').innerText = o.temp;
-    document.getElementById('f-anexo').value = o.anexo || '';
+    document.getElementById('f-nome').value = o.nome || '';
+    document.getElementById('f-sobrenome').value = o.sobrenome || '';
+    document.getElementById('f-tel').value = o.tel || '';
+    document.getElementById('f-origem').value = o.origem || 'ADS';
+    document.getElementById('f-produto').value = o.produto || 'Downsell';
+    document.getElementById('f-expectativa').value = o.expectativa || '1';
+    document.getElementById('f-status-final').value = o.statusFinal || 'NORMAL';
+    document.getElementById('f-temp').value = o.temp || 0;
+    document.getElementById('temp-val').innerText = o.temp || 0;
+    
     document.getElementById('btn-del').style.display = 'block';
     renderNotes(id);
-    switchTab('dados');
+    switchModalTab('dados');
     document.getElementById('overlay').classList.add('open');
 }
 
@@ -299,31 +304,27 @@ function drag(ev, id) { ev.dataTransfer.setData("id", id); }
 function drop(ev, status) {
     ev.preventDefault();
     const id = ev.dataTransfer.getData("id");
-    dbData[id].status = status;
-    fbDB.ref('crm/kanban_v2').set(dbData);
-}
-
-function switchTab(t) {
-    document.getElementById('pane-dados').style.display = t === 'dados' ? 'block' : 'none';
-    document.getElementById('pane-notes').style.display = t === 'notas' ? 'block' : 'none';
-    document.getElementById('mt-dados').classList.toggle('active', t === 'dados');
-    document.getElementById('mt-notas').classList.toggle('active', t === 'notas');
+    if(dbData[id]) {
+        dbData[id].status = status;
+        fbDB.ref('crm/kanban_v2').set(dbData);
+    }
 }
 
 function openModal() { 
     document.getElementById('f-id').value = '';
     document.getElementById('btn-del').style.display = 'none';
+    document.getElementById('notes-list').innerHTML = '';
+    switchModalTab('dados');
     document.getElementById('overlay').classList.add('open'); 
 }
 
 function closeModal() { 
     document.getElementById('overlay').classList.remove('open'); 
     document.querySelectorAll('.modal input').forEach(i => i.value = '');
-    document.getElementById('notes-list').innerHTML = '';
 }
 
 function deleteOpp() {
-    if(confirm("Deseja excluir esta oportunidade permanentemente?")) {
+    if(confirm("Deseja excluir permanentemente?")) {
         delete dbData[document.getElementById('f-id').value];
         fbDB.ref('crm/kanban_v2').set(dbData);
         closeModal();
