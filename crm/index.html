@@ -314,6 +314,9 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
             </select>
+            <select id="p-filter-month" class="sort-box" onchange="filterAndSortTable('p')" style="min-width:140px;">
+                <option value="all">Todos os Meses</option>
+            </select>
         </div>
         <div class="toolbar-right">
           <button class="btn-danger" id="p-del-btn" onclick="deleteSelected('p')">
@@ -337,6 +340,7 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
             <th onclick="toggleSort('p', 'web')">Webinário <span class="material-symbols-outlined sort-icon" id="sort-icon-p-web">unfold_more</span></th>
             <th onclick="toggleSort('p', 'valor')">Valor <span class="material-symbols-outlined sort-icon" id="sort-icon-p-valor">unfold_more</span></th>
             <th onclick="toggleSort('p', 'data')">Data da Venda <span class="material-symbols-outlined sort-icon" id="sort-icon-p-data">unfold_more</span></th>
+            <th style="text-align:right;">Ações</th>
           </tr></thead>
           <tbody id="p-tbody"></tbody>
         </table>
@@ -361,6 +365,9 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
                 <option value="default">Ordem Padrão</option>
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
+            </select>
+            <select id="w-filter-month" class="sort-box" onchange="filterAndSortTable('w')" style="min-width:140px;">
+                <option value="all">Todos os Meses</option>
             </select>
         </div>
         <div class="toolbar-right">
@@ -451,6 +458,73 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
 
 <div class="toast" id="toast"></div>
 
+<!-- Modal Editar — Plataforma -->
+<div class="overlay" id="ov-edit-p" onclick="ovClickEdit(event,'p')">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">✏️ Editar Aluno — Plataforma</span>
+      <button class="modal-close" onclick="closeEditModal('p')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-p-id">
+      <div class="fg">
+        <div class="fgrp full"><label>Nome do Aluno</label><input id="edit-p-aluno" type="text" placeholder="Dr(a). Nome completo"></div>
+        <div class="fgrp"><label>Origem</label>
+          <select id="edit-p-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>Carrinho abandonado</option></select>
+        </div>
+        <div class="fgrp"><label>Tipo</label>
+          <select id="edit-p-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
+        </div>
+        <div class="fgrp"><label>Produto</label>
+          <select id="edit-p-produto"><option value="">Selecione</option><option>Plataforma Vitalícia</option><option>Plataforma Anual</option><option>Plataforma Mensal</option><option>Downsell</option></select>
+        </div>
+        <div class="fgrp"><label>Webinário</label>
+          <select id="edit-p-web"><option value="">Selecione</option><option>Participou</option><option>Não participou</option><option>Não houve webinário</option></select>
+        </div>
+        <div class="fgrp"><label>Valor (R$)</label><input id="edit-p-valor" type="number" step="0.01" min="0" placeholder="0,00"></div>
+        <div class="fgrp"><label>Data da Venda</label><input id="edit-p-data" type="date"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeEditModal('p')">Cancelar</button>
+      <button class="btn-primary" onclick="saveEdit('p')">
+        <span class="material-symbols-outlined" style="font-size:16px">save</span>
+        Salvar alterações
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar — Webinário -->
+<div class="overlay" id="ov-edit-w" onclick="ovClickEdit(event,'w')">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">✏️ Editar Aluno — Webinário</span>
+      <button class="modal-close" onclick="closeEditModal('w')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-w-id">
+      <div class="fg">
+        <div class="fgrp full"><label>Nome do Aluno</label><input id="edit-w-aluno" type="text" placeholder="Dr(a). Nome completo"></div>
+        <div class="fgrp"><label>Origem</label>
+          <select id="edit-w-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>Carrinho abandonado</option></select>
+        </div>
+        <div class="fgrp"><label>Tipo</label>
+          <select id="edit-w-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
+        </div>
+        <div class="fgrp full"><label>Data do Webinário</label><input id="edit-w-data" type="date"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeEditModal('w')">Cancelar</button>
+      <button class="btn-primary" onclick="saveEdit('w')">
+        <span class="material-symbols-outlined" style="font-size:16px">save</span>
+        Salvar alterações
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ══════════════════════════════════════════
 //  CONSTANTES 
@@ -480,17 +554,8 @@ function getRows() {
 }
 
 fbRef.on('value', function(snap) {
-  var val = snap.val() || {};
-  // Mescla: mantém entradas locais que ainda não foram confirmadas pelo servidor
-  // (chaves que existem em dbData mas não em val são entradas recém-adicionadas)
-  var merged = Object.assign({}, val);
-  Object.keys(dbData).forEach(function(k) {
-    if (!val[k]) {
-      // Entrada local ainda não confirmada pelo Firebase — mantém
-      merged[k] = dbData[k];
-    }
-  });
-  dbData = merged;
+  var val = snap.val();
+  dbData = val || {}; 
   updateDateFilter();
   refresh();
   setSyncStatus('ok');
@@ -498,14 +563,9 @@ fbRef.on('value', function(snap) {
 
 function saveToStorage() {
   setSyncStatus('saving');
-  var dataToSave = Object.keys(dbData).length ? dbData : null;
-  fbRef.set(dataToSave, function(error) {
+  fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
       if (error) {
           setSyncStatus('err');
-          toast('Erro ao salvar no servidor: ' + error.message, true);
-          console.error('Firebase save error:', error);
-      } else {
-          setSyncStatus('ok');
       }
   });
 }
@@ -596,6 +656,45 @@ function updateDateFilter() {
     } else {
         sel.value = 'all';
     }
+    
+    updateMonthFilter('p');
+    updateMonthFilter('w');
+}
+
+var MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function updateMonthFilter(tab) {
+    var sel = document.getElementById(tab + '-filter-month');
+    if (!sel) return;
+    var cur = sel.value;
+    
+    var months = [];
+    var seen = {};
+    
+    getRows().forEach(function(r) {
+        if (r.tab === tab && r.data) {
+            var parts = r.data.split('-');
+            if (parts.length >= 2) {
+                var key = parts[0] + '-' + parts[1]; // YYYY-MM
+                if (!seen[key]) { seen[key] = true; months.push(key); }
+            }
+        }
+    });
+    months.sort();
+    
+    var html = '<option value="all">Todos os Meses</option>';
+    months.forEach(function(m) {
+        var parts = m.split('-');
+        var label = MONTH_NAMES[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
+        html += '<option value="'+m+'">' + label + '</option>';
+    });
+    
+    sel.innerHTML = html;
+    if (months.includes(cur) || cur === 'all') {
+        sel.value = cur;
+    } else {
+        sel.value = 'all';
+    }
 }
 
 function onDateFilterChange() {
@@ -625,6 +724,19 @@ function filterAndSortTable(tab) {
         if(dateFilter !== 'all') {
             const webAttendeesInDate = allRows.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => (r.aluno || "").toLowerCase().trim());
             filteredData = filteredData.filter(r => webAttendeesInDate.includes((r.aluno || "").toLowerCase().trim()));
+        }
+        // Filtro de mês de venda (Plataforma)
+        const monthFilter = document.getElementById('p-filter-month').value;
+        if (monthFilter !== 'all') {
+            filteredData = filteredData.filter(r => r.data && r.data.substring(0, 7) === monthFilter);
+        }
+    }
+
+    // Filtro de mês para Webinário
+    if (tab === 'w') {
+        const monthFilter = document.getElementById('w-filter-month').value;
+        if (monthFilter !== 'all') {
+            filteredData = filteredData.filter(r => r.data && r.data.substring(0, 7) === monthFilter);
         }
     }
 
@@ -731,7 +843,7 @@ function renderPlataforma(pArr, allRows) {
 
   var tb = document.getElementById('p-tbody');
   if (!pArr.length) {
-    tb.innerHTML = '<tr class="empty-row"><td colspan="8">Nenhum aluno encontrado.</td></tr>';
+    tb.innerHTML = '<tr class="empty-row"><td colspan="9">Nenhum aluno encontrado.</td></tr>';
   } else {
     var html = '';
     for (var i=0; i<pArr.length; i++) {
@@ -746,6 +858,7 @@ function renderPlataforma(pArr, allRows) {
         + '<td><span class="badge '+bc(r.web)+'">'+(r.web||'—')+'</span></td>'
         + '<td style="font-weight:600;color:var(--green)">'+(r.valor?fmt(r.valor):'—')+'</td>'
         + '<td style="color:#888">'+(r.data?r.data.split('-').reverse().join('/'):'—')+'</td>'
+        + '<td style="text-align:right;"><button class="btn-primary small" style="background:var(--blue);" onclick="openEditModal(\'p\',\''+gi+'\')"><span class="material-symbols-outlined" style="font-size:13px">edit</span> Editar</button></td>'
         + '</tr>';
     }
     tb.innerHTML = html;
@@ -781,7 +894,10 @@ function renderWebinario(wArr, allRows) {
         + '<td><span class="badge '+bc(r.origem)+'">'+(r.origem||'—')+'</span></td>'
         + '<td><span class="badge '+bc(r.tipo)+'">'+(r.tipo||'—')+'</span></td>'
         + '<td style="color:#888">'+(r.data?r.data.split('-').reverse().join('/'):'—')+'</td>'
-        + '<td style="text-align:right;"><button class="btn-primary small" style="'+btnStyle+'" '+btnAction+'>'+btnLabel+'</button></td>'
+        + '<td style="text-align:right;display:flex;gap:5px;justify-content:flex-end;">'
+        + '<button class="btn-primary small" style="background:var(--blue);" onclick="openEditModal(\'w\',\''+gi+'\')"><span class="material-symbols-outlined" style="font-size:13px">edit</span> Editar</button>'
+        + '<button class="btn-primary small" style="'+btnStyle+'" '+btnAction+'>'+btnLabel+'</button>'
+        + '</td>'
         + '</tr>';
     }
     tb.innerHTML = html;
@@ -929,15 +1045,12 @@ function addRow(pre) {
   var newId = 'r' + Date.now() + Math.floor(Math.random() * 1000).toString(); 
   dbData[newId] = entry;
   
-  // Atualização imediata na tela (optimistic update)
-  updateDateFilter();
-  refresh();
-  
-  closeModal(pre);
   toast('Aluno salvo com sucesso!');
   
-  // Salva no Firebase em segundo plano
   saveToStorage();
+  closeModal(pre);
+  updateDateFilter();
+  refresh();
 }
 
 // ══════════════════════════════════════════
@@ -971,17 +1084,71 @@ function exportExcel() {
 //  KEYBOARD
 // ══════════════════════════════════════════
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal('p'); closeModal('w'); }
+  if (e.key === 'Escape') { closeModal('p'); closeModal('w'); closeEditModal('p'); closeEditModal('w'); }
   if (e.key === 'Enter') {
     if (document.getElementById('ov-p').classList.contains('open')) addRow('p');
     if (document.getElementById('ov-w').classList.contains('open')) addRow('w');
+    if (document.getElementById('ov-edit-p').classList.contains('open')) saveEdit('p');
+    if (document.getElementById('ov-edit-w').classList.contains('open')) saveEdit('w');
   }
 });
 
 // ══════════════════════════════════════════
+//  EDITAR ALUNO
+// ══════════════════════════════════════════
+function openEditModal(pre, id) {
+    var r = dbData[id];
+    if (!r) return;
+    document.getElementById('edit-'+pre+'-id').value = id;
+    document.getElementById('edit-'+pre+'-aluno').value  = r.aluno  || '';
+    document.getElementById('edit-'+pre+'-origem').value = r.origem || '';
+    document.getElementById('edit-'+pre+'-tipo').value   = r.tipo   || '';
+    document.getElementById('edit-'+pre+'-data').value   = r.data   || '';
+    if (pre === 'p') {
+        document.getElementById('edit-p-produto').value = r.produto || '';
+        document.getElementById('edit-p-web').value     = r.web     || '';
+        document.getElementById('edit-p-valor').value   = r.valor   || '';
+    }
+    document.getElementById('ov-edit-'+pre).classList.add('open');
+    document.getElementById('edit-'+pre+'-aluno').focus();
+}
+
+function closeEditModal(pre) {
+    document.getElementById('ov-edit-'+pre).classList.remove('open');
+}
+
+function ovClickEdit(e, pre) {
+    if (e.target === document.getElementById('ov-edit-'+pre)) closeEditModal(pre);
+}
+
+function saveEdit(pre) {
+    var id = document.getElementById('edit-'+pre+'-id').value;
+    if (!id || !dbData[id]) return;
+    
+    var aluno = document.getElementById('edit-'+pre+'-aluno').value.trim();
+    if (!aluno) { document.getElementById('edit-'+pre+'-aluno').focus(); return; }
+    
+    dbData[id].aluno  = aluno;
+    dbData[id].origem = document.getElementById('edit-'+pre+'-origem').value;
+    dbData[id].tipo   = document.getElementById('edit-'+pre+'-tipo').value;
+    dbData[id].data   = document.getElementById('edit-'+pre+'-data').value;
+    
+    if (pre === 'p') {
+        dbData[id].produto = document.getElementById('edit-p-produto').value;
+        dbData[id].web     = document.getElementById('edit-p-web').value;
+        dbData[id].valor   = parseFloat(document.getElementById('edit-p-valor').value) || 0;
+    }
+    
+    saveToStorage();
+    closeEditModal(pre);
+    updateDateFilter();
+    refresh();
+    toast('Aluno atualizado com sucesso!');
+}
+
+// ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
-// Inicia aguardando conexão com Firebase
 setSyncStatus('saving');
 </script>
 </body>
