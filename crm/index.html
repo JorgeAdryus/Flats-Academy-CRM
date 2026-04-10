@@ -30,58 +30,57 @@
   --purple:#6b21a8; --purple-card:#f3e8ff; --gray:#595959; --border:#E2E8F0; --white:#FFFFFF;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#F0F4FA;color:#1a1a2e;min-height:100vh;}
+body{font-family:'DM Sans',sans-serif;background:#F0F4FA;color:#1a1a2e;min-height:100vh; transition: background 0.3s;}
 header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100;}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-img {width:38px; height:38px; object-fit: contain;}
 .logo-text{font-size:17px;font-weight:600;color:#fff;}
+.btn-icon { border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; color: white; cursor: pointer; }
+
 .tabs-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:65px;z-index:90;}
 .tab-btn{padding:12px 22px;font-size:13px;font-weight:500;color:var(--gray);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;}
 .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
 .tab-pane{display:none} .tab-pane.active{display:block}
 main{max-width:1600px;margin:0 auto;padding:1.2rem;}
 
-/* Kanban Board */
+/* Kanban */
 .kanban-board { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; }
-.kanban-col { background: #e2e8f0; border-radius: 12px; width: 300px; min-width: 300px; padding: 12px; border: 1px solid var(--border); min-height: 70vh; }
-.kanban-col.col-ganho { background: #bbf7d0; }
-.kanban-col.col-perdido { background: #fecaca; }
+.kanban-col { background: #e2e8f0; border-radius: 12px; width: 300px; min-width: 300px; padding: 12px; border: 1px solid var(--border); min-height: 600px; }
 .kanban-col-header { font-weight: 700; font-size: 13px; color: var(--blue); margin-bottom: 12px; display: flex; justify-content: space-between; }
-
-/* Kanban Cards */
-.kanban-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: grab; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.kanban-card.status-ganho { background: var(--green-card); border-color: #86efac; }
-.kanban-card.status-perdido { background: var(--red-card); border-color: #fca5a5; }
-.kanban-card.status-atrasado { background: var(--purple-card); border-color: #d8b4fe; }
+.kanban-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: grab; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.3s; }
+.kanban-card.status-GANHO { background: var(--green-card) !important; border-color: #86efac; }
+.kanban-card.status-PERDIDO { background: var(--red-card) !important; border-color: #fca5a5; }
 
 .kanban-card h4 { font-size: 14px; color: var(--blue); margin-bottom: 4px; }
-.kanban-card p { font-size: 11px; color: #64748b; margin-bottom: 4px; display: flex; align-items: center; gap: 5px;}
+.kanban-card p { font-size: 11px; color: #64748b; margin-bottom: 4px; }
 .k-tools { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; }
-.k-btn { font-size: 18px; cursor: pointer; color: #94a3b8; }
+.k-btn { font-size: 17px; cursor: pointer; color: #94a3b8; }
 .k-btn:hover { color: var(--blue); }
-.k-btn.btn-update { color: var(--purple); font-weight: bold; }
 
-/* Termômetro Visual */
-.termometro-box { display: flex; align-items: center; gap: 5px; margin-top: 8px; }
-.thermometer-icon { font-size: 20px; }
+/* Notas */
+.notes-section { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px; }
+.note-input-area { display: flex; gap: 8px; margin-bottom: 15px; }
+.note-input-area input { flex: 1; height: 36px; border: 1px solid var(--border); border-radius: 6px; padding: 0 10px; font-size: 13px; }
+.note-card { background: var(--gray-lt); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; border-left: 3px solid var(--blue); }
+.note-time { font-size: 10px; color: #999; margin-bottom: 2px; }
 
-.btn-primary { background: var(--blue); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; }
-
-/* Modal Styles */
+/* Modais */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000; backdrop-filter: blur(2px);}
 .overlay.open{display:flex}
-.modal{background:var(--white);border-radius:12px;width:min(500px, 95vw);max-height:90vh;overflow-y:auto;padding:25px;}
+.modal{background:var(--white);border-radius:12px;width:min(550px, 95vw);max-height:90vh;overflow-y:auto;padding:25px;}
 .fgrp{margin-bottom:15px; display: flex; flex-direction: column; gap: 5px;}
 .fgrp label{font-size:11px; font-weight:700; color:var(--gray); text-transform:uppercase;}
-.fgrp input, .fgrp select {padding:10px; border:1px solid var(--border); border-radius:6px; outline: none;}
+.fgrp input, .fgrp select {padding:10px; border:1px solid var(--border); border-radius:6px; outline: none; background: #fff;}
+
+.btn-primary { background: var(--blue); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+.btn-danger { background: var(--red); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; }
 
 /* Dark Mode */
 body.dark-mode { background: #0f172a; color: #f1f5f9; }
-body.dark-mode .kanban-col { background: #1e293b; border-color: #334155; }
+body.dark-mode .kanban-col, body.dark-mode .modal, body.dark-mode .tabs-bar { background: #1e293b; border-color: #334155; }
 body.dark-mode .kanban-card { background: #0f172a; border-color: #334155; }
-body.dark-mode .kanban-card.status-ganho { background: #064e3b; }
-body.dark-mode .kanban-card.status-perdido { background: #7f1d1d; }
-body.dark-mode .kanban-card.status-atrasado { background: #4c1d95; }
+body.dark-mode .note-card { background: #334155; color: #cbd5e1; }
+body.dark-mode .fgrp input, body.dark-mode .fgrp select { background: #0f172a; color: #fff; border-color: #334155; }
 </style>
 </head>
 <body>
@@ -92,8 +91,8 @@ body.dark-mode .kanban-card.status-atrasado { background: #4c1d95; }
     <div class="logo-text">Flats Academy CRM</div>
   </div>
   <div class="header-right">
-    <span id="syncInfo" style="font-size:11px; color:#fff;"></span>
-    <button class="btn-icon" onclick="toggleDarkMode()"><span class="material-symbols-outlined">dark_mode</span></button>
+    <span id="syncInfo" style="font-size:11px; color:#fff; opacity:0.8"></span>
+    <button class="btn-icon" onclick="toggleDarkMode()"><span class="material-symbols-outlined" id="theme-icon">dark_mode</span></button>
   </div>
 </header>
 
@@ -105,159 +104,207 @@ body.dark-mode .kanban-card.status-atrasado { background: #4c1d95; }
 
 <main>
   <div class="tab-pane active" id="tab-k">
-    <div style="margin-bottom:20px; display:flex; justify-content:space-between;">
+    <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
         <h2 style="font-size:18px">Fluxo Comercial</h2>
         <button class="btn-primary" onclick="openModal('k')"><span class="material-symbols-outlined">add</span> Nova Oportunidade</button>
     </div>
     <div class="kanban-board" id="kanban-board"></div>
   </div>
   
-  <div class="tab-pane" id="tab-p"><div class="card">Aba em manutenção...</div></div>
-  <div class="tab-pane" id="tab-w"><div class="card">Aba em manutenção...</div></div>
+  <div class="tab-pane" id="tab-p"><div style="padding:40px; text-align:center; background:#fff; border-radius:12px;">Aba Plataforma: Dados sincronizados com o Funil.</div></div>
+  <div class="tab-pane" id="tab-w"><div style="padding:40px; text-align:center; background:#fff; border-radius:12px;">Aba Webinário: Histórico de participações.</div></div>
 </main>
 
 <div class="overlay" id="ov-k">
   <div class="modal">
-    <h3 id="modal-title" style="margin-bottom:20px">Oportunidade</h3>
+    <div style="display:flex; justify-content:space-between; margin-bottom:20px">
+        <h3 id="modal-k-title">Oportunidade</h3>
+        <span class="material-symbols-outlined" style="cursor:pointer" onclick="closeModal('k')">close</span>
+    </div>
+    
     <input type="hidden" id="k-id">
-    <div class="fgrp"><label>Nome do Lead</label><input type="text" id="k-nome"></div>
+    
+    <div class="fgrp"><label>Nome do Lead</label><input type="text" id="k-nome" placeholder="Nome Completo"></div>
     <div class="fgrp"><label>Telefone</label><input type="text" id="k-tel" placeholder="(00) 00000-0000"></div>
-    <div class="fgrp">
-        <label>Expectativa de Fechamento</label>
-        <select id="k-mes">
-            <option value="Janeiro">Janeiro</option><option value="Fevereiro">Fevereiro</option>
-            <option value="Março">Março</option><option value="Abril">Abril</option>
-            <option value="Maio">Maio</option><option value="Junho">Junho</option>
-            <option value="Julho">Julho</option><option value="Agosto">Agosto</option>
-            <option value="Setembro">Setembro</option><option value="Outubro">Outubro</option>
-            <option value="Novembro">Novembro</option><option value="Dezembro">Dezembro</option>
-        </select>
+    
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div class="fgrp">
+            <label>Status Especial</label>
+            <select id="k-status-especial">
+                <option value="NORMAL">Normal (Padrão)</option>
+                <option value="GANHO">GANHO (Verde)</option>
+                <option value="PERDIDO">PERDIDO (Vermelho)</option>
+            </select>
+        </div>
+        <div class="fgrp">
+            <label>Engajamento (0-80)</label>
+            <input type="range" id="k-temp" min="0" max="80" step="10" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>
+        </div>
     </div>
-    <div class="fgrp">
-        <label>Engajamento (0-80)</label>
-        <input type="range" id="k-temp" min="0" max="80" step="10" oninput="this.nextElementSibling.value = this.value">
-        <output>0</output>
+
+    <div class="notes-section" id="notes-area" style="display:none">
+        <label>Anotações e Histórico</label>
+        <div class="note-input-area">
+            <input type="text" id="note-text" placeholder="Adicionar nova nota...">
+            <button class="btn-primary" onclick="addNote()">Salvar</button>
+        </div>
+        <div id="notes-list"></div>
     </div>
+
     <div style="display:flex; justify-content:space-between; margin-top:25px">
-        <button class="btn-primary" style="background:#64748b" onclick="closeModal('k')">Cancelar</button>
-        <button class="btn-primary" onclick="saveOpp()">Salvar Oportunidade</button>
+        <button class="btn-danger" id="btn-del-k" style="display:none" onclick="deleteOpp()">Excluir Lead</button>
+        <button class="btn-primary" onclick="saveOpp()">Salvar Alterações</button>
     </div>
   </div>
 </div>
 
 <script>
 let dbData = {};
-const COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By", "GANHO", "PERDIDO"];
-const MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By"];
 
-// FIREBASE INIT
-fbDB.ref('crm/v3').on('value', snap => {
+// SINCRONIZAÇÃO FIREBASE
+fbDB.ref('crm/v4').on('value', snap => {
     dbData = snap.val() || {};
     renderKanban();
 });
 
 function saveToFB() {
-    fbDB.ref('crm/v3').set(dbData);
+    document.getElementById('syncInfo').textContent = "🟡 salvando...";
+    fbDB.ref('crm/v4').set(dbData).then(() => {
+        document.getElementById('syncInfo').textContent = "🟢 sincronizado";
+    });
 }
 
-// KANBAN LOGIC
+// RENDERIZAÇÃO KANBAN
 function renderKanban() {
     const board = document.getElementById('kanban-board');
-    const curMonthIdx = new Date().getMonth();
+    if(!board) return;
 
     board.innerHTML = COLS.map(col => {
-        let colClass = col === 'GANHO' ? 'col-ganho' : (col === 'PERDIDO' ? 'col-perdido' : '');
+        const opps = Object.keys(dbData).filter(id => (dbData[id].column || "Primeiro Contato") === col);
         return `
-        <div class="kanban-col ${colClass}" ondragover="allowDrop(event)" ondrop="drop(event, '${col})">
-            <div class="kanban-col-header">${col}</div>
-            <div id="col-${col.replace(/ /g,'-')}" style="min-height:500px">
-                ${Object.keys(dbData).filter(id => dbData[id].status === col).map(id => {
-                    const opp = dbData[id];
-                    const mesIdx = MESES.indexOf(opp.mes);
-                    const isAtrasado = (mesIdx < curMonthIdx) && col !== 'GANHO' && col !== 'PERDIDO';
-                    
-                    let cardStatus = isAtrasado ? 'status-atrasado' : '';
-                    if(col === 'GANHO') cardStatus = 'status-ganho';
-                    if(col === 'PERDIDO') cardStatus = 'status-perdido';
-
-                    const temp = parseInt(opp.temp) || 0;
+        <div class="kanban-col" ondragover="allowDrop(event)" ondrop="drop(event, '${col}')">
+            <div class="kanban-col-header">${col} <span>${opps.length}</span></div>
+            <div style="min-height:500px">
+                ${opps.map(id => {
+                    const o = dbData[id];
+                    const statusClass = o.statusEspecial ? `status-${o.statusEspecial}` : '';
+                    const temp = o.temp || 0;
                     const tempColor = `color-mix(in srgb, #ef4444 ${temp / 0.8}%, #94a3b8)`;
-
+                    
                     return `
-                    <div class="kanban-card ${cardStatus}" draggable="true" ondragstart="drag(event, '${id}')">
+                    <div class="kanban-card ${statusClass}" draggable="true" ondragstart="drag(event, '${id}')">
                         <div class="k-tools">
-                            ${isAtrasado ? `<span class="material-symbols-outlined k-btn btn-update" onclick="updateMes('${id}')">upload</span>` : ''}
                             <span class="material-symbols-outlined k-btn" onclick="editOpp('${id}')">edit</span>
-                            <span class="material-symbols-outlined k-btn" onclick="deleteOpp('${id}')">delete</span>
                         </div>
-                        <h4>${opp.nome}</h4>
-                        <p><span class="material-symbols-outlined" style="font-size:14px">calendar_month</span> ${opp.mes}</p>
-                        <p><span class="material-symbols-outlined" style="font-size:14px">call</span> ${opp.tel || 'Sem tel'}</p>
-                        <div class="termometro-box">
-                            <span class="material-symbols-outlined thermometer-icon" style="color:${tempColor}; font-variation-settings: 'FILL' 1">thermometer</span>
-                            <span style="font-size:10px; font-weight:700">${temp}</span>
+                        <h4>${o.nome || 'Sem Nome'}</h4>
+                        <p><span class="material-symbols-outlined" style="font-size:12px">call</span> ${o.tel || '---'}</p>
+                        <div style="display:flex; align-items:center; gap:5px; margin-top:8px;">
+                            <span class="material-symbols-outlined" style="color:${tempColor}; font-size:18px; font-variation-settings:'FILL' 1">thermometer</span>
+                            <span style="font-size:10px; font-weight:700; color:${tempColor}">${temp}º</span>
                         </div>
                     </div>
                     `;
                 }).join('')}
             </div>
         </div>
-    `}).join('');
+        `;
+    }).join('');
 }
 
-// DRAG AND DROP
+// DRAG & DROP
 function allowDrop(ev) { ev.preventDefault(); }
 function drag(ev, id) { ev.dataTransfer.setData("id", id); }
 function drop(ev, col) {
     ev.preventDefault();
     const id = ev.dataTransfer.getData("id");
-    dbData[id].status = col;
-    saveToFB();
+    if(dbData[id]) {
+        dbData[id].column = col;
+        saveToFB();
+    }
 }
 
-// CRUD ACTIONS
+// FUNÇÕES DO MODAL
 function openModal(t) { document.getElementById('ov-'+t).classList.add('open'); }
 function closeModal(t) { 
     document.getElementById('ov-'+t).classList.remove('open');
-    document.querySelectorAll('.modal input').forEach(i => i.value = '');
     document.getElementById('k-id').value = '';
+    document.querySelectorAll('.modal input').forEach(i => i.value = '');
+    document.getElementById('notes-list').innerHTML = '';
 }
 
 function saveOpp() {
     const id = document.getElementById('k-id').value || 'id_' + Date.now();
+    const nome = document.getElementById('k-nome').value;
+    if(!nome) return alert("Por favor, insira ao menos o nome.");
+
     dbData[id] = {
-        nome: document.getElementById('k-nome').value,
+        ...dbData[id],
+        nome: nome,
         tel: document.getElementById('k-tel').value,
-        mes: document.getElementById('k-mes').value,
+        statusEspecial: document.getElementById('k-status-especial').value,
         temp: document.getElementById('k-temp').value,
-        status: dbData[id]?.status || "Primeiro Contato"
+        column: dbData[id]?.column || "Primeiro Contato"
     };
+
     saveToFB();
     closeModal('k');
 }
 
 function editOpp(id) {
-    const opp = dbData[id];
+    const o = dbData[id];
     document.getElementById('k-id').value = id;
-    document.getElementById('k-nome').value = opp.nome;
-    document.getElementById('k-tel').value = opp.tel;
-    document.getElementById('k-mes').value = opp.mes;
-    document.getElementById('k-temp').value = opp.temp;
+    document.getElementById('k-nome').value = o.nome || '';
+    document.getElementById('k-tel').value = o.tel || '';
+    document.getElementById('k-status-especial').value = o.statusEspecial || 'NORMAL';
+    document.getElementById('k-temp').value = o.temp || 0;
+    
+    document.getElementById('btn-del-k').style.display = 'block';
+    document.getElementById('notes-area').style.display = 'block';
+    renderNotes(id);
     openModal('k');
 }
 
-function deleteOpp(id) {
-    if(confirm("Excluir lead permanentemente?")) {
+function deleteOpp() {
+    const id = document.getElementById('k-id').value;
+    if(confirm("Deseja excluir este lead permanentemente?")) {
         delete dbData[id];
         saveToFB();
+        closeModal('k');
     }
 }
 
-function updateMes(id) {
-    dbData[id].mes = MESES[new Date().getMonth()];
+// SISTEMA DE NOTAS
+function addNote() {
+    const id = document.getElementById('k-id').value;
+    const text = document.getElementById('note-text').value;
+    if(!text) return;
+
+    if(!dbData[id].notes) dbData[id].notes = [];
+    dbData[id].notes.unshift({
+        id: Date.now(),
+        text: text,
+        time: new Date().toLocaleString('pt-BR')
+    });
+
+    document.getElementById('note-text').value = '';
     saveToFB();
+    renderNotes(id);
 }
 
+function renderNotes(id) {
+    const list = document.getElementById('notes-list');
+    const notes = dbData[id].notes || [];
+    list.innerHTML = notes.map(n => `
+        <div class="note-card">
+            <div class="note-time">${n.time}</div>
+            <div>${n.text}</div>
+        </div>
+    `).join('');
+}
+
+// UTILITÁRIOS
 function switchTab(t) {
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -265,7 +312,11 @@ function switchTab(t) {
     event.target.classList.add('active');
 }
 
-function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    document.getElementById('theme-icon').textContent = isDark ? 'light_mode' : 'dark_mode';
+}
 </script>
 </body>
 </html>
