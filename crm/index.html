@@ -537,6 +537,18 @@ var WEBS    = ["Participou","Não participou","Não houve webinário"];
 var charts  = {};
 
 // ══════════════════════════════════════════
+//  TOAST (notificação)
+// ══════════════════════════════════════════
+function toast(msg, isErr) {
+  var el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'toast' + (isErr ? ' err' : '');
+  el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, 2800);
+}
+
+// ══════════════════════════════════════════
 //  ESTADO
 // ══════════════════════════════════════════
 var dbData = {}; 
@@ -547,21 +559,29 @@ var currentSortW = { column: null, direction: 'asc' };
 // ══════════════════════════════════════════
 //  FIREBASE
 // ══════════════════════════════════════════
-var fbRef = fbDB.ref('crm/rows');
+var fbRef = null;
+try { fbRef = fbDB.ref('crm/rows'); } catch(e) { console.warn('Firebase não disponível:', e); }
 
 function getRows() {
     return Object.keys(dbData).map(key => ({ ...dbData[key], _id: key }));
 }
 
-fbRef.on('value', function(snap) {
-  var val = snap.val();
-  dbData = val || {}; 
+if (fbRef) {
+  fbRef.on('value', function(snap) {
+    var val = snap.val();
+    dbData = val || {}; 
+    updateDateFilter();
+    refresh();
+    setSyncStatus('ok');
+  });
+} else {
+  setSyncStatus('err');
   updateDateFilter();
   refresh();
-  setSyncStatus('ok');
-});
+}
 
 function saveToStorage() {
+  if (!fbRef) { setSyncStatus('err'); return; }
   setSyncStatus('saving');
   fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
       if (error) {
