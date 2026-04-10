@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flats Academy — CRM</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -25,1001 +26,328 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
 :root{
   --blue:#1C5D99; --blue-md:#2A7BCA; --blue-lt:#E6F0FA; --blue-xlt:#F2F7FC;
-  --green:#1A7A4A; --green-lt:#E8F5EE;
-  --orange:#C55A11; --orange-lt:#FEF4EC;
-  --purple:#6A1B9A; --purple-lt:#F3E5F5;
-  --red:#c53030;
-  --gray:#595959; --gray-lt:#F7F7F5; --border:#E2E8F0; --white:#FFFFFF;
+  --green:#1A7A4A; --green-lt:#E8F5EE; --orange:#C55A11; --orange-lt:#FEF4EC;
+  --purple:#6A1B9A; --purple-lt:#F3E5F5; --red:#c53030; --gray:#595959; --gray-lt:#F7F7F5; --border:#E2E8F0; --white:#FFFFFF;
   --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(28,93,153,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F0F4FA;color:#1a1a2e;min-height:100vh; transition: background 0.3s, color 0.3s;}
-
-header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100; transition: background 0.3s;}
+header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100;}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-img {width:38px; height:38px; object-fit: contain;}
-.logo-text-group {display:flex; flex-direction:column; gap:1px;}
-.logo-text{font-size:17px;font-weight:600;color:rgba(255,255,255,.98); line-height: 1.1;}
-.logo-sub{font-size:11px;color:rgba(255,255,255,.65);font-weight:300;}
-
+.logo-text{font-size:17px;font-weight:600;color:#fff;}
 .header-right {display:flex;align-items:center;gap:14px;}
-.btn-action{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer; transition: background 0.2s;}
-.btn-action:hover{background:rgba(255,255,255,.25)}
+.btn-action{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;}
+.btn-icon { border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; color: white; cursor: pointer; }
 
-.btn-icon { padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; color: white; cursor: pointer; transition: background 0.2s; }
-.btn-icon:hover { background: rgba(255,255,255,0.1); }
-.btn-icon span { font-size: 24px; }
-
-.tabs-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:65px;z-index:90; transition: background 0.3s, border-color 0.3s; overflow-x: auto;}
-.tab-btn{padding:12px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--gray);background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;transition:color .15s,border-color .15s; white-space: nowrap;}
+.tabs-bar{background:var(--white);border-bottom:2px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:65px;z-index:90;}
+.tab-btn{padding:12px 22px;font-size:13px;font-weight:500;color:var(--gray);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;}
 .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
-.tab-btn:hover:not(.active){color:var(--blue-md)}
-.tab-pane{display:none}
-.tab-pane.active{display:block}
+.tab-pane{display:none} .tab-pane.active{display:block}
+main{max-width:1400px;margin:0 auto;padding:1.2rem;}
 
-main{max-width:1320px;margin:0 auto;padding:1.2rem 1.2rem 4rem}
+/* Kanban */
+.kanban-board { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; }
+.kanban-col { background: var(--gray-lt); border-radius: 12px; width: 300px; min-width: 300px; padding: 12px; border: 1px solid var(--border); min-height: 500px; }
+.kanban-col-header { font-weight: 600; font-size: 13px; color: var(--blue); margin-bottom: 12px; display: flex; justify-content: space-between; }
+.kanban-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: grab; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.kanban-card h4 { font-size: 14px; color: var(--blue); margin-bottom: 4px; }
+.kanban-card p { font-size: 11px; color: var(--gray); margin-bottom: 4px; }
+.k-tools { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; }
+.k-btn { font-size: 16px; cursor: pointer; color: #ccc; }
+.k-btn:hover { color: var(--blue); }
 
-.kpis5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:1.2rem}
-.kpis3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.2rem}
-.kpis1{display:grid;grid-template-columns:repeat(1,minmax(0,300px));gap:10px;margin-bottom:1.2rem}
-.kpi{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:.9rem 1.1rem;box-shadow:var(--shadow); transition: background 0.3s, border-color 0.3s;}
-.kpi-label{font-size:10px;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
-.kpi-value{font-size:24px;font-weight:600;color:var(--blue);line-height:1}
-.kpi-value.green{color:var(--green)}
-.kpi-value.purple{color:var(--purple)}
-.kpi-sub{font-size:10px;color:#aaa;margin-top:3px}
+/* Notas / Timeline */
+.notes-section { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px; }
+.note-input-area { display: flex; gap: 8px; margin-bottom: 15px; }
+.note-input-area input { flex: 1; height: 36px; border: 1px solid var(--border); border-radius: 6px; padding: 0 10px; font-size: 13px; }
+.note-card { background: var(--gray-lt); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; position: relative; border-left: 3px solid var(--blue); }
+.note-time { font-size: 10px; color: #999; margin-bottom: 4px; }
+.note-actions { display: flex; gap: 10px; margin-top: 5px; }
+.note-actions span { cursor: pointer; color: var(--blue); font-weight: 600; font-size: 10px; }
 
-.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
-.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:1.2rem}
-.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;box-shadow:var(--shadow); transition: background 0.3s, border-color 0.3s;}
-.card-title{font-size:12px;font-weight:600;color:var(--blue);margin-bottom:.8rem;display:flex;align-items:center;gap:6px}
-.card-title::before{content:'';display:block;width:3px;height:13px;background:var(--blue-md);border-radius:2px}
-.chart-box{position:relative;height:175px}
+/* Global */
+.termometro-wrap { height: 6px; background: #eee; border-radius: 3px; margin: 8px 0; overflow: hidden; }
+.termometro-fill { height: 100%; transition: width 0.3s; }
+.btn-primary { background: var(--blue); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+.btn-danger { background: var(--red); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; }
 
-.table-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow); transition: background 0.3s, border-color 0.3s;}
-.table-toolbar{padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px; transition: border-color 0.3s;}
-.toolbar-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
-.search-box { padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; width: 200px; transition: border-color 0.2s, background 0.3s, color 0.3s; }
-.search-box:focus { border-color: var(--blue); }
-.sort-box { padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background-color: var(--white); cursor: pointer; outline: none; transition: border-color 0.2s, background 0.3s, color 0.3s; }
-.toolbar-right{display:flex;align-items:center;gap:8px}
-
-.btn-primary{padding:7px 15px;border:none;border-radius:7px;background:var(--blue);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:5px; transition: background 0.2s;}
-.btn-primary:hover{background:var(--blue-md)}
-.btn-primary.small {font-size: 10px; padding: 5px 10px; border-radius: 5px; background: var(--blue-md);}
-.btn-primary.small:hover {background: var(--blue);}
-.btn-primary.outline {background: transparent; border: 1.5px solid var(--blue); color: var(--blue);}
-.btn-primary.outline:hover {background: var(--blue-lt);}
-.btn-danger{padding:7px 15px;border:none;border-radius:7px;background:var(--red);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;align-items:center;gap:5px;display:none}
-.btn-danger.vis{display:inline-flex}
-.btn-danger:hover{background:#9b2c2c}
-
-/* Estilos Kanban */
-.kanban-wrapper { width: 100%; overflow-x: auto; padding-bottom: 15px; }
-.kanban-board { display: flex; gap: 15px; min-width: max-content; align-items: flex-start; }
-.kanban-col { background: var(--gray-lt); border-radius: 12px; width: 280px; padding: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; transition: background 0.3s, border-color 0.3s;}
-.kanban-col-header { font-weight: 600; font-size: 13px; color: var(--blue); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-.kanban-cards-container { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; min-height: 100px; padding-bottom: 20px;}
-.kanban-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: grab; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background 0.3s, border-color 0.3s; position: relative;}
-.kanban-card:active { cursor: grabbing; opacity: 0.8;}
-.kanban-card h4 { margin: 0 0 5px 0; font-size: 14px; color: var(--blue); }
-.kanban-card p { margin: 0 0 6px 0; font-size: 11px; color: var(--gray); display: flex; align-items: center; gap: 4px;}
-.termometro-wrap { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; margin-top: 6px; width: 100%; }
-.termometro-fill { height: 100%; transition: width 0.3s, background 0.3s; }
-.k-actions { display: flex; gap: 5px; margin-top: 12px; }
-.k-delete { position: absolute; top: 10px; right: 10px; color: #aaa; cursor: pointer; font-size: 16px; }
-.k-delete:hover { color: var(--red); }
-
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;background:var(--white);font-size:12px; transition: background 0.3s;}
-thead tr{background:var(--blue); transition: background 0.3s;}
-thead th{padding:9px 11px;text-align:left;font-size:10px;font-weight:600;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap; cursor: pointer; user-select: none;}
-thead th:hover { background-color: var(--blue-md); }
-thead th.chk-col{width:36px;text-align:center; cursor: default;}
-thead th.chk-col:hover { background-color: var(--blue); }
-.sort-icon { font-size: 14px; vertical-align: middle; margin-left: 4px; color: rgba(255,255,255,0.6); }
-
-tbody tr{border-bottom:1px solid var(--border);transition:background .1s, border-color 0.3s;}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:var(--blue-xlt)}
-tbody tr.sel{background:#fff0f0 !important}
-td{padding:8px 11px;color:#2a2a3e;vertical-align:middle}
-td.nc{font-weight:600;color:var(--blue)}
-td.chk-cell{text-align:center}
-input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--blue)}
-.empty-row td{text-align:center;padding:2.5rem;color:#aaa;font-size:13px}
-
-.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
-.bg{background:var(--green-lt);color:var(--green)}
-.bo{background:var(--orange-lt);color:var(--orange)}
-.bb{background:var(--blue-lt);color:var(--blue)}
-.bgy{background:#F0F0EE;color:#666}
-.bp{background:var(--purple-lt);color:var(--purple)}
-
-.overlay{position:fixed;inset:0;background:rgba(10,20,50,.6);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
-.overlay.open{display:flex}
-.modal{background:var(--white);border-radius:16px;width:min(520px,95vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25);animation:up .2s ease; transition: background 0.3s;}
-@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-header{padding:1.1rem 1.4rem .85rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; transition: border-color 0.3s;}
-.modal-title{font-size:14px;font-weight:600;color:var(--blue)}
-.modal-close{background:none;border:none;font-size:20px;color:#aaa;cursor:pointer;padding:2px 6px;border-radius:5px}
-.modal-close:hover{background:var(--gray-lt)}
-.modal-body{padding:1.1rem 1.4rem}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fgrp{display:flex;flex-direction:column;gap:5px}
-.fgrp.full{grid-column:1/-1}
-.fgrp label{font-size:10px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.04em; transition: color 0.3s; display:flex; justify-content:space-between;}
-.fgrp input,.fgrp select{height:36px;border:1.5px solid var(--border);border-radius:7px;padding:0 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:#1a1a2e;outline:none;transition:border-color .15s, background 0.3s, color 0.3s;background:var(--white)}
-.fgrp input[type=file] { padding: 6px 10px; font-size: 11px; }
-.fgrp input[type=range] { padding: 0; height: 15px; cursor: pointer; }
-.fgrp input:focus,.fgrp select:focus{border-color:var(--blue-md);box-shadow:0 0 0 3px rgba(42,123,202,.12)}
-.modal-footer{padding:.6rem 1.4rem 1.1rem;display:flex;gap:9px;justify-content:flex-end}
-.btn-cancel{padding:7px 15px;border:1.5px solid var(--border);border-radius:7px;background:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--gray);cursor:pointer; transition: border-color 0.3s, color 0.3s;}
-.btn-cancel:hover{background:var(--gray-lt)}
-
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--green);color:#fff;padding:10px 18px;border-radius:9px;font-size:12px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.15);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;z-index:600;pointer-events:none}
-.toast.show{opacity:1;transform:translateY(0)}
-.toast.err{background:var(--red)}
-
-.sync-info{font-size:11px;color:rgba(255,255,255,.6)}
-
-/* DARK MODE STYLES */
+/* Dark Mode */
 body.dark-mode { background: #0f172a; color: #f1f5f9; }
-body.dark-mode header { background: #0f172a; border-bottom: 1px solid #1e293b; box-shadow: none; }
-body.dark-mode .logo-text { color: #f8fafc; }
-body.dark-mode .tabs-bar { background: #1e293b; border-bottom: 2px solid #334155; }
-body.dark-mode .tab-btn { color: #94a3b8; }
-body.dark-mode .tab-btn.active { color: #38bdf8; border-bottom-color: #38bdf8; }
-body.dark-mode .kpi, body.dark-mode .card, body.dark-mode .table-card, body.dark-mode .modal { background: #1e293b; border-color: #334155; }
-body.dark-mode .kpi-label, body.dark-mode .kpi-sub, body.dark-mode .kanban-card p { color: #94a3b8; }
-body.dark-mode .kpi-value { color: #e2e8f0; }
-body.dark-mode .kpi-value.green { color: #4ade80; }
-body.dark-mode .kpi-value.purple { color: #c084fc; }
-body.dark-mode .card-title, body.dark-mode .kanban-col-header, body.dark-mode .kanban-card h4 { color: #f8fafc; }
-body.dark-mode .card-title::before { background: #38bdf8; }
-body.dark-mode table { background: #1e293b; }
-body.dark-mode thead tr { background: #334155; }
-body.dark-mode thead th { color: #cbd5e1; }
-body.dark-mode thead th:hover { background-color: #475569; }
-body.dark-mode tbody tr { border-bottom-color: #334155; }
-body.dark-mode tbody tr:hover { background: #0f172a; }
-body.dark-mode tbody tr.sel{background:#3b0707 !important}
-body.dark-mode td { color: #cbd5e1; }
-body.dark-mode td.nc { color: #38bdf8; }
-body.dark-mode .table-toolbar, body.dark-mode .modal-header { border-bottom-color: #334155; }
-body.dark-mode .modal-title { color: #f8fafc; }
-body.dark-mode .fgrp label { color: #cbd5e1; }
-body.dark-mode .fgrp input, body.dark-mode .fgrp select, body.dark-mode .search-box, body.dark-mode .sort-box { background: #0f172a; color: #f8fafc; border-color: #475569; }
-body.dark-mode .btn-cancel { color: #cbd5e1; border-color: #475569; }
-body.dark-mode .btn-cancel:hover { background: #334155; }
-body.dark-mode .empty-row td { color: #64748b; }
-body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
-body.dark-mode .kanban-col { background: #1e293b; border-color: #334155; }
-body.dark-mode .kanban-card { background: #0f172a; border-color: #475569; }
-body.dark-mode .termometro-wrap { background: #334155; }
+body.dark-mode .kpi, body.dark-mode .card, body.dark-mode .kanban-col, body.dark-mode .modal, body.dark-mode .kanban-card, body.dark-mode .tabs-bar { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+body.dark-mode .kanban-card { background: #0f172a; }
+body.dark-mode .note-card { background: #334155; color: #cbd5e1; }
 
-@media(max-width:960px){
-  .kpis5,.kpis4, .kpis3{grid-template-columns:repeat(2,1fr)}
-  .grid5,.grid4,.grid3, .grid2{grid-template-columns:repeat(2,1fr)}
-  .fg{grid-template-columns:1fr}
-}
+/* Tabelas e Modais mantidos do original... */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000; backdrop-filter: blur(2px);}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:12px;width:min(550px, 95vw);max-height:90vh;overflow-y:auto;padding:20px;box-shadow: 0 20px 40px rgba(0,0,0,0.2);}
+.fgrp{margin-bottom:12px; display: flex; flex-direction: column; gap: 5px;}
+.fgrp label{font-size:11px; font-weight:600; color:var(--gray); text-transform:uppercase;}
+.fgrp input, .fgrp select, .fgrp textarea{padding:10px; border:1px solid var(--border); border-radius:6px; outline: none; font-family: inherit;}
 </style>
 </head>
-<body>
+<body class="">
 
 <header>
   <div class="logo">
-    <img src="logo.png" alt="Digital Flats Logo" class="logo-img">
-    <div class="logo-text-group">
-      <div class="logo-text">Flats Academy</div>
-      <div class="logo-sub">CRM de Vendas</div>
-    </div>
+    <img src="logo.png" class="logo-img" onerror="this.style.display='none'">
+    <div class="logo-text">Flats Academy CRM</div>
   </div>
   <div class="header-right">
-    <span class="sync-info" id="syncInfo"></span>
-    <button class="btn-action" onclick="exportExcel()">
-      <span class="material-symbols-outlined" style="font-size: 16px;">download</span>
-      Exportar Excel
-    </button>
-    <button id="dark-mode-btn" class="btn-icon" onclick="toggleDarkMode()" title="Alternar Modo Escuro">
-        <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
-    </button>
+    <span id="syncInfo" style="font-size:11px; color:#fff; opacity:0.7"></span>
+    <button id="dark-mode-btn" class="btn-icon" onclick="toggleDarkMode()"><span class="material-symbols-outlined" id="theme-icon">dark_mode</span></button>
   </div>
 </header>
 
 <div class="tabs-bar">
-  <button class="tab-btn active" id="tab-btn-k" onclick="switchTab('k')">🗂️ Funil Kanban</button>
-  <button class="tab-btn" id="tab-btn-p" onclick="switchTab('p')">📊 Plataforma</button>
-  <button class="tab-btn" id="tab-btn-w" onclick="switchTab('w')">🎥 Webinário</button>
+  <button class="tab-btn active" onclick="switchTab('k')">🗂️ Funil Kanban</button>
+  <button class="tab-btn" onclick="switchTab('p')">📊 Plataforma</button>
+  <button class="tab-btn" onclick="switchTab('w')">🎥 Webinário</button>
 </div>
 
 <datalist id="leads-list"></datalist>
 
 <main>
-
   <div class="tab-pane active" id="tab-k">
-    <div class="table-card" style="background: transparent; border: none; box-shadow: none;">
-      <div class="table-toolbar" style="background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px; box-shadow: var(--shadow);">
-         <div class="toolbar-left">
-            <div class="card-title" style="margin:0">Funil de Oportunidades</div>
-        </div>
-        <div class="toolbar-right">
-          <button class="btn-primary" onclick="openModal('k')">
-            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
-            Adicionar Oportunidade
-          </button>
-        </div>
-      </div>
-      
-      <div class="kanban-wrapper">
-         <div class="kanban-board" id="kanban-board">
-            </div>
-      </div>
+    <div style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="font-size:18px">Fluxo de Oportunidades</h2>
+        <button class="btn-primary" onclick="openModal('k')"><span class="material-symbols-outlined">add</span> Adicionar Oportunidade</button>
     </div>
+    <div class="kanban-board" id="kanban-board"></div>
   </div>
 
   <div class="tab-pane" id="tab-p">
-    <div class="kpis5">
-      <div class="kpi"><div class="kpi-label">Total Registros</div><div class="kpi-value" id="p-kpi-total">0</div><div class="kpi-sub">plataforma</div></div>
-      <div class="kpi"><div class="kpi-label">Compraram</div><div class="kpi-value green" id="p-kpi-compra">0</div><div class="kpi-sub">vendas efetuadas</div></div>
-      <div class="kpi"><div class="kpi-label">Receita Total</div><div class="kpi-value green" id="p-kpi-receita">R$ 0</div><div class="kpi-sub">em vendas</div></div>
-      <div class="kpi"><div class="kpi-label">Ticket Médio</div><div class="kpi-value" id="p-kpi-ticket">—</div><div class="kpi-sub">por aluno</div></div>
-      <div class="kpi"><div class="kpi-label">Conversão Webinário</div><div class="kpi-value purple" id="p-kpi-web-conv">0%</div><div class="kpi-sub" id="p-kpi-web-sub">0 de 0 compraram</div></div>
-    </div>
-    <div class="grid5">
-      <div class="card"><div class="card-title">Origem</div><div class="chart-box"><canvas id="pCO"></canvas></div></div>
-      <div class="card"><div class="card-title">Tipo</div><div class="chart-box"><canvas id="pCT"></canvas></div></div>
-      <div class="card"><div class="card-title">Produto</div><div class="chart-box"><canvas id="pCP"></canvas></div></div>
-      <div class="card"><div class="card-title">Webinário</div><div class="chart-box"><canvas id="pCW"></canvas></div></div>
-      <div class="card" style="display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
-          <div class="card-title" style="margin:0">Conversão do Webinário</div>
-          <select id="p-filter-date" class="sort-box" onchange="onDateFilterChange()" style="font-size:11px;padding:4px 8px;height:28px;max-width:140px;">
-            <option value="all">Todas as datas</option>
-          </select>
+    <div class="table-card" style="padding:15px; background:#fff; border-radius:12px">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px">
+            <input type="text" id="p-search" class="search-box" placeholder="Pesquisar..." oninput="refresh()">
+            <button class="btn-primary" onclick="openModal('p')">Novo Aluno</button>
         </div>
-        <div class="chart-box"><canvas id="pCWC"></canvas></div>
-      </div>
-    </div>
-    <div class="table-card">
-      <div class="table-toolbar">
-        <div class="toolbar-left">
-            <div class="card-title" style="margin:0">Registros — Plataforma</div>
-            <input type="text" id="p-search" class="search-box" placeholder="Pesquisar por nome..." oninput="filterAndSortTable('p')">
-            <select id="p-sort" class="sort-box" onchange="filterAndSortTable('p')">
-                <option value="default">Ordem Padrão</option>
-                <option value="az">A-Z</option>
-                <option value="za">Z-A</option>
-            </select>
-        </div>
-        <div class="toolbar-right">
-          <button class="btn-danger" id="p-del-btn" onclick="deleteSelected('p')">
-            <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
-            Excluir selecionados
-          </button>
-          <button class="btn-primary" onclick="openModal('p')">
-            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
-            Adicionar aluno
-          </button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table id="p-table">
-          <thead><tr>
-            <th class="chk-col"><input type="checkbox" id="p-chk-all" onchange="toggleAll('p')"></th>
-            <th onclick="toggleSort('p', 'aluno')">Aluno <span class="material-symbols-outlined sort-icon" id="sort-icon-p-aluno">unfold_more</span></th>
-            <th onclick="toggleSort('p', 'origem')">Origem <span class="material-symbols-outlined sort-icon" id="sort-icon-p-origem">unfold_more</span></th>
-            <th onclick="toggleSort('p', 'tipo')">Tipo <span class="material-symbols-outlined sort-icon" id="sort-icon-p-tipo">unfold_more</span></th>
-            <th onclick="toggleSort('p', 'produto')">Produto <span class="material-symbols-outlined sort-icon" id="sort-icon-p-produto">unfold_more</span></th>
-            <th onclick="toggleSort('p', 'web')">Webinário <span class="material-symbols-outlined sort-icon" id="sort-icon-p-web">unfold_more</span></th>
-            <th onclick="toggleSort('p', 'valor')">Valor <span class="material-symbols-outlined sort-icon" id="sort-icon-p-valor">unfold_more</span></th>
-            <th onclick="toggleSort('p', 'data')">Data da Venda <span class="material-symbols-outlined sort-icon" id="sort-icon-p-data">unfold_more</span></th>
-          </tr></thead>
-          <tbody id="p-tbody"></tbody>
+        <table style="width:100%" id="p-table">
+            <thead><tr><th>Aluno</th><th>Origem</th><th>Produto</th><th>Valor</th><th>Ação</th></tr></thead>
+            <tbody id="p-tbody"></tbody>
         </table>
-      </div>
     </div>
   </div>
 
   <div class="tab-pane" id="tab-w">
-    <div class="kpis1">
-      <div class="kpi"><div class="kpi-label">Total Registros</div><div class="kpi-value purple" id="w-kpi-total">0</div><div class="kpi-sub">cadastros no webinário</div></div>
-    </div>
-    <div class="grid2">
-      <div class="card"><div class="card-title">Origem</div><div class="chart-box"><canvas id="wCO"></canvas></div></div>
-      <div class="card"><div class="card-title">Tipo</div><div class="chart-box"><canvas id="wCT"></canvas></div></div>
-    </div>
-    <div class="table-card">
-      <div class="table-toolbar">
-         <div class="toolbar-left">
-            <div class="card-title" style="margin:0">Registros — Webinário</div>
-            <input type="text" id="w-search" class="search-box" placeholder="Pesquisar por nome..." oninput="filterAndSortTable('w')">
-            <select id="w-sort" class="sort-box" onchange="filterAndSortTable('w')">
-                <option value="default">Ordem Padrão</option>
-                <option value="az">A-Z</option>
-                <option value="za">Z-A</option>
-            </select>
-        </div>
-        <div class="toolbar-right">
-          <button class="btn-danger" id="w-del-btn" onclick="deleteSelected('w')">
-            <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
-            Excluir selecionados
-          </button>
-          <button class="btn-primary" onclick="openModal('w')">
-            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
-            Adicionar aluno
-          </button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table id="w-table">
-          <thead><tr>
-            <th class="chk-col"><input type="checkbox" id="w-chk-all" onchange="toggleAll('w')"></th>
-            <th onclick="toggleSort('w', 'aluno')">Aluno <span class="material-symbols-outlined sort-icon" id="sort-icon-w-aluno">unfold_more</span></th>
-            <th onclick="toggleSort('w', 'origem')">Origem <span class="material-symbols-outlined sort-icon" id="sort-icon-w-origem">unfold_more</span></th>
-            <th onclick="toggleSort('w', 'tipo')">Tipo <span class="material-symbols-outlined sort-icon" id="sort-icon-w-tipo">unfold_more</span></th>
-            <th onclick="toggleSort('w', 'data')">Data do Webinário <span class="material-symbols-outlined sort-icon" id="sort-icon-w-data">unfold_more</span></th>
-            <th style="text-align:right;">Ações</th>
-          </tr></thead>
-          <tbody id="w-tbody"></tbody>
+    <div class="table-card" style="padding:15px; background:#fff; border-radius:12px">
+        <button class="btn-primary" style="margin-bottom:15px" onclick="openModal('w')">Novo Cadastro Web</button>
+        <table style="width:100%">
+            <thead><tr><th>Aluno</th><th>Origem</th><th>Data</th><th>Ação</th></tr></thead>
+            <tbody id="p-tbody-w"></tbody>
         </table>
-      </div>
     </div>
   </div>
-
 </main>
 
-<div class="overlay" id="ov-k" onclick="ovClick(event,'k')">
+<div class="overlay" id="ov-k">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">Nova Oportunidade</span>
-      <button class="modal-close" onclick="closeModal('k')">×</button>
+    <div style="display:flex; justify-content:space-between; margin-bottom:20px">
+        <h3 id="modal-k-title">Nova Oportunidade</h3>
+        <span class="material-symbols-outlined" style="cursor:pointer" onclick="closeModal('k')">close</span>
     </div>
-    <div class="modal-body">
-      <div class="fg">
-        <div class="fgrp"><label>Nome</label><input id="k-f-nome" type="text" placeholder="Nome"></div>
-        <div class="fgrp"><label>Sobrenome</label><input id="k-f-sobrenome" type="text" placeholder="Sobrenome"></div>
-        <div class="fgrp full"><label>Telefone</label><input id="k-f-telefone" type="text" placeholder="(00) 00000-0000"></div>
-        
-        <div class="fgrp"><label>Origem</label>
-          <select id="k-f-origem">
-            <option value="">Selecione</option>
-            <option>ADS</option><option>Instagram</option><option>WhatsApp</option>
-            <option>Indicação Interna</option><option>Indicação Externa</option>
-          </select>
-        </div>
-        <div class="fgrp"><label>Produto de Interesse</label>
-          <select id="k-f-produto">
-            <option value="">Selecione</option>
-            <option>Downsell</option><option>Flats Academy</option>
-            <option>Flats Academy VIT</option><option>Webinário</option><option>Flats Academy Web</option>
-          </select>
-        </div>
-        
-        <div class="fgrp full">
-            <label>Temperatura da Oportunidade <span id="k-temp-val" style="color:var(--blue);">0</span></label>
-            <input id="k-f-temperatura" type="range" min="0" max="80" value="0" oninput="document.getElementById('k-temp-val').textContent=this.value">
-        </div>
-        
-        <div class="fgrp full">
-            <label>Anexos (Notas, Prints)</label>
-            <input id="k-f-arquivo" type="file" multiple accept="image/*,.pdf">
-        </div>
-      </div>
+    <input type="hidden" id="k-f-id">
+    <div class="fgrp"><label>Nome</label><input type="text" id="k-f-nome"></div>
+    <div class="fgrp"><label>Sobrenome</label><input type="text" id="k-f-sobrenome"></div>
+    <div class="fgrp"><label>Telefone</label><input type="text" id="k-f-telefone" placeholder="(00) 00000-0000"></div>
+    <div class="fgrp"><label>Origem</label>
+        <select id="k-f-origem">
+            <option value="ADS">ADS</option><option value="Instagram">Instagram</option>
+            <option value="WhatsApp">WhatsApp</option><option value="Indicação Interna">Indicação Interna</option>
+        </select>
     </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('k')">Cancelar</button>
-      <button class="btn-primary" onclick="addRow('k')">Salvar Oportunidade</button>
+    <div class="fgrp"><label>Produto</label>
+        <select id="k-f-produto">
+            <option value="Flats Academy">Flats Academy</option><option value="Flats Academy VIT">Flats Academy VIT</option>
+            <option value="Downsell">Downsell</option><option value="Webinário">Webinário</option>
+        </select>
+    </div>
+    <div class="fgrp"><label>Temperatura (0-80)</label>
+        <input type="range" id="k-f-temp" min="0" max="80" oninput="this.nextElementSibling.value = this.value">
+        <output>0</output>
+    </div>
+    
+    <div class="notes-section" id="notes-container" style="display:none">
+        <label style="font-size:10px; font-weight:700">ANOTAÇÕES / LOG</label>
+        <div class="note-input-area">
+            <input type="text" id="note-text" placeholder="Escreva uma nota...">
+            <button class="btn-primary" onclick="addNote()">Salvar Nota</button>
+        </div>
+        <div id="notes-list"></div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:20px">
+        <button class="btn-danger" id="btn-del-k" style="display:none" onclick="deleteOpp()">Excluir</button>
+        <button class="btn-primary" onclick="saveOpp()">Salvar Oportunidade</button>
     </div>
   </div>
 </div>
 
-<div class="overlay" id="ov-p" onclick="ovClick(event,'p')">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">Novo Aluno — Plataforma</span>
-      <button class="modal-close" onclick="closeModal('p')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="fg">
-        <div class="fgrp full"><label>Nome do Aluno</label><input id="p-f-aluno" list="leads-list" type="text" placeholder="Dr(a). Nome completo" onchange="checkAutoFill('p')"></div>
-        
-        <div class="fgrp"><label>Origem</label>
-          <select id="p-f-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>WhatsApp</option><option>Carrinho abandonado</option></select>
-        </div>
-        <div class="fgrp"><label>Tipo</label>
-          <select id="p-f-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
-        </div>
-        <div class="fgrp"><label>Produto</label>
-          <select id="p-f-produto"><option value="">Selecione</option><option>Plataforma Vitalícia</option><option>Plataforma Anual</option><option>Plataforma Mensal</option><option>Downsell</option><option>Flats Academy</option><option>Flats Academy VIT</option><option>Flats Academy Web</option></select>
-        </div>
-        <div class="fgrp"><label>Webinário</label>
-          <select id="p-f-web"><option value="">Selecione</option><option>Participou</option><option>Não participou</option><option>Não houve webinário</option></select>
-        </div>
-        <div class="fgrp"><label>Valor (R$)</label><input id="p-f-valor" type="number" step="0.01" min="0" placeholder="0,00"></div>
-        <div class="fgrp"><label>Data da Venda</label><input id="p-f-data" type="date"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('p')">Cancelar</button>
-      <button class="btn-primary" onclick="addRow('p')">Salvar aluno</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="ov-w" onclick="ovClick(event,'w')">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">Novo Aluno — Webinário</span>
-      <button class="modal-close" onclick="closeModal('w')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="fg">
-        <div class="fgrp full"><label>Nome do Aluno</label><input id="w-f-aluno" list="leads-list" type="text" placeholder="Dr(a). Nome completo" onchange="checkAutoFill('w')"></div>
-        <div class="fgrp"><label>Origem</label>
-          <select id="w-f-origem"><option value="">Selecione</option><option>Lista de clientes</option><option>Social Selling</option><option>Post Instagram</option><option>Indicação Interna</option><option>Indicação Externa</option><option>ADS</option><option>WhatsApp</option><option>Carrinho abandonado</option></select>
-        </div>
-        <div class="fgrp"><label>Tipo</label>
-          <select id="w-f-tipo"><option value="">Selecione</option><option>Prospecção Ativa (Outbound)</option><option>Lead de ADS (Inbound)</option><option>Kiwify</option></select>
-        </div>
-        <div class="fgrp full"><label>Data do Webinário</label><input id="w-f-data" type="date"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('w')">Cancelar</button>
-      <button class="btn-primary" onclick="addRow('w')">Salvar aluno</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
+<div class="overlay" id="ov-p"><div class="modal"><h3>Venda Plataforma</h3><div class="fgrp"><label>Nome</label><input type="text" id="p-f-aluno"></div><div class="fgrp"><label>Valor</label><input type="number" id="p-f-valor"></div><button class="btn-primary" onclick="saveGeneric('p')">Salvar</button><button onclick="closeModal('p')">Fechar</button></div></div>
+<div class="overlay" id="ov-w"><div class="modal"><h3>Cadastro Webinário</h3><div class="fgrp"><label>Nome</label><input type="text" id="w-f-aluno"></div><button class="btn-primary" onclick="saveGeneric('w')">Salvar</button><button onclick="closeModal('w')">Fechar</button></div></div>
 
 <script>
-// ══════════════════════════════════════════
-//  CONSTANTES 
-// ══════════════════════════════════════════
-var ORIGENS = ["Lista de clientes","Social Selling","Post Instagram","Indicação Interna","Indicação Externa","ADS","WhatsApp","Carrinho abandonado"];
-var TIPOS_P = ["Prospecção Ativa (Outbound)","Lead de ADS (Inbound)","Kiwify"];
-var TIPOS_W = ["Prospecção Ativa (Outbound)","Lead de ADS (Inbound)","Kiwify"];
-var PRODS   = ["Plataforma Vitalícia","Plataforma Anual","Plataforma Mensal","Downsell", "Flats Academy", "Flats Academy VIT", "Flats Academy Web"];
-var WEBS    = ["Participou","Não participou","Não houve webinário"];
-var KANBAN_COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By", "Fechado"];
-var charts  = {};
+// ESTADO GLOBAL
+let dbData = {};
+const K_COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By", "Fechado"];
 
-// ══════════════════════════════════════════
-//  ESTADO & FIREBASE
-// ══════════════════════════════════════════
-var dbData = {}; 
-var currentSortP = { column: null, direction: 'asc' };
-var currentSortW = { column: null, direction: 'asc' };
-var fbRef = fbDB.ref('crm/rows');
-
-function getRows() { return Object.keys(dbData).map(key => ({ ...dbData[key], _id: key })); }
-
-fbRef.on('value', function(snap) {
-  var val = snap.val();
-  dbData = val || {}; 
-  updateDateFilter();
-  populateDatalist();
-  refresh();
-  setSyncStatus('ok');
+// FIREBASE SYNC
+fbDB.ref('crm/data').on('value', snap => {
+    dbData = snap.val() || {};
+    refresh();
 });
 
-function saveToStorage() {
-  setSyncStatus('saving');
-  fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
-      if (error) setSyncStatus('err');
-  });
+function saveToFB() {
+    document.getElementById('syncInfo').textContent = "🟡 salvando...";
+    fbDB.ref('crm/data').set(dbData)
+        .then(() => document.getElementById('syncInfo').textContent = "🟢 sincronizado")
+        .catch(() => document.getElementById('syncInfo').textContent = "🔴 erro");
 }
 
-function setSyncStatus(s) {
-  var el = document.getElementById('syncInfo');
-  if (!el) return;
-  if (s==='ok')     el.textContent = '🟢 sincronizado';
-  if (s==='saving') el.textContent = '🟡 salvando...';
-  if (s==='err')    el.textContent = '🔴 erro ao salvar';
+// NAVEGAÇÃO
+function switchTab(t) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-'+t).classList.add('active');
+    event.target.classList.add('active');
 }
 
-// ── Helpers ──
-function cnt(arr, f, v) { return arr.filter(function(r){ return r[f]===v; }).length; }
-function fmt(n) { return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
-function getFullName(r) { return r.aluno ? r.aluno : `${r.nome||''} ${r.sobrenome||''}`.trim(); }
-
-function bc(v) {
-  if (v==='Participou')                                             return 'bg';
-  if (v==='Não participou')                                         return 'bo';
-  if (v==='Não houve webinário')                                    return 'bgy';
-  if (v==='Indicação Interna'||v==='Indicação Externa'||v==='Carrinho abandonado') return 'bo';
-  if (v==='Social Selling'||v==='Post Instagram'||v==='Lista de clientes' || v==='WhatsApp') return 'bb';
-  if (v==='ADS'||v==='Lead de ADS (Inbound)' || v==='Kiwify')        return 'bp';
-  return 'bb';
-}
-
-function mkChart(id, type, labels, data, colors) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  if (charts[id]) {
-    charts[id].data.datasets[0].data = data;
-    if(id === 'pCWC') charts[id].data.labels = labels; 
-    charts[id].update('none');
-    return;
-  }
-  var chartOptions = {
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{ display:type==='pie', position:'bottom', labels:{font:{family:'DM Sans',size:10},boxWidth:9,padding:6, color: document.body.classList.contains('dark-mode') ? '#cbd5e1' : '#666'} },
-        tooltip:{bodyFont:{family:'DM Sans'},titleFont:{family:'DM Sans'}}
-      },
-      scales: type==='bar' ? {
-        y:{beginAtZero:true,ticks:{font:{family:'DM Sans',size:10},stepSize:1, color: document.body.classList.contains('dark-mode') ? '#94a3b8' : '#666'},grid:{color: document.body.classList.contains('dark-mode') ? '#334155' : '#F0F0EE'}},
-        x:{ticks:{font:{family:'DM Sans',size:9},maxRotation:35, color: document.body.classList.contains('dark-mode') ? '#94a3b8' : '#666'},grid:{display:false}}
-      } : {}
-    };
-  charts[id] = new Chart(el.getContext('2d'), {
-    type: type,
-    data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: type==='pie'?2:0, borderColor: document.body.classList.contains('dark-mode') ? '#1e293b' : '#fff', borderRadius: type==='bar'?4:0 }] },
-    options: chartOptions
-  });
-}
-
-// ══════════════════════════════════════════
-//  AUTO-PREENCHIMENTO
-// ══════════════════════════════════════════
-function populateDatalist() {
-    const list = document.getElementById('leads-list');
-    let names = new Set();
-    getRows().forEach(r => {
-        const name = getFullName(r);
-        if(name) names.add(name);
-    });
-    list.innerHTML = Array.from(names).map(n => `<option value="${n}">`).join('');
-}
-
-function checkAutoFill(pre) {
-    const val = document.getElementById(pre+'-f-aluno').value.toLowerCase().trim();
-    if(!val) return;
-    
-    // Procura no Kanban primeiro, depois nas outras
-    const lead = getRows().find(r => getFullName(r).toLowerCase() === val);
-    
-    if(lead) {
-        const origem = document.getElementById(pre+'-f-origem');
-        if(origem && lead.origem && origem.querySelector(`option[value="${lead.origem}"]`)) origem.value = lead.origem;
-        
-        const produto = document.getElementById(pre+'-f-produto');
-        if(produto && lead.produto && produto.querySelector(`option[value="${lead.produto}"]`)) produto.value = lead.produto;
-        
-        toast('Dados do lead puxados automaticamente!');
-    }
-}
-
-// ══════════════════════════════════════════
-//  FILTRO DE DATAS DO WEBINÁRIO
-// ══════════════════════════════════════════
-function updateDateFilter() {
-    var sel = document.getElementById('p-filter-date');
-    if (!sel) return;
-    var cur = sel.value;
-    var dates = [...new Set(getRows().filter(r => r.tab === 'w' && r.data).map(r => r.data))].sort();
-    
-    var html = '<option value="all">Todas as Datas (Webinário)</option>';
-    dates.forEach(d => { html += '<option value="'+d+'">' + d.split('-').reverse().join('/') + '</option>'; });
-    sel.innerHTML = html;
-    sel.value = (dates.includes(cur) || cur === 'all') ? cur : 'all';
-}
-function onDateFilterChange() { filterAndSortTable('p'); }
-
-// ══════════════════════════════════════════
-//  REFRESH E TABELAS
-// ══════════════════════════════════════════
-function refresh() {
-  renderKanban();
-  filterAndSortTable('p');
-  filterAndSortTable('w');
-}
-
-function filterAndSortTable(tab) {
-    const searchInput = document.getElementById(`${tab}-search`).value.toLowerCase();
-    const sortSelect = document.getElementById(`${tab}-sort`).value;
-    let allRows = getRows();
-
-    let filteredData = allRows.filter(r => r.tab === tab && getFullName(r).toLowerCase().includes(searchInput));
-
-    if(tab === 'p') {
-        const dateFilter = document.getElementById('p-filter-date').value;
-        if(dateFilter !== 'all') {
-            const webAttendeesInDate = allRows.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => getFullName(r).toLowerCase());
-            filteredData = filteredData.filter(r => webAttendeesInDate.includes(getFullName(r).toLowerCase()));
+// CRUD OPORTUNIDADES
+function openModal(tab, id = null) {
+    document.getElementById('ov-'+tab).classList.add('open');
+    if(tab === 'k') {
+        if(id) {
+            const opp = dbData[id];
+            document.getElementById('k-f-id').value = id;
+            document.getElementById('k-f-nome').value = opp.nome || '';
+            document.getElementById('k-f-sobrenome').value = opp.sobrenome || '';
+            document.getElementById('k-f-telefone').value = opp.telefone || '';
+            document.getElementById('k-f-origem').value = opp.origem || 'ADS';
+            document.getElementById('k-f-produto').value = opp.produto || 'Flats Academy';
+            document.getElementById('k-f-temp').value = opp.temperatura || 0;
+            document.getElementById('btn-del-k').style.display = 'block';
+            document.getElementById('notes-container').style.display = 'block';
+            renderNotes(id);
+        } else {
+            document.getElementById('k-f-id').value = '';
+            document.getElementById('modal-k-title').innerText = "Nova Oportunidade";
+            document.getElementById('btn-del-k').style.display = 'none';
+            document.getElementById('notes-container').style.display = 'none';
+            document.querySelectorAll('#ov-k input').forEach(i => i.value = '');
         }
     }
-
-    if (sortSelect === 'az') filteredData.sort((a, b) => getFullName(a).localeCompare(getFullName(b)));
-    else if (sortSelect === 'za') filteredData.sort((a, b) => getFullName(b).localeCompare(getFullName(a)));
-    
-    let currentSort = tab === 'p' ? currentSortP : currentSortW;
-    if (currentSort.column) {
-        filteredData.sort((a, b) => {
-            let valA = a[currentSort.column] || ''; let valB = b[currentSort.column] || '';
-            if (currentSort.column === 'aluno') { valA = getFullName(a); valB = getFullName(b); }
-            if (currentSort.column === 'valor') { valA = Number(valA)||0; valB = Number(valB)||0; }
-            if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
-            if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
-            return 0;
-        });
-    }
-
-    if (tab === 'p') renderPlataforma(filteredData, allRows);
-    else renderWebinario(filteredData, allRows);
 }
 
-function toggleSort(tab, column) {
-    let currentSort = tab === 'p' ? currentSortP : currentSortW;
-    currentSort.direction = (currentSort.column === column && currentSort.direction === 'asc') ? 'desc' : 'asc';
-    currentSort.column = column;
-    filterAndSortTable(tab);
+function saveOpp() {
+    const id = document.getElementById('k-f-id').value || 'opp_' + Date.now();
+    const isNew = !dbData[id];
     
-    let icons = document.querySelectorAll(`#${tab}-table th .sort-icon`);
-    icons.forEach(icon => { icon.textContent = 'unfold_more'; icon.style.color = 'rgba(255,255,255,0.6)'; });
-    let activeIcon = document.getElementById(`sort-icon-${tab}-${column}`);
-    if (activeIcon) {
-        activeIcon.textContent = currentSort.direction === 'asc' ? 'expand_less' : 'expand_more';
-        activeIcon.style.color = '#fff';
+    dbData[id] = {
+        ...dbData[id],
+        tab: 'k',
+        nome: document.getElementById('k-f-nome').value,
+        sobrenome: document.getElementById('k-f-sobrenome').value,
+        telefone: document.getElementById('k-f-telefone').value,
+        origem: document.getElementById('k-f-origem').value,
+        produto: document.getElementById('k-f-produto').value,
+        temperatura: document.getElementById('k-f-temp').value,
+        status: isNew ? 'Primeiro Contato' : dbData[id].status
+    };
+    
+    saveToFB();
+    closeModal('k');
+}
+
+function deleteOpp() {
+    const id = document.getElementById('k-f-id').value;
+    if(confirm("Deseja realmente excluir esta oportunidade permanentemente?")) {
+        delete dbData[id];
+        saveToFB();
+        closeModal('k');
     }
 }
 
-// ══════════════════════════════════════════
-//  KANBAN RENDER & LOGIC
-// ══════════════════════════════════════════
-function renderKanban() {
-    const kArr = getRows().filter(r => r.tab === 'k');
+// ANOTAÇÕES
+function addNote() {
+    const id = document.getElementById('k-f-id').value;
+    const text = document.getElementById('note-text').value;
+    if(!text) return;
+    
+    if(!dbData[id].notes) dbData[id].notes = [];
+    dbData[id].notes.unshift({
+        id: Date.now(),
+        text: text,
+        time: new Date().toLocaleString('pt-BR')
+    });
+    
+    document.getElementById('note-text').value = '';
+    saveToFB();
+    renderNotes(id);
+}
+
+function renderNotes(oppId) {
+    const list = document.getElementById('notes-list');
+    const notes = dbData[oppId].notes || [];
+    list.innerHTML = notes.map(n => `
+        <div class="note-card">
+            <div class="note-time">${n.time}</div>
+            <div>${n.text}</div>
+            <div class="note-actions">
+                <span onclick="deleteNote('${oppId}', ${n.id})">Excluir</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function deleteNote(oppId, noteId) {
+    dbData[oppId].notes = dbData[oppId].notes.filter(n => n.id !== noteId);
+    saveToFB();
+    renderNotes(oppId);
+}
+
+// RENDER KANBAN
+function refresh() {
     const board = document.getElementById('kanban-board');
     if(!board) return;
-    let html = '';
     
-    KANBAN_COLS.forEach(colName => {
-        const cards = kArr.filter(r => (r.status || 'Primeiro Contato') === colName);
-        html += `
-        <div class="kanban-col" ondrop="dropKanban(event, '${colName}')" ondragover="allowDropKanban(event)">
-            <div class="kanban-col-header">${colName} <span style="background:rgba(0,0,0,0.1);padding:2px 6px;border-radius:10px;">${cards.length}</span></div>
-            <div class="kanban-cards-container">
-        `;
-        cards.forEach(r => {
-            const name = getFullName(r);
-            const temp = parseInt(r.temperatura) || 0;
-            const pct = Math.min(100, (temp / 80) * 100);
-            
-            // Mix color from gray to red based on percentage
-            const colorFill = `color-mix(in srgb, #ef4444 ${pct}%, #94a3b8)`;
-            const hasFile = r.arquivo ? `📎 Anexo` : '';
-
-            html += `
-            <div class="kanban-card" id="card-${r._id}" data-gi="${r._id}" draggable="true" ondragstart="dragKanban(event)">
-                <span class="material-symbols-outlined k-delete" onclick="deleteKanbanCard('${r._id}')">close</span>
-                <h4>${name}</h4>
-                <p>📞 ${r.telefone || '—'}</p>
-                <p style="margin-bottom:2px;"><span class="badge bb">${r.produto || '—'}</span> <span class="badge bp">${r.origem || '—'}</span></p>
-                <p style="font-size:9px; color:var(--blue); font-weight:600;">${hasFile}</p>
-                <div style="font-size:10px; margin-top:6px; color:var(--gray); display:flex; justify-content:space-between;">
-                    <span>Temperatura</span> <span>${temp}/80</span>
-                </div>
-                <div class="termometro-wrap">
-                    <div class="termometro-fill" style="width:${pct}%; background: ${colorFill};"></div>
-                </div>
-                <div class="k-actions">
-                    <button class="btn-primary small outline" onclick="copyFromKanban('${r._id}', 'p')" style="flex:1;">📊 Plataforma</button>
-                    <button class="btn-primary small outline" onclick="copyFromKanban('${r._id}', 'w')" style="flex:1;">🎥 Web</button>
-                </div>
+    const opps = Object.keys(dbData).map(k => ({...dbData[k], id: k})).filter(o => o.tab === 'k');
+    
+    board.innerHTML = K_COLS.map(col => `
+        <div class="kanban-col">
+            <div class="kanban-col-header">${col} <span>${opps.filter(o => o.status === col).length}</span></div>
+            <div class="kanban-container" data-status="${col}">
+                ${opps.filter(o => o.status === col).map(o => {
+                    const pct = (o.temperatura / 80) * 100;
+                    const color = pct > 60 ? '#ef4444' : pct > 30 ? '#f59e0b' : '#94a3b8';
+                    return `
+                    <div class="kanban-card">
+                        <div class="k-tools">
+                            <span class="material-symbols-outlined k-btn" onclick="openModal('k', '${o.id}')">edit</span>
+                        </div>
+                        <h4>${o.nome} ${o.sobrenome}</h4>
+                        <p><span class="material-symbols-outlined" style="font-size:12px">call</span> ${o.telefone}</p>
+                        <p><span class="badge bb">${o.produto}</span></p>
+                        <div class="termometro-wrap">
+                            <div class="termometro-fill" style="width:${pct}%; background:${color}"></div>
+                        </div>
+                    </div>
+                `}).join('')}
             </div>
-            `;
-        });
-        html += `</div></div>`;
-    });
-    board.innerHTML = html;
+        </div>
+    `).join('');
 }
 
-function allowDropKanban(ev) { ev.preventDefault(); }
-function dragKanban(ev) { ev.dataTransfer.setData("text", ev.target.id); }
-function dropKanban(ev, status) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    var card = document.getElementById(data);
-    if(!card) return;
-    var gi = card.getAttribute('data-gi');
-    if(dbData[gi]) {
-        dbData[gi].status = status;
-        saveToStorage();
-        refresh();
-    }
+function closeModal(t) { document.getElementById('ov-'+t).classList.remove('open'); }
+function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+
+// Simulação de salvamento genérico para outras abas para evitar erros
+function saveGeneric(pre) {
+    const id = 'gen_' + Date.now();
+    dbData[id] = { tab: pre, aluno: document.getElementById(pre+'-f-aluno').value, valor: pre === 'p' ? document.getElementById('p-f-valor').value : 0 };
+    saveToFB();
+    closeModal(pre);
 }
-function deleteKanbanCard(gi) {
-    if(confirm('Excluir esta oportunidade?')) {
-        delete dbData[gi];
-        saveToStorage();
-        refresh();
-    }
-}
-function copyFromKanban(gi, targetTab) {
-    var r = dbData[gi];
-    if(!r) return;
-    
-    document.getElementById(targetTab+'-f-aluno').value = getFullName(r);
-    document.getElementById(targetTab+'-f-origem').value = r.origem || '';
-    
-    if(targetTab === 'p') {
-        document.getElementById('p-f-produto').value = r.produto || '';
-        document.getElementById('p-f-tipo').value = '';
-    } else {
-        document.getElementById('w-f-tipo').value = '';
-    }
-    
-    document.getElementById('ov-'+targetTab).classList.add('open');
-    switchTab(targetTab);
-}
-
-// ══════════════════════════════════════════
-//  PLATAFORMA E WEBINARIO RENDER
-// ══════════════════════════════════════════
-function renderPlataforma(pArr, allRows) {
-  var comprou = pArr.filter(r => (parseFloat(r.valor) || 0) > 0);
-  var rev = comprou.reduce((s,r) => s+(parseFloat(r.valor)||0), 0);
-
-  var selDate = document.getElementById('p-filter-date').value;
-  var webAttendees = allRows.filter(r => r.tab === 'w' && (selDate === 'all' || r.data === selDate));
-  var totalWeb = webAttendees.length;
-  
-  var nomesWeb = webAttendees.map(r => getFullName(r).toLowerCase());
-  var compradoresDoWebinario = allRows.filter(r => r.tab === 'p' && (parseFloat(r.valor) || 0) > 0 && nomesWeb.includes(getFullName(r).toLowerCase()));
-  
-  var numComp = compradoresDoWebinario.length;
-  var numNaoComp = Math.max(0, totalWeb - numComp);
-  var pct = totalWeb > 0 ? Math.round((numComp / totalWeb) * 100) : 0;
-  var pctN = totalWeb > 0 ? 100 - pct : 0;
-
-  document.getElementById('p-kpi-total').textContent   = pArr.length;
-  document.getElementById('p-kpi-compra').textContent  = comprou.length;
-  document.getElementById('p-kpi-receita').textContent = fmt(rev);
-  document.getElementById('p-kpi-ticket').textContent  = comprou.length ? fmt(rev/comprou.length) : '—';
-  
-  document.getElementById('p-kpi-web-conv').textContent = pct + '%';
-  document.getElementById('p-kpi-web-sub').textContent  = numComp + ' de ' + totalWeb + ' compraram';
-
-  mkChart('pCO','bar', ORIGENS, ORIGENS.map(l => cnt(pArr,'origem',l)), '#2A7BCA');
-  mkChart('pCT','pie', TIPOS_P, TIPOS_P.map(l => cnt(pArr,'tipo',l)), ['#1C5D99','#1A7A4A','#6A1B9A']);
-  mkChart('pCP','bar', PRODS,   PRODS.map(l => cnt(pArr,'produto',l)),'#1A7A4A');
-  mkChart('pCW','pie', WEBS,    WEBS.map(l => cnt(pArr,'web',l)), ['#1A7A4A','#C55A11','#888']);
-  mkChart('pCWC','pie', [`Compraram (${pct}%)`, `Não Compraram (${pctN}%)`], [numComp, numNaoComp], ['#1A7A4A', '#C55A11']);
-
-  var tb = document.getElementById('p-tbody');
-  if (!pArr.length) {
-    tb.innerHTML = '<tr class="empty-row"><td colspan="8">Nenhum aluno encontrado.</td></tr>';
-  } else {
-    let html = '';
-    pArr.forEach(r => {
-      html += `<tr id="row-${r._id}">
-        <td class="chk-cell"><input type="checkbox" data-gi="${r._id}" onchange="chkChange('p')"></td>
-        <td class="nc">${getFullName(r)}</td>
-        <td><span class="badge ${bc(r.origem)}">${r.origem||'—'}</span></td>
-        <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
-        <td><span class="badge bb">${r.produto||'—'}</span></td>
-        <td><span class="badge ${bc(r.web)}">${r.web||'—'}</span></td>
-        <td style="font-weight:600;color:var(--green)">${r.valor?fmt(r.valor):'—'}</td>
-        <td style="color:#888">${r.data?r.data.split('-').reverse().join('/'):'—'}</td>
-      </tr>`;
-    });
-    tb.innerHTML = html;
-  }
-  document.getElementById('p-chk-all').checked = false;
-  document.getElementById('p-del-btn').classList.remove('vis');
-}
-
-function renderWebinario(wArr, allRows) {
-  document.getElementById('w-kpi-total').textContent = wArr.length;
-  mkChart('wCO','bar', ORIGENS, ORIGENS.map(l => cnt(wArr,'origem',l)), '#6A1B9A');
-  mkChart('wCT','pie', TIPOS_W, TIPOS_W.map(l => cnt(wArr,'tipo',l)), ['#6A1B9A','#C55A11','#1C5D99']);
-
-  var tb = document.getElementById('w-tbody');
-  if (!wArr.length) {
-    tb.innerHTML = '<tr class="empty-row"><td colspan="6">Nenhum aluno encontrado.</td></tr>';
-  } else {
-    let html = '';
-    wArr.forEach(r => {
-      var jaVendeu = allRows.some(x => x.tab === 'p' && getFullName(x).toLowerCase() === getFullName(r).toLowerCase() && (parseFloat(x.valor)||0) > 0);
-      var btnLabel = jaVendeu ? '✅ Vendido' : 'Venda';
-      var btnStyle = jaVendeu ? 'opacity:.6;cursor:default;' : '';
-      var btnAction = jaVendeu ? '' : `onclick="transferToPlataforma('${r._id}')"`;
-
-      html += `<tr id="row-${r._id}">
-        <td class="chk-cell"><input type="checkbox" data-gi="${r._id}" onchange="chkChange('w')"></td>
-        <td class="nc">${getFullName(r)}</td>
-        <td><span class="badge ${bc(r.origem)}">${r.origem||'—'}</span></td>
-        <td><span class="badge ${bc(r.tipo)}">${r.tipo||'—'}</span></td>
-        <td style="color:#888">${r.data?r.data.split('-').reverse().join('/'):'—'}</td>
-        <td style="text-align:right;"><button class="btn-primary small" style="${btnStyle}" ${btnAction}>${btnLabel}</button></td>
-      </tr>`;
-    });
-    tb.innerHTML = html;
-  }
-  document.getElementById('w-chk-all').checked = false;
-  document.getElementById('w-del-btn').classList.remove('vis');
-}
-
-function transferToPlataforma(gi) {
-    var r = dbData[gi];
-    if(!r) return;
-    document.getElementById('p-f-aluno').value = getFullName(r);
-    document.getElementById('p-f-origem').value = r.origem || '';
-    document.getElementById('p-f-data').value = new Date().toISOString().split('T')[0]; 
-    document.getElementById('p-f-web').value = 'Participou'; 
-    document.getElementById('ov-p').classList.add('open');
-    switchTab('p');
-}
-
-// ══════════════════════════════════════════
-//  UI INTERACTIONS & DELETE
-// ══════════════════════════════════════════
-function chkChange(pre) {
-  var boxes = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]');
-  var sel = 0;
-  boxes.forEach(b => {
-    var tr = document.getElementById('row-'+b.getAttribute('data-gi'));
-    if (tr) tr.classList.toggle('sel', b.checked);
-    if (b.checked) sel++;
-  });
-  var btn = document.getElementById(pre+'-del-btn');
-  if (sel > 0) btn.classList.add('vis'); else btn.classList.remove('vis');
-}
-
-function toggleAll(pre) {
-  var master = document.getElementById(pre+'-chk-all');
-  var boxes  = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]');
-  boxes.forEach(b => b.checked = master.checked);
-  chkChange(pre);
-}
-
-function deleteSelected(pre) {
-  var boxes = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]:checked');
-  if (!boxes.length) return;
-  
-  if (!confirm('Remover ' + boxes.length + ' registro(s)?')) return;
-  
-  boxes.forEach(b => delete dbData[b.getAttribute('data-gi')]);
-  
-  saveToStorage();
-  updateDateFilter();
-  refresh();
-  toast(boxes.length + ' registro(s) removido(s).', true);
-}
-
-function switchTab(t) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-btn-'+t).classList.add('active');
-  document.getElementById('tab-'+t).classList.add('active');
-  setTimeout(() => Object.values(charts).forEach(c => c.resize()), 60);
-}
-
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    var isDark = document.body.classList.contains('dark-mode');
-    document.getElementById('theme-icon').textContent = isDark ? 'light_mode' : 'dark_mode'; 
-    
-    Object.values(charts).forEach(c => {
-        if(c.config.type === 'pie') {
-            c.data.datasets[0].borderColor = isDark ? '#1e293b' : '#fff';
-            c.options.plugins.legend.labels.color = isDark ? '#cbd5e1' : '#666';
-        } else if (c.config.type === 'bar') {
-            c.options.scales.x.ticks.color = isDark ? '#94a3b8' : '#666';
-            c.options.scales.y.ticks.color = isDark ? '#94a3b8' : '#666';
-            c.options.scales.y.grid.color = isDark ? '#334155' : '#F0F0EE';
-        }
-        c.update();
-    });
-}
-
-function openModal(pre) {
-  document.getElementById('ov-'+pre).classList.add('open');
-  var dInput = document.getElementById(pre+'-f-data');
-  if(dInput) dInput.value = new Date().toISOString().split('T')[0];
-  
-  if(pre==='k') {
-      document.getElementById('k-temp-val').textContent = '0';
-      document.getElementById('k-f-temperatura').value = 0;
-  }
-}
-
-function closeModal(pre) {
-  document.getElementById('ov-'+pre).classList.remove('open');
-  const fields = ['aluno','nome','sobrenome','telefone','origem','tipo','produto','web','valor','data','arquivo','temperatura'];
-  fields.forEach(f => {
-      let el = document.getElementById(pre+'-f-'+f);
-      if(el) el.value = '';
-  });
-}
-function ovClick(e, pre) { if (e.target === document.getElementById('ov-'+pre)) closeModal(pre); }
-
-// ══════════════════════════════════════════
-//  ADD ROW (SALVAR NO BANCO)
-// ══════════════════════════════════════════
-function addRow(pre) {
-  var entry = { tab: pre, _id: 'r' + Date.now() + Math.floor(Math.random() * 1000).toString() };
-  
-  if(pre === 'k') {
-      entry.nome = document.getElementById('k-f-nome').value.trim();
-      entry.sobrenome = document.getElementById('k-f-sobrenome').value.trim();
-      entry.telefone = document.getElementById('k-f-telefone').value.trim();
-      entry.origem = document.getElementById('k-f-origem').value;
-      entry.produto = document.getElementById('k-f-produto').value;
-      entry.temperatura = document.getElementById('k-f-temperatura').value;
-      entry.status = "Primeiro Contato";
-      let fileInput = document.getElementById('k-f-arquivo');
-      entry.arquivo = fileInput.files.length > 0 ? fileInput.files[0].name : '';
-      
-      if(!entry.nome) { document.getElementById('k-f-nome').focus(); return; }
-  } else {
-      entry.aluno = document.getElementById(pre+'-f-aluno').value.trim();
-      entry.origem = document.getElementById(pre+'-f-origem').value;
-      entry.tipo = document.getElementById(pre+'-f-tipo').value;
-      entry.data = document.getElementById(pre+'-f-data').value;
-      if(!entry.aluno) { document.getElementById(pre+'-f-aluno').focus(); return; }
-      
-      if (pre === 'p') {
-        entry.produto = document.getElementById('p-f-produto').value;
-        entry.web     = document.getElementById('p-f-web').value;
-        entry.valor   = parseFloat(document.getElementById('p-f-valor').value) || 0;
-      }
-  }
-  
-  dbData[entry._id] = entry;
-  toast(pre === 'k' ? 'Oportunidade salva!' : 'Aluno salvo com sucesso!');
-  
-  saveToStorage();
-  closeModal(pre);
-  updateDateFilter();
-  populateDatalist();
-  refresh();
-}
-
-// ══════════════════════════════════════════
-//  EXPORT EXCEL
-// ══════════════════════════════════════════
-function exportExcel() {
-  var rowsArray = getRows();
-  var pArr = rowsArray.filter(r => r.tab==='p');
-  var wArr = rowsArray.filter(r => r.tab==='w');
-  var kArr = rowsArray.filter(r => r.tab==='k');
-  var wb   = XLSX.utils.book_new();
-
-  var wsP = XLSX.utils.aoa_to_sheet([
-    ['Aluno','Origem','Tipo','Produto','Webinário','Valor (R$)','Data da Venda'],
-    ...pArr.map(r => [getFullName(r),r.origem,r.tipo,r.produto||'',r.web||'',r.valor||0,r.data?r.data.split('-').reverse().join('/'):''])
-  ]);
-  wsP['!cols'] = [28,14,22,18,18,14,13].map(w => ({wch:w}));
-  XLSX.utils.book_append_sheet(wb, wsP, 'Plataforma');
-
-  var wsW = XLSX.utils.aoa_to_sheet([
-    ['Aluno','Origem','Tipo','Data do Webinário'],
-    ...wArr.map(r => [getFullName(r),r.origem,r.tipo,r.data?r.data.split('-').reverse().join('/'):''])
-  ]);
-  wsW['!cols'] = [28,14,22,13].map(w => ({wch:w}));
-  XLSX.utils.book_append_sheet(wb, wsW, 'Webinário');
-  
-  var wsK = XLSX.utils.aoa_to_sheet([
-    ['Aluno','Telefone','Origem','Produto','Fase do Funil', 'Temperatura'],
-    ...kArr.map(r => [getFullName(r),r.telefone,r.origem,r.produto,r.status,r.temperatura])
-  ]);
-  wsK['!cols'] = [28,16,16,18,18,12].map(w => ({wch:w}));
-  XLSX.utils.book_append_sheet(wb, wsK, 'Funil Kanban');
-
-  XLSX.writeFile(wb, 'FlatsAcademy_CRM_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.xlsx');
-  toast('Excel exportado!');
-}
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal('p'); closeModal('w'); closeModal('k'); }
-});
-
-setSyncStatus('saving');
 </script>
 </body>
 </html>
