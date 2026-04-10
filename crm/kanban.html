@@ -30,9 +30,9 @@
   --bg-ganho: #dcfce7; --bg-perdido: #fee2e2; --bg-atrasado: #f3e8ff;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: #F0F4FA; color: #1a1a2e; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+body { font-family: 'DM Sans', sans-serif; background: #F0F4FA; color: #1a1a2e; height: 100vh; display: flex; flex-direction: column; overflow: hidden; transition: background 0.3s; }
 
-header { background: var(--blue); padding: 0 1.5rem; height: 65px; display: flex; align-items: center; justify-content: space-between; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); position: sticky; top:0; z-index:100;}
+header { background: var(--blue); padding: 0 1.5rem; min-height: 65px; display: flex; align-items: center; justify-content: space-between; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); z-index: 100; }
 .logo-area { display: flex; align-items: center; gap: 12px; }
 .logo-img { width: 38px; height: 38px; object-fit: contain; }
 
@@ -45,63 +45,58 @@ header { background: var(--blue); padding: 0 1.5rem; height: 65px; display: flex
 }
 .btn-action-main:hover { background: #9c470d; }
 
-.btn-icon {
-    padding: 0; border-radius: 50%; width: 40px; height: 40px; 
-    display: flex; justify-content: center; align-items: center; 
-    background: transparent; border: none; color: white; cursor: pointer; 
-    transition: background 0.2s;
-}
+.btn-icon { padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; color: white; cursor: pointer; transition: background 0.2s; }
 .btn-icon:hover { background: rgba(255,255,255,0.1); }
 
-main { padding: 1.5rem; max-width: 1850px; margin: 0 auto; }
-.kanban-board { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; }
-.kanban-col { background: #e2e8f0; border-radius: 12px; width: 320px; min-width: 320px; padding: 12px; min-height: 80vh; transition: background 0.3s, border-color 0.3s; }
-.kanban-col-header { font-weight: 700; font-size: 14px; color: var(--blue); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+/* AJUSTE PARA 100% ZOOM */
+main { flex: 1; padding: 1rem; display: flex; flex-direction: column; overflow: hidden; }
+.kanban-board { display: flex; gap: 10px; height: 100%; width: 100%; justify-content: space-between; }
+.kanban-col { background: #e2e8f0; border-radius: 12px; flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 10px; max-height: 100%; transition: background 0.3s; }
+.kanban-col-header { font-weight: 700; font-size: 11px; color: var(--blue); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; }
+.kanban-cards-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 2px; }
 
-.kanban-card { background: var(--white); border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: grab; box-shadow: 0 2px 5px rgba(0,0,0,0.06); position: relative; border: 1px solid transparent; transition: background 0.3s, border-color 0.3s; }
+.kanban-card { background: var(--white); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: grab; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative; border: 1px solid transparent; transition: background 0.3s; }
 .kanban-card.status-GANHO { background: var(--bg-ganho); border-color: #86efac; }
 .kanban-card.status-PERDIDO { background: var(--bg-perdido); border-color: #fca5a5; }
 .kanban-card.atrasado { background: var(--bg-atrasado) !important; border-color: #d8b4fe; }
 
-.k-tools { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; }
+.k-tools { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; }
 .k-btn { font-size: 18px; cursor: pointer; color: #94a3b8; }
 .k-btn:hover { color: var(--blue); }
 .btn-up { color: var(--purple) !important; font-weight: bold; }
 
-.kanban-card h4 { font-size: 15px; margin-bottom: 5px; color: var(--blue); }
-.kanban-card p { font-size: 11px; color: var(--gray); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+.kanban-card h4 { font-size: 13px; margin-bottom: 4px; color: var(--blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 35px; }
+.kanban-card p { font-size: 10px; color: var(--gray); margin-bottom: 2px; }
 
-.therm-container { position: relative; width: 24px; height: 40px; background: #ddd; border-radius: 12px; border: 2px solid #bbb; overflow: hidden; margin-top: 5px; }
+/* TERMÔMETRO */
+.therm-container { position: relative; width: 22px; height: 35px; background: #ddd; border-radius: 10px; border: 1px solid #bbb; overflow: hidden; margin-top: 5px; }
 .therm-fill { position: absolute; bottom: 0; width: 100%; transition: height 0.4s, background 0.4s; }
 
-/* Modal e Sub-Abas */
+/* MODAL */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(2px); }
 .overlay.open { display: flex; }
 .modal { background: #fff; border-radius: 16px; width: min(650px, 95vw); padding: 25px; max-height: 90vh; overflow-y: auto; transition: background 0.3s; }
-.modal-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; gap: 10px; overflow-x: auto; }
-.m-tab { padding: 10px 12px; font-size: 11px; cursor: pointer; color: var(--gray); border-bottom: 3px solid transparent; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
-.m-tab.active { color: var(--blue); border-color: var(--blue); }
+.modal-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; gap: 10px; }
+.m-tab { padding: 10px 12px; font-size: 11px; cursor: pointer; color: var(--gray); border-bottom: 3px solid transparent; font-weight: 700; text-transform: uppercase; }
+.m-tab.active { color: var(--blue); border-bottom: 3px solid var(--blue); }
 
 .fgrp { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
-.fgrp label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--gray); }
-.fgrp input, .fgrp select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; transition: background 0.3s, border-color 0.3s, color 0.3s; }
+.fgrp label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--gray); }
+.fgrp input, .fgrp select, .fgrp textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; transition: 0.2s; }
 
-.item-list-box { background: var(--gray-lt); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); position: relative; transition: background 0.3s; }
+/* NOTAS COM QUEBRA DE LINHA */
+.item-list-box { background: var(--gray-lt); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); position: relative; transition: background 0.3s; white-space: pre-wrap; word-break: break-word; font-size: 13px; line-height: 1.4; }
+
 .btn-primary { background: var(--blue); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 13px; }
 .btn-danger { background: #fee2e2; color: var(--red); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
 
-/* DARK MODE STYLES (Igual ao site principal) */
+/* DARK MODE */
 body.dark-mode { background: #0f172a; color: #f1f5f9; }
-body.dark-mode header { background: #0f172a; border-bottom: 1px solid #1e293b; box-shadow: none; }
+body.dark-mode header { background: #0f172a; border-bottom: 1px solid #1e293b; }
 body.dark-mode .kanban-col, body.dark-mode .modal { background: #1e293b; border-color: #334155; }
 body.dark-mode .kanban-card { background: #0f172a; border-color: #334155; }
-body.dark-mode .kanban-card.status-GANHO { background: #064e3b !important; }
-body.dark-mode .kanban-card.status-PERDIDO { background: #7f1d1d !important; }
-body.dark-mode .kanban-card.atrasado { background: #4c1d95 !important; }
-body.dark-mode .kanban-card h4, body.dark-mode .kanban-col-header { color: #f8fafc; }
 body.dark-mode .item-list-box { background: #0f172a; color: #cbd5e1; border-color: #334155; }
-body.dark-mode .fgrp input, body.dark-mode .fgrp select { background: #0f172a; color: #f8fafc; border-color: #475569; }
-body.dark-mode .modal-tabs { border-color: #334155; }
+body.dark-mode .fgrp input, body.dark-mode .fgrp select, body.dark-mode .fgrp textarea { background: #0f172a; color: #f8fafc; border-color: #475569; }
 body.dark-mode .m-tab.active { color: #38bdf8; border-color: #38bdf8; }
 </style>
 </head>
@@ -126,9 +121,9 @@ body.dark-mode .m-tab.active { color: #38bdf8; border-color: #38bdf8; }
 </header>
 
 <main>
-  <div style="margin-bottom:25px; display:flex; justify-content:space-between; align-items:center;">
-    <h2 style="font-size:22px; font-weight:700;">Gestão de Oportunidades</h2>
-    <button class="btn-primary" onclick="openModal()"><span class="material-symbols-outlined">add</span> Nova Oportunidade</button>
+  <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+    <h2 style="font-size:18px; font-weight:700;">Gestão Comercial</h2>
+    <button class="btn-primary" onclick="openModal()"><span class="material-symbols-outlined" style="font-size:18px; vertical-align:middle">add</span> Nova Oportunidade</button>
   </div>
   <div class="kanban-board" id="kanban-board"></div>
 </main>
@@ -138,7 +133,6 @@ body.dark-mode .m-tab.active { color: #38bdf8; border-color: #38bdf8; }
     <div class="modal-tabs">
       <div class="m-tab active" id="mt-dados" onclick="switchModalTab('dados')">Cadastro</div>
       <div class="m-tab" id="mt-tasks" onclick="switchModalTab('tasks')">Atividades</div>
-      <div class="m-tab" id="mt-docs" onclick="switchModalTab('docs')">Documentos</div>
       <div class="m-tab" id="mt-notas" onclick="switchModalTab('notas')">Timeline</div>
     </div>
 
@@ -156,52 +150,47 @@ body.dark-mode .m-tab.active { color: #38bdf8; border-color: #38bdf8; }
             <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
           </select>
         </div>
-        <div class="fgrp">
-          <label>Engajamento: <span id="temp-val">0</span>º</label>
-          <input type="range" id="f-temp" min="0" max="80" step="10" oninput="document.getElementById('temp-val').innerText=this.value">
+        <div class="fgrp"><label>Status Final</label>
+          <select id="f-status-final">
+              <option value="NORMAL">Em Aberto</option>
+              <option value="GANHO">GANHO</option>
+              <option value="PERDIDO">PERDIDO</option>
+          </select>
         </div>
       </div>
-      <div class="fgrp"><label>Status Final</label>
-        <select id="f-status-final">
-            <option value="NORMAL">Em Aberto</option><option value="GANHO">GANHO (Verde)</option><option value="PERDIDO">PERDIDO (Vermelho)</option>
-        </select>
+      <div class="fgrp">
+          <label>Temperatura (0-80º): <span id="temp-val-display">0</span>º</label>
+          <input type="range" id="f-temp" min="0" max="80" step="10" oninput="document.getElementById('temp-val-display').innerText=this.value">
       </div>
     </div>
 
     <div id="pane-tasks" style="display:none">
         <div class="fgrp">
-            <label>Nova Tarefa</label>
+            <label>O que fazer?</label>
             <div style="display:flex; gap:8px">
-                <input type="text" id="f-task-name" placeholder="O que fazer?" style="flex:1">
-                <input type="date" id="f-task-date">
+                <input type="text" id="f-task-name" placeholder="Tarefa..." style="flex:1">
+                <input type="date" id="f-task-date" style="width:140px">
                 <button class="btn-primary" onclick="addTask()">Add</button>
             </div>
         </div>
-        <div id="tasks-list"></div>
-    </div>
-
-    <div id="pane-docs" style="display:none">
-        <div class="fgrp">
-            <label>Registrar Documento (Link ou Referência)</label>
-            <div style="display:flex; gap:8px">
-                <input type="text" id="f-doc-name" placeholder="Nome do documento ou link" style="flex:1">
-                <button class="btn-primary" onclick="addDoc()">Salvar</button>
-            </div>
-        </div>
-        <div id="docs-list"></div>
+        <div id="tasks-list" style="margin-top:10px"></div>
     </div>
 
     <div id="pane-notas" style="display:none">
         <div class="fgrp">
             <label>Nova Nota</label>
-            <div style="display:flex; gap:8px"><input type="text" id="f-note-input" style="flex:1"><button class="btn-primary" onclick="addNote()">Salvar</button></div>
+            <textarea id="f-note-input" rows="4" placeholder="Escreva os detalhes..."></textarea>
+            <button class="btn-primary" onclick="addNote()" style="margin-top:8px">Salvar Anotação</button>
         </div>
-        <div id="notes-list"></div>
+        <div id="notes-list" style="margin-top:10px"></div>
     </div>
 
     <div style="margin-top:25px; display:flex; justify-content:space-between; padding-top:15px; border-top:1px solid #eee;">
       <button class="btn-danger" id="btn-del" onclick="deleteOpp()">Excluir</button>
-      <button class="btn-primary" onclick="saveOpp()">Salvar Alterações</button>
+      <div style="display:flex; gap:10px">
+          <button class="btn-primary" style="background:#64748b" onclick="closeModal()">Fechar</button>
+          <button class="btn-primary" onclick="saveOpp()">Salvar Alterações</button>
+      </div>
     </div>
   </div>
 </div>
@@ -209,7 +198,6 @@ body.dark-mode .m-tab.active { color: #38bdf8; border-color: #38bdf8; }
 <script>
 let dbData = {};
 const COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By", "Fechado"];
-const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 
 fbDB.ref('crm/kanban_v4').on('value', snap => {
     dbData = snap.val() || {};
@@ -224,85 +212,80 @@ function renderKanban() {
         return `
         <div class="kanban-col" ondragover="event.preventDefault()" ondrop="drop(event, '${col}')">
             <div class="kanban-col-header">${col} <span>${items.length}</span></div>
-            ${items.map(id => {
-                const o = dbData[id];
-                const isAtrasado = (parseInt(o.expectativa) < curMonth) && o.statusFinal === 'NORMAL';
-                const temp = parseInt(o.temp) || 0;
-                const fillPct = (temp / 80) * 100;
-                const tempColor = `color-mix(in srgb, #ef4444 ${fillPct}%, #1C5D99)`;
-                return `
-                <div class="kanban-card status-${o.statusFinal} ${isAtrasado ? 'atrasado' : ''}" draggable="true" ondragstart="drag(event, '${id}')">
-                    <div class="k-tools">
-                        ${isAtrasado ? `<span class="material-symbols-outlined k-btn" style="color:var(--purple)" onclick="updateExp('${id}')">upgrade</span>` : ''}
-                        <span class="material-symbols-outlined k-btn" onclick="editOpp('${id}')">edit</span>
-                    </div>
-                    <h4>${o.nome} ${o.sobrenome}</h4>
-                    <p>📞 ${o.tel || '---'}</p>
-                    <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
-                        <div class="therm-container"><div class="therm-fill" style="height:${fillPct}%; background:${tempColor};"></div></div>
-                        <span style="font-size:11px; font-weight:700;">${temp}º</span>
-                        ${(o.docs || []).length > 0 ? `<span class="material-symbols-outlined" style="font-size:16px; margin-left:auto; color:var(--blue)">attach_file</span>` : ''}
-                    </div>
-                </div>`;
-            }).join('')}
+            <div class="kanban-cards-area">
+                ${items.map(id => {
+                    const o = dbData[id];
+                    const isAtrasado = (parseInt(o.expectativa) < curMonth) && o.statusFinal === 'NORMAL';
+                    const temp = parseInt(o.temp) || 0;
+                    const fillPct = (temp / 80) * 100;
+                    const tempColor = `color-mix(in srgb, #ef4444 ${fillPct}%, #1C5D99)`;
+                    return `
+                    <div class="kanban-card status-${o.statusFinal} ${isAtrasado ? 'atrasado' : ''}" draggable="true" ondragstart="drag(event, '${id}')">
+                        <div class="k-tools">
+                            ${isAtrasado ? `<span class="material-symbols-outlined k-btn btn-up" title="Atualizar Mês" onclick="updateExp('${id}')">upgrade</span>` : ''}
+                            <span class="material-symbols-outlined k-btn" onclick="editOpp('${id}')">edit</span>
+                        </div>
+                        <h4>${o.nome} ${o.sobrenome || ''}</h4>
+                        <p>📞 ${o.tel || '---'}</p>
+                        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                            <div class="therm-container"><div class="therm-fill" style="height:${fillPct}%; background:${tempColor};"></div></div>
+                            <span style="font-size:10px; font-weight:700; color:${tempColor}">${temp}º</span>
+                        </div>
+                    </div>`;
+                }).join('')}
+            </div>
         </div>`;
     }).join('');
 }
 
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    document.getElementById('theme-icon').textContent = isDark ? 'light_mode' : 'dark_mode';
+function updateExp(id) { 
+  dbData[id].expectativa = new Date().getMonth() + 1; 
+  fbDB.ref('crm/kanban_v4').set(dbData); 
 }
 
 function switchModalTab(t) {
-    ['dados','tasks','docs','notas'].forEach(p => document.getElementById('pane-'+p).style.display = 'none');
-    ['mt-dados','mt-tasks','mt-docs','mt-notas'].forEach(m => document.getElementById(m).classList.remove('active'));
+    ['dados','tasks','notas'].forEach(p => document.getElementById('pane-'+p).style.display = 'none');
+    document.querySelectorAll('.m-tab').forEach(el => el.classList.remove('active'));
     document.getElementById('pane-'+t).style.display = 'block';
-    document.getElementById('mt-'+t).classList.add('active');
-}
-
-function addDoc() {
-    const id = document.getElementById('f-id').value;
-    const name = document.getElementById('f-doc-name').value;
-    if(!name || !id) return;
-    if(!dbData[id].docs) dbData[id].docs = [];
-    dbData[id].docs.push({ name, date: new Date().toLocaleDateString(), docId: Date.now() });
-    fbDB.ref('crm/kanban_v4').set(dbData);
-    document.getElementById('f-doc-name').value = ''; renderDocs(id);
-}
-
-function renderDocs(id) {
-    document.getElementById('docs-list').innerHTML = (dbData[id].docs || []).map(d => `
-        <div class="item-list-box">
-            <strong>📄 ${d.name}</strong>
-            <span class="material-symbols-outlined" style="position:absolute; right:8px; cursor:pointer; color:#ccc" onclick="deleteDoc('${id}', ${d.docId})">delete</span>
-        </div>`).join('');
-}
-
-function deleteDoc(oid, did) {
-    dbData[oid].docs = dbData[oid].docs.filter(x => x.docId !== did);
-    fbDB.ref('crm/kanban_v4').set(dbData); renderDocs(oid);
+    document.getElementById('mt-' + t).classList.add('active');
 }
 
 function addTask() {
     const id = document.getElementById('f-id').value;
     if(!dbData[id].tasks) dbData[id].tasks = [];
-    dbData[id].tasks.push({ name: document.getElementById('f-task-name').value, date: document.getElementById('f-task-date').value, done: false, taskId: Date.now() });
-    fbDB.ref('crm/kanban_v4').set(dbData); renderTasks(id);
+    const name = document.getElementById('f-task-name').value;
+    if(!name) return;
+    dbData[id].tasks.push({ name: name, date: document.getElementById('f-task-date').value, done: false, taskId: Date.now() });
+    fbDB.ref('crm/kanban_v4').set(dbData);
+    document.getElementById('f-task-name').value = ''; renderTasks(id);
 }
 
 function renderTasks(id) {
     document.getElementById('tasks-list').innerHTML = (dbData[id].tasks || []).map(t => `
         <div class="item-list-box" style="${t.done ? 'opacity:0.5; background:#e8f5ee' : ''}">
             <input type="checkbox" ${t.done?'checked':''} onclick="toggleTask('${id}', ${t.taskId})">
-            <span style="${t.done?'text-decoration:line-through':''}">${t.name} (${t.date})</span>
+            <span style="${t.done?'text-decoration:line-through':''}">${t.name} (${t.date || '---'})</span>
         </div>`).join('');
 }
 
 function toggleTask(oid, tid) {
     const t = dbData[oid].tasks.find(x => x.taskId === tid); t.done = !t.done;
     fbDB.ref('crm/kanban_v4').set(dbData); renderTasks(oid);
+}
+
+function addNote() {
+    const id = document.getElementById('f-id').value;
+    const text = document.getElementById('f-note-input').value;
+    if(!text) return;
+    if(!dbData[id].notes) dbData[id].notes = [];
+    dbData[id].notes.unshift({ text: text, time: new Date().toLocaleString(), nid: Date.now() });
+    fbDB.ref('crm/kanban_v4').set(dbData); 
+    document.getElementById('f-note-input').value = ''; renderNotes(id);
+}
+
+function renderNotes(id) {
+    document.getElementById('notes-list').innerHTML = (dbData[id].notes || []).map(n => `
+        <div class="item-list-box"><strong>${n.time}</strong><br>${n.text}</div>`).join('');
 }
 
 function saveOpp() {
@@ -315,29 +298,21 @@ function saveOpp() {
 
 function editOpp(id) {
     const o = dbData[id]; document.getElementById('f-id').value = id;
-    document.getElementById('f-nome').value = o.nome; document.getElementById('f-sobrenome').value = o.sobrenome;
-    document.getElementById('f-tel').value = o.tel; document.getElementById('f-expectativa').value = o.expectativa;
-    document.getElementById('f-status-final').value = o.statusFinal; document.getElementById('f-temp').value = o.temp;
-    document.getElementById('temp-val').innerText = o.temp;
-    renderTasks(id); renderDocs(id); renderNotes(id); switchModalTab('dados'); document.getElementById('overlay').classList.add('open');
+    document.getElementById('f-nome').value = o.nome || '';
+    document.getElementById('f-sobrenome').value = o.sobrenome || '';
+    document.getElementById('f-tel').value = o.tel || '';
+    document.getElementById('f-expectativa').value = o.expectativa || '1';
+    document.getElementById('f-status-final').value = o.statusFinal || 'NORMAL';
+    document.getElementById('f-temp').value = o.temp || 0;
+    document.getElementById('temp-val-display').innerText = o.temp || 0;
+    renderTasks(id); renderNotes(id); switchModalTab('dados'); document.getElementById('overlay').classList.add('open');
 }
 
-function addNote() {
-    const id = document.getElementById('f-id').value;
-    if(!dbData[id].notes) dbData[id].notes = [];
-    dbData[id].notes.unshift({ text: document.getElementById('f-note-input').value, time: new Date().toLocaleString(), nid: Date.now() });
-    fbDB.ref('crm/kanban_v4').set(dbData); document.getElementById('f-note-input').value = ''; renderNotes(id);
-}
-
-function renderNotes(id) {
-    document.getElementById('notes-list').innerHTML = (dbData[id].notes || []).map(n => `<div class="item-list-box"><strong>${n.time}</strong><br>${n.text}</div>`).join('');
-}
-
-function updateExp(id) { dbData[id].expectativa = new Date().getMonth()+1; fbDB.ref('crm/kanban_v3').set(dbData); }
+function toggleDarkMode() { document.body.classList.toggle('dark-mode'); document.getElementById('theme-icon').textContent = document.body.classList.contains('dark-mode') ? 'light_mode' : 'dark_mode'; }
 function drag(ev, id) { ev.dataTransfer.setData("id", id); }
-function drop(ev, s) { ev.preventDefault(); const id = ev.dataTransfer.getData("id"); dbData[id].status = s; fbDB.ref('crm/kanban_v4').set(dbData); }
+function drop(ev, s) { ev.preventDefault(); const id = ev.dataTransfer.getData("id"); if(dbData[id]) { dbData[id].status = s; fbDB.ref('crm/kanban_v4').set(dbData); } }
 function openModal() { document.getElementById('f-id').value = ''; document.getElementById('overlay').classList.add('open'); switchModalTab('dados'); }
-function closeModal() { document.getElementById('overlay').classList.remove('open'); document.querySelectorAll('input').forEach(i => i.value=''); }
+function closeModal() { document.getElementById('overlay').classList.remove('open'); document.querySelectorAll('.modal input, .modal textarea').forEach(i => i.value=''); }
 function deleteOpp() { if(confirm("Excluir?")) { delete dbData[document.getElementById('f-id').value]; fbDB.ref('crm/kanban_v4').set(dbData); closeModal(); } }
 </script>
 </body>
