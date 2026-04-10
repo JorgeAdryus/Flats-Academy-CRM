@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flats Academy — Funil Kanban Pro</title>
+<title>Flats Academy — CRM Pro Kanban</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -26,30 +26,21 @@
   --blue: #1C5D99; --blue-md: #2A7BCA; --blue-lt: #E6F0FA; 
   --white: #FFFFFF; --border: #E2E8F0;
   --green: #1A7A4A; --red: #c53030; --orange: #C55A11; --purple: #6A1B9A;
-  --gray: #595959; --gray-lt: #F7F7F5;
-  --bg-ganho: #dcfce7; --bg-perdido: #fee2e2; --bg-atrasado: #f3e8ff;
+  --gray: #595959; --bg-ganho: #dcfce7; --bg-perdido: #fee2e2; --bg-atrasado: #f3e8ff;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: #F0F4FA; color: #1a1a2e; min-height: 100vh; }
 
-header { background: var(--blue); padding: 0 1.5rem; height: 65px; display: flex; align-items: center; justify-content: space-between; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+header { background: var(--blue); padding: 0 1.5rem; height: 65px; display: flex; align-items: center; justify-content: space-between; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); position: sticky; top:0; z-index:100;}
 .logo-area { display: flex; align-items: center; gap: 12px; }
-.logo-img { width: 38px; height: 38px; object-fit: contain; }
+.btn-action-main { background: var(--orange); color: #fff; padding: 8px 16px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; border: none; }
 
-.btn-action-main {
-  display: flex; align-items: center; justify-content: center; gap: 6px; 
-  background: var(--orange); border: 1px solid rgba(255,255,255,0.1); 
-  color: #fff; padding: 6px 14px; border-radius: 7px; font-size: 12px; 
-  font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s;
-}
-.btn-action-main:hover { background: #9c470d; }
-
-main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
+main { padding: 1.5rem; max-width: 1850px; margin: 0 auto; }
 .kanban-board { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; }
-.kanban-col { background: #e2e8f0; border-radius: 12px; width: 300px; min-width: 300px; padding: 12px; min-height: 80vh; }
+.kanban-col { background: #e2e8f0; border-radius: 12px; width: 320px; min-width: 320px; padding: 12px; min-height: 80vh; transition: background 0.3s; }
 .kanban-col-header { font-weight: 700; font-size: 14px; color: var(--blue); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
 
-.kanban-card { background: var(--white); border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: grab; box-shadow: 0 2px 5px rgba(0,0,0,0.06); position: relative; border: 1px solid transparent; transition: transform 0.2s; }
+.kanban-card { background: var(--white); border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: grab; box-shadow: 0 2px 5px rgba(0,0,0,0.06); position: relative; border: 1px solid transparent; }
 .kanban-card.status-GANHO { background: var(--bg-ganho); border-color: #86efac; }
 .kanban-card.status-PERDIDO { background: var(--bg-perdido); border-color: #fca5a5; }
 .kanban-card.atrasado { background: var(--bg-atrasado) !important; border-color: #d8b4fe; }
@@ -60,48 +51,51 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
 .btn-up { color: var(--purple) !important; font-weight: bold; }
 
 .kanban-card h4 { font-size: 15px; margin-bottom: 5px; color: var(--blue); }
-.kanban-card p { font-size: 12px; color: var(--gray); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+.kanban-card p { font-size: 11px; color: var(--gray); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
 
-/* Modal e Sub-Abas */
+/* UI Termômetro */
+.therm-container { position: relative; width: 24px; height: 40px; background: #ddd; border-radius: 12px; border: 2px solid #bbb; overflow: hidden; margin-top: 5px; }
+.therm-fill { position: absolute; bottom: 0; width: 100%; transition: height 0.4s, background 0.4s; }
+
+/* Modal */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(2px); }
 .overlay.open { display: flex; }
-.modal { background: #fff; border-radius: 16px; width: min(600px, 95vw); padding: 25px; max-height: 90vh; overflow-y: auto; }
-
+.modal { background: #fff; border-radius: 16px; width: min(650px, 95vw); padding: 25px; max-height: 90vh; overflow-y: auto; }
 .modal-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; gap: 15px; }
-.m-tab { padding: 10px 5px; font-size: 12px; cursor: pointer; color: var(--gray); border-bottom: 3px solid transparent; font-weight: 600; text-transform: uppercase; transition: all 0.2s; }
+.m-tab { padding: 10px 10px; font-size: 12px; cursor: pointer; color: var(--gray); border-bottom: 3px solid transparent; font-weight: 700; text-transform: uppercase; }
 .m-tab.active { color: var(--blue); border-color: var(--blue); background: rgba(28, 93, 153, 0.05); }
 
-.fgrp { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
-.fgrp label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--gray); }
-.fgrp input, .fgrp select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; background: #fff; }
+/* Task Tracker */
+.task-item { display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--blue); transition: all 0.2s; }
+.task-item.completed { background: #e8f5ee; border-left-color: var(--green); opacity: 0.8; }
+.task-item.completed .task-text { text-decoration: line-through; color: var(--gray); }
+.task-date-info { font-size: 9px; color: #94a3b8; font-weight: 600; margin-top: 2px; }
 
-.timeline-box { background: var(--gray-lt); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--blue); position: relative; }
-.time-stamp { font-size: 10px; color: #94a3b8; font-weight: 600; margin-bottom: 5px; }
-.btn-primary { background: var(--blue); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 13px; }
-.btn-danger { background: #fee2e2; color: #c53030; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; }
-
+/* Botões */
+.btn-primary { background: var(--blue); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; }
+.btn-danger { background: #fee2e2; color: var(--red); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.fgrp input, .fgrp select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-area">
-    <img src="logo.png" class="logo-img" onerror="this.style.display='none'">
-    <div style="display:flex; flex-direction:column;">
-        <span style="font-weight:600; font-size:17px;">Flats Academy</span>
-        <span style="font-size:11px; opacity:0.7;">Funil Comercial</span>
+    <img src="logo.png" height="38" onerror="this.style.display='none'">
+    <div style="display:flex; flex-direction:column">
+        <span style="font-weight:700; font-size:18px;">Flats Academy</span>
+        <span style="font-size:10px; opacity:0.8; letter-spacing:1px; text-transform:uppercase;">CRM Pro Kanban</span>
     </div>
   </div>
   <a href="index.html" class="btn-action-main">
-    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
-    Voltar ao Site Principal
+    <span class="material-symbols-outlined">arrow_back</span> Voltar ao Site Principal
   </a>
 </header>
 
 <main>
   <div style="margin-bottom:25px; display:flex; justify-content:space-between; align-items:center;">
-    <h2 style="font-size:20px; font-weight:700;">Fluxo de Oportunidades</h2>
-    <button class="btn-primary" onclick="openModal()">+ Adicionar Oportunidade</button>
+    <h2 style="font-size:22px; font-weight:700;">Gestão de Oportunidades</h2>
+    <button class="btn-primary" onclick="openModal()"><span class="material-symbols-outlined" style="vertical-align:middle; font-size:18px">add</span> Nova Oportunidade</button>
   </div>
   <div class="kanban-board" id="kanban-board"></div>
 </main>
@@ -110,6 +104,7 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
   <div class="modal">
     <div class="modal-tabs">
       <div class="m-tab active" id="mt-dados" onclick="switchModalTab('dados')">Cadastro</div>
+      <div class="m-tab" id="mt-atividades" onclick="switchModalTab('atividades')">Atividades</div>
       <div class="m-tab" id="mt-notas" onclick="switchModalTab('notas')">Timeline</div>
     </div>
 
@@ -121,49 +116,47 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
         <div class="fgrp"><label>Sobrenome</label><input type="text" id="f-sobrenome"></div>
       </div>
       <div class="fgrp"><label>Telefone</label><input type="text" id="f-tel"></div>
-      <div class="fgrp"><label>Origem</label>
-        <select id="f-origem">
-            <option value="ADS">ADS</option><option value="Instagram">Instagram</option>
-            <option value="WhatsApp">WhatsApp</option><option value="Indicação Interna">Indicação Interna</option>
-            <option value="Indicação Externa">Indicação Externa</option>
-        </select>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
+        <div class="fgrp"><label>Produto</label>
+          <select id="f-produto">
+            <option value="Flats Academy">Flats Academy</option><option value="Flats Academy VIT">Flats Academy VIT</option>
+            <option value="Webinário">Webinário</option><option value="Downsell">Downsell</option>
+          </select>
+        </div>
+        <div class="fgrp"><label>Expectativa (Mês)</label>
+          <select id="f-expectativa">
+            <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+          </select>
+        </div>
       </div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
-          <div class="fgrp"><label>Produto</label>
-            <select id="f-produto">
-                <option value="Downsell">Downsell</option><option value="Flats Academy">Flats Academy</option>
-                <option value="Flats Academy VIT">Flats Academy VIT</option><option value="Webinário">Webinário</option>
-                <option value="Flats Academy Web">Flats Academy Web</option>
-            </select>
-          </div>
-          <div class="fgrp"><label>Expectativa (Mês)</label>
-            <select id="f-expectativa">
-                <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
-                <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
-                <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
-                <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
-            </select>
-          </div>
+        <div class="fgrp"><label>Status Final</label>
+          <select id="f-status-final">
+            <option value="NORMAL">Em Aberto</option><option value="GANHO">GANHO (Verde)</option><option value="PERDIDO">PERDIDO (Vermelho)</option>
+          </select>
+        </div>
+        <div class="fgrp">
+          <label>Engajamento (0-80º): <span id="temp-val">0</span></label>
+          <input type="range" id="f-temp" min="0" max="80" step="10" oninput="document.getElementById('temp-val').innerText=this.value">
+        </div>
       </div>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
-          <div class="fgrp"><label>Status Final</label>
-            <select id="f-status-final">
-                <option value="NORMAL">Normal (Em aberto)</option>
-                <option value="GANHO">GANHO (Verde)</option>
-                <option value="PERDIDO">PERDIDO (Vermelha)</option>
-            </select>
-          </div>
-          <div class="fgrp">
-            <label>Temperatura: <span id="temp-val">0</span></label>
-            <input type="range" id="f-temp" min="0" max="80" step="10" oninput="document.getElementById('temp-val').innerText=this.value">
-          </div>
-      </div>
-      <div class="fgrp"><label>Documentação (Link/Print)</label><input type="text" id="f-anexo" placeholder="Link de Notas Fiscais ou Prints"></div>
+    </div>
+
+    <div id="pane-atividades" style="display:none">
+        <div class="fgrp">
+            <label>Nova Tarefa</label>
+            <div style="display:flex; gap:8px">
+                <input type="text" id="f-task-name" placeholder="O que precisa ser feito?" style="flex:2">
+                <input type="date" id="f-task-date" style="flex:1">
+                <button class="btn-primary" onclick="addTask()">Add</button>
+            </div>
+        </div>
+        <div id="tasks-list"></div>
     </div>
 
     <div id="pane-notas" style="display:none">
         <div class="fgrp">
-            <label>Nova Anotação</label>
+            <label>Adicionar Anotação</label>
             <div style="display:flex; gap:8px"><input type="text" id="f-note-input" style="flex:1"><button class="btn-primary" onclick="addNote()">Salvar</button></div>
         </div>
         <div id="notes-list"></div>
@@ -173,7 +166,7 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
       <button class="btn-danger" id="btn-del" onclick="deleteOpp()">Excluir</button>
       <div style="display:flex; gap:10px">
           <button class="btn-primary" style="background:#64748b" onclick="closeModal()">Fechar</button>
-          <button class="btn-primary" onclick="saveOpp()">Salvar Oportunidade</button>
+          <button class="btn-primary" onclick="saveOpp()">Salvar Alterações</button>
       </div>
     </div>
   </div>
@@ -182,17 +175,16 @@ main { padding: 1.5rem; max-width: 1800px; margin: 0 auto; }
 <script>
 let dbData = {};
 const COLS = ["Primeiro Contato", "Proposta", "Negociação", "Stand By", "Fechado"];
-const MONTHS = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 
-fbDB.ref('crm/kanban_v2').on('value', snap => {
+fbDB.ref('crm/kanban_v3').on('value', snap => {
     dbData = snap.val() || {};
     renderKanban();
 });
 
 function renderKanban() {
     const board = document.getElementById('kanban-board');
-    const now = new Date();
-    const curMonth = now.getMonth() + 1;
+    const curMonth = new Date().getMonth() + 1;
 
     board.innerHTML = COLS.map(col => {
         const items = Object.keys(dbData).filter(id => (dbData[id].status || "Primeiro Contato") === col);
@@ -203,20 +195,27 @@ function renderKanban() {
                 const o = dbData[id];
                 const isAtrasado = (parseInt(o.expectativa) < curMonth) && o.statusFinal === 'NORMAL';
                 const temp = parseInt(o.temp) || 0;
-                const tempColor = `color-mix(in srgb, #ef4444 ${temp/0.8}%, #1C5D99)`;
-                
+                const fillPct = (temp / 80) * 100;
+                const tempColor = `color-mix(in srgb, #ef4444 ${fillPct}%, #1C5D99)`;
+                const tasksDone = (o.tasks || []).filter(t => t.done).length;
+                const totalTasks = (o.tasks || []).length;
+
                 return `
                 <div class="kanban-card status-${o.statusFinal} ${isAtrasado ? 'atrasado' : ''}" draggable="true" ondragstart="drag(event, '${id}')">
                     <div class="k-tools">
-                        ${isAtrasado ? `<span class="material-symbols-outlined k-btn btn-up" title="Atualizar para Mês Atual" onclick="updateExp('${id}')">upgrade</span>` : ''}
-                        <span class="material-symbols-outlined k-btn" title="Editar" onclick="editOpp('${id}')">edit</span>
+                        ${isAtrasado ? `<span class="material-symbols-outlined k-btn btn-up" title="Renovar Mês" onclick="updateExp('${id}')">upgrade</span>` : ''}
+                        <span class="material-symbols-outlined k-btn" onclick="editOpp('${id}')">edit</span>
                     </div>
                     <h4>${o.nome} ${o.sobrenome}</h4>
                     <p><span class="material-symbols-outlined" style="font-size:14px">call</span> ${o.tel || '---'}</p>
-                    <p><span class="material-symbols-outlined" style="font-size:14px">calendar_today</span> Exp: ${MONTHS[o.expectativa-1] || 'Mês'}</p>
-                    <div style="display:flex; align-items:center; gap:5px; margin-top:8px;">
-                        <span class="material-symbols-outlined" style="color:${tempColor}; font-variation-settings: 'FILL' 1; font-size:20px;">thermometer</span>
-                        <span style="font-size:10px; font-weight:700;">${temp}º</span>
+                    <p><span class="material-symbols-outlined" style="font-size:14px">task_alt</span> Tarefas: ${tasksDone}/${totalTasks}</p>
+                    <p><span class="material-symbols-outlined" style="font-size:14px">calendar_month</span> Expectativa: ${MONTHS[o.expectativa-1]}</p>
+                    
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+                        <div class="therm-container" title="Temperatura: ${temp}º">
+                            <div class="therm-fill" style="height:${fillPct}%; background:${tempColor};"></div>
+                        </div>
+                        <span style="font-size:12px; font-weight:700; color:${tempColor}">${temp}º</span>
                     </div>
                 </div>`;
             }).join('')}
@@ -224,33 +223,23 @@ function renderKanban() {
     }).join('');
 }
 
-function switchModalTab(t) {
-    document.getElementById('pane-dados').style.display = t === 'dados' ? 'block' : 'none';
-    document.getElementById('pane-notas').style.display = t === 'notas' ? 'block' : 'none';
-    
-    document.getElementById('mt-dados').classList.toggle('active', t === 'dados');
-    document.getElementById('mt-notas').classList.toggle('active', t === 'notas');
-}
-
 function saveOpp() {
     const id = document.getElementById('f-id').value || 'k_' + Date.now();
     const nome = document.getElementById('f-nome').value;
-    if(!nome) return alert("Por favor, insira o nome.");
+    if(!nome) return alert("Insira o nome do lead.");
 
     dbData[id] = {
         ...dbData[id],
         nome: nome,
         sobrenome: document.getElementById('f-sobrenome').value,
         tel: document.getElementById('f-tel').value,
-        origem: document.getElementById('f-origem').value,
         produto: document.getElementById('f-produto').value,
         expectativa: document.getElementById('f-expectativa').value,
         statusFinal: document.getElementById('f-status-final').value,
         temp: document.getElementById('f-temp').value,
-        anexo: document.getElementById('f-anexo').value,
         status: dbData[id]?.status || "Primeiro Contato"
     };
-    fbDB.ref('crm/kanban_v2').set(dbData);
+    fbDB.ref('crm/kanban_v3').set(dbData);
     closeModal();
 }
 
@@ -260,66 +249,108 @@ function editOpp(id) {
     document.getElementById('f-nome').value = o.nome || '';
     document.getElementById('f-sobrenome').value = o.sobrenome || '';
     document.getElementById('f-tel').value = o.tel || '';
-    document.getElementById('f-origem').value = o.origem || 'ADS';
-    document.getElementById('f-produto').value = o.produto || 'Downsell';
+    document.getElementById('f-produto').value = o.produto || 'Flats Academy';
     document.getElementById('f-expectativa').value = o.expectativa || '1';
     document.getElementById('f-status-final').value = o.statusFinal || 'NORMAL';
     document.getElementById('f-temp').value = o.temp || 0;
     document.getElementById('temp-val').innerText = o.temp || 0;
-    document.getElementById('f-anexo').value = o.anexo || '';
     
-    document.getElementById('btn-del').style.display = 'block';
+    renderTasks(id);
     renderNotes(id);
     switchModalTab('dados');
     document.getElementById('overlay').classList.add('open');
 }
 
+// LÓGICA DE ATIVIDADES
+function addTask() {
+    const id = document.getElementById('f-id').value;
+    const name = document.getElementById('f-task-name').value;
+    const date = document.getElementById('f-task-date').value;
+    if(!name) return;
+    if(!dbData[id].tasks) dbData[id].tasks = [];
+    dbData[id].tasks.push({ name, date, done: false, taskId: Date.now(), finishDate: '' });
+    fbDB.ref('crm/kanban_v3').set(dbData);
+    document.getElementById('f-task-name').value = ''; renderTasks(id);
+}
+
+function toggleTask(oid, tid) {
+    const task = dbData[oid].tasks.find(x => x.taskId === tid);
+    task.done = !task.done;
+    task.finishDate = task.done ? new Date().toLocaleDateString('pt-BR') : '';
+    fbDB.ref('crm/kanban_v3').set(dbData); renderTasks(oid);
+}
+
+function deleteTask(oid, tid) {
+    dbData[oid].tasks = dbData[oid].tasks.filter(x => x.taskId !== tid);
+    fbDB.ref('crm/kanban_v3').set(dbData); renderTasks(oid);
+}
+
+function renderTasks(id) {
+    const list = document.getElementById('tasks-list');
+    list.innerHTML = (dbData[id].tasks || []).map(t => `
+        <div class="task-item ${t.done ? 'completed' : ''}">
+            <input type="checkbox" ${t.done ? 'checked' : ''} onclick="toggleTask('${id}', ${t.taskId})">
+            <div style="flex:1">
+                <div class="task-text" style="font-size:12px; font-weight:600">${t.name}</div>
+                <div class="task-date-info">Previsto: ${t.date || '---'} ${t.done ? '| Concluído em: '+t.finishDate : ''}</div>
+            </div>
+            <span class="material-symbols-outlined" style="font-size:16px; cursor:pointer; color:#ccc" onclick="deleteTask('${id}', ${t.taskId})">delete</span>
+        </div>`).join('');
+}
+
+// LÓGICA DE NOTAS
 function addNote() {
     const id = document.getElementById('f-id').value;
     const text = document.getElementById('f-note-input').value;
-    if(!text || !id) return;
+    if(!text) return;
     if(!dbData[id].notes) dbData[id].notes = [];
     dbData[id].notes.unshift({ text, time: new Date().toLocaleString('pt-BR'), nid: Date.now() });
-    fbDB.ref('crm/kanban_v2').set(dbData);
+    fbDB.ref('crm/kanban_v3').set(dbData);
     document.getElementById('f-note-input').value = ''; renderNotes(id);
 }
 
 function renderNotes(id) {
     const list = document.getElementById('notes-list');
     list.innerHTML = (dbData[id].notes || []).map(n => `
-        <div class="timeline-box">
-            <div class="time-stamp">${n.time}</div>
-            <div>${n.text}</div>
-            <span class="material-symbols-outlined" style="position:absolute; top:8px; right:8px; font-size:16px; cursor:pointer; color:#aaa;" onclick="deleteNote('${id}', ${n.nid})">delete</span>
+        <div style="background:#f1f5f9; padding:10px; border-radius:8px; margin-bottom:8px; border-left:3px solid var(--blue); position:relative;">
+            <div style="font-size:10px; color:#94a3b8; font-weight:700;">${n.time}</div>
+            <div style="font-size:12px">${n.text}</div>
+            <span class="material-symbols-outlined" style="position:absolute; top:8px; right:8px; font-size:16px; cursor:pointer; color:#ccc" onclick="deleteNote('${id}', ${n.nid})">delete</span>
         </div>`).join('');
 }
 
 function deleteNote(oid, nid) {
     dbData[oid].notes = dbData[oid].notes.filter(x => x.nid !== nid);
-    fbDB.ref('crm/kanban_v2').set(dbData); renderNotes(oid);
+    fbDB.ref('crm/kanban_v3').set(dbData); renderNotes(oid);
+}
+
+function switchModalTab(t) {
+    document.getElementById('pane-dados').style.display = t === 'dados' ? 'block' : 'none';
+    document.getElementById('pane-atividades').style.display = t === 'atividades' ? 'block' : 'none';
+    document.getElementById('pane-notas').style.display = t === 'notas' ? 'block' : 'none';
+    document.querySelectorAll('.m-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('mt-' + t).classList.add('active');
 }
 
 function updateExp(id) {
     dbData[id].expectativa = new Date().getMonth() + 1;
-    fbDB.ref('crm/kanban_v2').set(dbData);
+    fbDB.ref('crm/kanban_v3').set(dbData);
 }
 
 function drag(ev, id) { ev.dataTransfer.setData("id", id); }
 function drop(ev, status) {
     ev.preventDefault();
     const id = ev.dataTransfer.getData("id");
-    if(dbData[id]) {
-        dbData[id].status = status;
-        fbDB.ref('crm/kanban_v2').set(dbData);
-    }
+    if(dbData[id]) { dbData[id].status = status; fbDB.ref('crm/kanban_v3').set(dbData); }
 }
 
 function openModal() { 
     document.getElementById('f-id').value = '';
-    document.getElementById('btn-del').style.display = 'none';
+    document.getElementById('tasks-list').innerHTML = '';
     document.getElementById('notes-list').innerHTML = '';
-    switchModalTab('dados');
+    document.getElementById('btn-del').style.display = 'none';
     document.getElementById('overlay').classList.add('open'); 
+    switchModalTab('dados');
 }
 
 function closeModal() { 
@@ -328,10 +359,9 @@ function closeModal() {
 }
 
 function deleteOpp() {
-    const id = document.getElementById('f-id').value;
-    if(id && confirm("Deseja excluir esta oportunidade permanentemente?")) {
-        delete dbData[id];
-        fbDB.ref('crm/kanban_v2').set(dbData);
+    if(confirm("Excluir lead permanentemente?")) {
+        delete dbData[document.getElementById('f-id').value];
+        fbDB.ref('crm/kanban_v3').set(dbData);
         closeModal();
     }
 }
