@@ -25,7 +25,6 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
 :root{
-  /* Azul Claro Marinho */
   --blue:#1C5D99; 
   --blue-md:#2A7BCA;
   --blue-lt:#E6F0FA;
@@ -42,8 +41,6 @@ body{font-family:'DM Sans',sans-serif;background:#F0F4FA;color:#1a1a2e;min-heigh
 
 header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100; transition: background 0.3s;}
 .logo{display:flex;align-items:center;gap:12px}
-
-/* Logo em arquivo */
 .logo-img {width:38px; height:38px; object-fit: contain;}
 .logo-text-group {display:flex; flex-direction:column; gap:1px;}
 .logo-text{font-size:17px;font-weight:600;color:rgba(255,255,255,.98); line-height: 1.1;}
@@ -52,8 +49,6 @@ header{background:var(--blue);padding:0 1.5rem;height:65px;display:flex;align-it
 .header-right {display:flex;align-items:center;gap:14px;}
 .btn-action{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 14px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer; transition: background 0.2s;}
 .btn-action:hover{background:rgba(255,255,255,.25)}
-
-/* Botão de Tema (Sol/Lua Google) */
 .btn-icon {
     padding: 0;
     border-radius: 50%;
@@ -102,7 +97,7 @@ main{max-width:1320px;margin:0 auto;padding:1.2rem 1.2rem 4rem}
 
 .table-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow); transition: background 0.3s, border-color 0.3s;}
 .table-toolbar{padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px; transition: border-color 0.3s;}
-.toolbar-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
+.toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;}
 .search-box {
   padding: 6px 12px;
   border: 1px solid var(--border);
@@ -141,7 +136,6 @@ thead th:hover { background-color: var(--blue-md); }
 thead th.chk-col{width:36px;text-align:center; cursor: default;}
 thead th.chk-col:hover { background-color: var(--blue); }
 
-/* Estilo para o ícone de ordenação na tabela */
 .sort-icon {
   font-size: 14px;
   vertical-align: middle;
@@ -165,6 +159,25 @@ input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--bl
 .bb{background:var(--blue-lt);color:var(--blue)}
 .bgy{background:#F0F0EE;color:#666}
 .bp{background:var(--purple-lt);color:var(--purple)}
+
+/* ── Tag de filtro ativo ── */
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--purple-lt);
+  color: var(--purple);
+  border: 1px solid var(--purple);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.filter-tag:hover { background: #e8d0f7; }
+.filter-tag .close-tag { font-size: 13px; line-height: 1; }
 
 .overlay{position:fixed;inset:0;background:rgba(10,20,50,.6);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .overlay.open{display:flex}
@@ -191,30 +204,14 @@ input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--bl
 
 .sync-info{font-size:11px;color:rgba(255,255,255,.6)}
 
-/* DARK MODE STYLES */
-body.dark-mode {
-  background: #0f172a;
-  color: #f1f5f9;
-}
-body.dark-mode header {
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
-  box-shadow: none;
-}
+/* DARK MODE */
+body.dark-mode { background: #0f172a; color: #f1f5f9; }
+body.dark-mode header { background: #0f172a; border-bottom: 1px solid #1e293b; box-shadow: none; }
 body.dark-mode .logo-text { color: #f8fafc; }
-body.dark-mode .tabs-bar {
-  background: #1e293b;
-  border-bottom: 2px solid #334155;
-}
+body.dark-mode .tabs-bar { background: #1e293b; border-bottom: 2px solid #334155; }
 body.dark-mode .tab-btn { color: #94a3b8; }
-body.dark-mode .tab-btn.active {
-  color: #38bdf8;
-  border-bottom-color: #38bdf8;
-}
-body.dark-mode .kpi, body.dark-mode .card, body.dark-mode .table-card, body.dark-mode .modal {
-  background: #1e293b;
-  border-color: #334155;
-}
+body.dark-mode .tab-btn.active { color: #38bdf8; border-bottom-color: #38bdf8; }
+body.dark-mode .kpi, body.dark-mode .card, body.dark-mode .table-card, body.dark-mode .modal { background: #1e293b; border-color: #334155; }
 body.dark-mode .kpi-label, body.dark-mode .kpi-sub { color: #94a3b8; }
 body.dark-mode .kpi-value { color: #e2e8f0; }
 body.dark-mode .kpi-value.green { color: #4ade80; }
@@ -233,18 +230,13 @@ body.dark-mode td.nc { color: #38bdf8; }
 body.dark-mode .table-toolbar, body.dark-mode .modal-header { border-bottom-color: #334155; }
 body.dark-mode .modal-title { color: #f8fafc; }
 body.dark-mode .fgrp label { color: #cbd5e1; }
-body.dark-mode .fgrp input, body.dark-mode .fgrp select, body.dark-mode .search-box, body.dark-mode .sort-box {
-  background: #0f172a;
-  color: #f8fafc;
-  border-color: #475569;
-}
-body.dark-mode .btn-cancel {
-  color: #cbd5e1;
-  border-color: #475569;
-}
+body.dark-mode .fgrp input, body.dark-mode .fgrp select, body.dark-mode .search-box, body.dark-mode .sort-box { background: #0f172a; color: #f8fafc; border-color: #475569; }
+body.dark-mode .btn-cancel { color: #cbd5e1; border-color: #475569; }
 body.dark-mode .btn-cancel:hover { background: #334155; }
 body.dark-mode .empty-row td { color: #64748b; }
 body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
+body.dark-mode .filter-tag { background: #3b1a5e; color: #c084fc; border-color: #7e22ce; }
+body.dark-mode .filter-tag:hover { background: #4c1d95; }
 
 @media(max-width:960px){
   .kpis5,.kpis4, .kpis3{grid-template-columns:repeat(2,1fr)}
@@ -353,6 +345,9 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════
+       ABA WEBINÁRIO
+  ════════════════════════════════════════ -->
   <div class="tab-pane" id="tab-w">
     <div class="kpis1">
       <div class="kpi"><div class="kpi-label">Total Registros</div><div class="kpi-value purple" id="w-kpi-total">0</div><div class="kpi-sub">cadastros no webinário</div></div>
@@ -371,9 +366,19 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
             </select>
-            <select id="w-filter-month" class="sort-box" onchange="filterAndSortTable('w')" style="min-width:140px;">
+            <!-- FILTRO MÊS -->
+            <select id="w-filter-month" class="sort-box" onchange="onWebMonthChange()" style="min-width:140px;">
                 <option value="all">Todos os Meses</option>
             </select>
+            <!-- FILTRO DIA (NOVO) — populado dinamicamente -->
+            <select id="w-filter-date" class="sort-box" onchange="filterAndSortTable('w')" style="min-width:155px;">
+                <option value="all">Todos os Dias</option>
+            </select>
+            <!-- TAG do filtro de data ativo -->
+            <span id="w-filter-tag" style="display:none;" class="filter-tag" onclick="clearWebDateFilter()" title="Clique para limpar este filtro">
+                <span class="material-symbols-outlined close-tag">close</span>
+                <span id="w-filter-tag-label"></span>
+            </span>
         </div>
         <div class="toolbar-right">
           <button class="btn-danger" id="w-del-btn" onclick="deleteSelected('w')">
@@ -404,6 +409,7 @@ body.dark-mode .modal-close:hover { background: #334155; color: #fff;}
 
 </main>
 
+<!-- Modais Adicionar -->
 <div class="overlay" id="ov-p" onclick="ovClick(event,'p')">
   <div class="modal">
     <div class="modal-header">
@@ -542,7 +548,7 @@ var WEBS    = ["Participou","Não participou","Não houve webinário"];
 var charts  = {};
 
 // ══════════════════════════════════════════
-//  TOAST (notificação)
+//  TOAST
 // ══════════════════════════════════════════
 function toast(msg, isErr) {
   var el = document.getElementById('toast');
@@ -557,7 +563,6 @@ function toast(msg, isErr) {
 //  ESTADO
 // ══════════════════════════════════════════
 var dbData = {}; 
-
 var currentSortP = { column: null, direction: 'asc' };
 var currentSortW = { column: null, direction: 'asc' };
 
@@ -575,13 +580,13 @@ if (fbRef) {
   fbRef.on('value', function(snap) {
     var val = snap.val();
     dbData = val || {}; 
-    updateDateFilter();
+    updateAllFilters();
     refresh();
     setSyncStatus('ok');
   });
 } else {
   setSyncStatus('err');
-  updateDateFilter();
+  updateAllFilters();
   refresh();
 }
 
@@ -589,9 +594,7 @@ function saveToStorage() {
   if (!fbRef) { setSyncStatus('err'); return; }
   setSyncStatus('saving');
   fbRef.set(Object.keys(dbData).length ? dbData : null, function(error) {
-      if (error) {
-          setSyncStatus('err');
-      }
+      if (error) { setSyncStatus('err'); }
   });
 }
 
@@ -608,12 +611,12 @@ function cnt(arr, f, v) { return arr.filter(function(r){ return r[f]===v; }).len
 function fmt(n) { return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
 
 function bc(v) {
-  if (v==='Participou')                                             return 'bg';
-  if (v==='Não participou')                                         return 'bo';
-  if (v==='Não houve webinário')                                    return 'bgy';
+  if (v==='Participou')                                              return 'bg';
+  if (v==='Não participou')                                          return 'bo';
+  if (v==='Não houve webinário')                                     return 'bgy';
   if (v==='Indicação Interna'||v==='Indicação Externa'||v==='Carrinho abandonado') return 'bo';
   if (v==='Social Selling'||v==='Post Instagram'||v==='Lista de clientes') return 'bb';
-  if (v==='ADS'||v==='Lead de ADS (Inbound)' || v==='Kiwify')        return 'bp';
+  if (v==='ADS'||v==='Lead de ADS (Inbound)' || v==='Kiwify')         return 'bp';
   return 'bb';
 }
 
@@ -623,13 +626,10 @@ function mkChart(id, type, labels, data, colors) {
   if (!el) return;
   if (charts[id]) {
     charts[id].data.datasets[0].data = data;
-    if(id === 'pCWC') {
-      charts[id].data.labels = labels; 
-    }
+    if(id === 'pCWC') { charts[id].data.labels = labels; }
     charts[id].update('none');
     return;
   }
-  
   var chartOptions = {
       responsive:true, maintainAspectRatio:false,
       plugins:{
@@ -641,7 +641,6 @@ function mkChart(id, type, labels, data, colors) {
         x:{ticks:{font:{family:'DM Sans',size:9},maxRotation:35, color: document.body.classList.contains('dark-mode') ? '#94a3b8' : '#666'},grid:{display:false}}
       } : {}
     };
-
   charts[id] = new Chart(el.getContext('2d'), {
     type: type,
     data: { labels: labels, datasets: [{ data: data, backgroundColor: colors,
@@ -651,76 +650,144 @@ function mkChart(id, type, labels, data, colors) {
 }
 
 // ══════════════════════════════════════════
-//  FILTRO DE DATAS DO WEBINÁRIO
+//  FILTROS — ATUALIZAÇÃO
 // ══════════════════════════════════════════
-function updateDateFilter() {
+var MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function updateAllFilters() {
+    updatePlatformDateFilter();
+    updateMonthFilter('p');
+    updateMonthFilter('w');
+    updateWebDayFilter(); // NOVO
+}
+
+// Filtro de data do webinário no card de Conversão (aba Plataforma)
+function updatePlatformDateFilter() {
     var sel = document.getElementById('p-filter-date');
     if (!sel) return;
     var cur = sel.value;
-    
     var dates = [];
     var seen = {};
-    
     getRows().forEach(function(r) {
-        if (r.tab === 'w' && r.data && !seen[r.data]) { 
-            seen[r.data] = true; 
-            dates.push(r.data); 
-        }
+        if (r.tab === 'w' && r.data && !seen[r.data]) { seen[r.data] = true; dates.push(r.data); }
     });
     dates.sort();
-    
     var html = '<option value="all">Todas as Datas (Webinário)</option>';
     dates.forEach(function(d) {
         html += '<option value="'+d+'">' + d.split('-').reverse().join('/') + '</option>';
     });
-    
     sel.innerHTML = html;
-    
-    if (dates.includes(cur) || cur === 'all') {
-        sel.value = cur;
-    } else {
-        sel.value = 'all';
-    }
-    
-    updateMonthFilter('p');
-    updateMonthFilter('w');
+    sel.value = (dates.includes(cur) || cur === 'all') ? cur : 'all';
 }
 
-var MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-
+// Filtro de mês genérico
 function updateMonthFilter(tab) {
     var sel = document.getElementById(tab + '-filter-month');
     if (!sel) return;
     var cur = sel.value;
-    
     var months = [];
     var seen = {};
-    
     getRows().forEach(function(r) {
         if (r.tab === tab && r.data) {
             var parts = r.data.split('-');
             if (parts.length >= 2) {
-                var key = parts[0] + '-' + parts[1]; // YYYY-MM
+                var key = parts[0] + '-' + parts[1];
                 if (!seen[key]) { seen[key] = true; months.push(key); }
             }
         }
     });
     months.sort();
-    
     var html = '<option value="all">Todos os Meses</option>';
     months.forEach(function(m) {
         var parts = m.split('-');
         var label = MONTH_NAMES[parseInt(parts[1], 10) - 1] + ' ' + parts[0];
         html += '<option value="'+m+'">' + label + '</option>';
     });
-    
     sel.innerHTML = html;
-    if (months.includes(cur) || cur === 'all') {
+    sel.value = (months.includes(cur) || cur === 'all') ? cur : 'all';
+}
+
+// ══════════════════════════════════════════
+//  NOVO: FILTRO DE DIA DO WEBINÁRIO
+// ══════════════════════════════════════════
+
+/**
+ * Popula o select w-filter-date com as datas únicas do webinário.
+ * Se um mês estiver selecionado em w-filter-month, mostra apenas
+ * os dias daquele mês. Caso contrário, mostra todos.
+ */
+function updateWebDayFilter() {
+    var sel = document.getElementById('w-filter-date');
+    if (!sel) return;
+    var cur = sel.value;
+    var selectedMonth = document.getElementById('w-filter-month').value; // ex: "2025-04" ou "all"
+
+    var dates = [];
+    var seen = {};
+    getRows().forEach(function(r) {
+        if (r.tab === 'w' && r.data && !seen[r.data]) {
+            // Se há filtro de mês ativo, só inclui datas daquele mês
+            if (selectedMonth === 'all' || r.data.substring(0, 7) === selectedMonth) {
+                seen[r.data] = true;
+                dates.push(r.data);
+            }
+        }
+    });
+    dates.sort();
+
+    var html = '<option value="all">Todos os Dias</option>';
+    dates.forEach(function(d) {
+        // Exibe no formato DD/MM/AAAA
+        var parts = d.split('-');
+        var label = parts[2] + '/' + parts[1] + '/' + parts[0];
+        html += '<option value="'+d+'">' + label + '</option>';
+    });
+    sel.innerHTML = html;
+
+    // Tenta restaurar seleção anterior; se não existir mais, volta para "all"
+    if (dates.includes(cur)) {
         sel.value = cur;
     } else {
         sel.value = 'all';
     }
+
+    updateWebFilterTag();
 }
+
+/** Chamado quando o mês do webinário muda: repopula dias e filtra. */
+function onWebMonthChange() {
+    updateWebDayFilter();
+    filterAndSortTable('w');
+}
+
+/** Limpa o filtro de dia e refiltra. */
+function clearWebDateFilter() {
+    document.getElementById('w-filter-date').value = 'all';
+    updateWebFilterTag();
+    filterAndSortTable('w');
+}
+
+/** Atualiza a tag visual que mostra qual dia está filtrado. */
+function updateWebFilterTag() {
+    var sel   = document.getElementById('w-filter-date');
+    var tag   = document.getElementById('w-filter-tag');
+    var label = document.getElementById('w-filter-tag-label');
+    if (!sel || !tag) return;
+
+    if (sel.value !== 'all') {
+        var parts = sel.value.split('-');
+        var formatted = parts[2] + '/' + parts[1] + '/' + parts[0];
+        label.textContent = '📅 ' + formatted;
+        tag.style.display = 'inline-flex';
+    } else {
+        tag.style.display = 'none';
+    }
+}
+
+// ══════════════════════════════════════════
+//  DEPRECADO: wrapper para compat. com on='change' antigo
+// ══════════════════════════════════════════
+function updateDateFilter() { updateAllFilters(); }
 
 function onDateFilterChange() {
   filterAndSortTable('p');
@@ -735,92 +802,91 @@ function refresh() {
 }
 
 function filterAndSortTable(tab) {
-    const searchInput = document.getElementById(`${tab}-search`).value.toLowerCase();
-    const sortSelect = document.getElementById(`${tab}-sort`).value;
-    
-    let allRows = getRows();
+    var searchInput = document.getElementById(tab+'-search').value.toLowerCase();
+    var sortSelect  = document.getElementById(tab+'-sort').value;
 
-    // Filtro base: apenas da aba atual e pelo texto da busca
-    let filteredData = allRows.filter(r => r.tab === tab && (r.aluno || "").toLowerCase().includes(searchInput));
+    var allRows = getRows();
+    var filteredData = allRows.filter(function(r) {
+        return r.tab === tab && (r.aluno || "").toLowerCase().includes(searchInput);
+    });
 
-    // Filtro específico para a aba Plataforma por Data de Webinário
-    if(tab === 'p') {
-        const dateFilter = document.getElementById('p-filter-date').value;
-        if(dateFilter !== 'all') {
-            const webAttendeesInDate = allRows.filter(r => r.tab === 'w' && r.data === dateFilter).map(r => (r.aluno || "").toLowerCase().trim());
-            filteredData = filteredData.filter(r => webAttendeesInDate.includes((r.aluno || "").toLowerCase().trim()));
+    if (tab === 'p') {
+        // Filtro por data do webinário (card de conversão)
+        var dateFilter = document.getElementById('p-filter-date').value;
+        if (dateFilter !== 'all') {
+            var webAttendeesInDate = allRows
+                .filter(function(r){ return r.tab === 'w' && r.data === dateFilter; })
+                .map(function(r){ return (r.aluno || "").toLowerCase().trim(); });
+            filteredData = filteredData.filter(function(r){
+                return webAttendeesInDate.includes((r.aluno || "").toLowerCase().trim());
+            });
         }
-        // Filtro de mês de venda (Plataforma)
-        const monthFilter = document.getElementById('p-filter-month').value;
+        // Filtro de mês de venda
+        var monthFilter = document.getElementById('p-filter-month').value;
         if (monthFilter !== 'all') {
-            filteredData = filteredData.filter(r => r.data && r.data.substring(0, 7) === monthFilter);
+            filteredData = filteredData.filter(function(r){ return r.data && r.data.substring(0,7) === monthFilter; });
         }
     }
 
-    // Filtro de mês para Webinário
     if (tab === 'w') {
-        const monthFilter = document.getElementById('w-filter-month').value;
-        if (monthFilter !== 'all') {
-            filteredData = filteredData.filter(r => r.data && r.data.substring(0, 7) === monthFilter);
+        // Filtro de mês
+        var wMonthFilter = document.getElementById('w-filter-month').value;
+        if (wMonthFilter !== 'all') {
+            filteredData = filteredData.filter(function(r){ return r.data && r.data.substring(0,7) === wMonthFilter; });
         }
+        // ── NOVO: Filtro por dia específico ──
+        var wDateFilter = document.getElementById('w-filter-date').value;
+        if (wDateFilter !== 'all') {
+            filteredData = filteredData.filter(function(r){ return r.data === wDateFilter; });
+        }
+        // Atualiza tag visual
+        updateWebFilterTag();
     }
 
     // Ordenação Dropdown
     if (sortSelect === 'az') {
-        filteredData.sort((a, b) => (a.aluno || "").localeCompare(b.aluno || ""));
+        filteredData.sort(function(a,b){ return (a.aluno||"").localeCompare(b.aluno||""); });
     } else if (sortSelect === 'za') {
-        filteredData.sort((a, b) => (b.aluno || "").localeCompare(a.aluno || ""));
+        filteredData.sort(function(a,b){ return (b.aluno||"").localeCompare(a.aluno||""); });
     }
-    
-    // Ordenação Setinhas (Sobrescreve Dropdown)
-    let currentSort = tab === 'p' ? currentSortP : currentSortW;
+
+    // Ordenação Setinhas
+    var currentSort = tab === 'p' ? currentSortP : currentSortW;
     if (currentSort.column) {
-        filteredData.sort((a, b) => {
-            let valA = a[currentSort.column] || '';
-            let valB = b[currentSort.column] || '';
-            
-            if (currentSort.column === 'valor') {
-                valA = Number(valA) || 0;
-                valB = Number(valB) || 0;
-            }
-            
+        filteredData.sort(function(a,b) {
+            var valA = a[currentSort.column] || '';
+            var valB = b[currentSort.column] || '';
+            if (currentSort.column === 'valor') { valA = Number(valA)||0; valB = Number(valB)||0; }
             if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
-            if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+            if (valA > valB) return currentSort.direction === 'asc' ?  1 : -1;
             return 0;
         });
     }
 
-    if (tab === 'p') {
-        renderPlataforma(filteredData, allRows);
-    } else {
-        renderWebinario(filteredData, allRows);
-    }
+    if (tab === 'p') { renderPlataforma(filteredData, allRows); }
+    else             { renderWebinario(filteredData, allRows); }
 }
 
 function toggleSort(tab, column) {
-    let currentSort = tab === 'p' ? currentSortP : currentSortW;
-    
+    var currentSort = tab === 'p' ? currentSortP : currentSortW;
     if (currentSort.column === column) {
         currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
     } else {
         currentSort.column = column;
         currentSort.direction = 'asc';
     }
-    
     filterAndSortTable(tab);
     updateSortIcons(tab);
 }
 
 function updateSortIcons(tab) {
-    let icons = document.querySelectorAll(`#${tab}-table th .sort-icon`);
-    icons.forEach(icon => {
+    document.querySelectorAll('#'+tab+'-table th .sort-icon').forEach(function(icon) {
         icon.textContent = 'unfold_more';
-        icon.style.color = 'rgba(255,255,255,0.6)'; 
+        icon.style.color = 'rgba(255,255,255,0.6)';
     });
-    
-    let currentSort = tab === 'p' ? currentSortP : currentSortW;
+    var currentSort = tab === 'p' ? currentSortP : currentSortW;
     if (currentSort.column) {
-        let activeIcon = document.getElementById(`sort-icon-${tab}-${currentSort.column}`);
+        var activeIcon = document.getElementById('sort-icon-'+tab+'-'+currentSort.column);
         if (activeIcon) {
             activeIcon.textContent = currentSort.direction === 'asc' ? 'expand_less' : 'expand_more';
             activeIcon.style.color = '#fff';
@@ -829,42 +895,33 @@ function updateSortIcons(tab) {
 }
 
 function renderPlataforma(pArr, allRows) {
-  
-  var comprou = pArr.filter(function(r){ return (parseFloat(r.valor) || 0) > 0; });
-  var rev = comprou.reduce(function(s,r){ return s+(parseFloat(r.valor)||0); }, 0);
+  var comprou = pArr.filter(function(r){ return (parseFloat(r.valor)||0) > 0; });
+  var rev     = comprou.reduce(function(s,r){ return s+(parseFloat(r.valor)||0); }, 0);
 
-  // Lógica KPI e Gráfico Conversão Webinário (Considerando apenas os filtrados)
-  var selDate = document.getElementById('p-filter-date').value;
-  var webAttendees = allRows.filter(r => r.tab === 'w' && (selDate === 'all' || r.data === selDate));
-  var totalWeb = webAttendees.length;
-  
-  var nomesWeb = webAttendees.map(r => (r.aluno || "").trim().toLowerCase());
-  var compradoresDoWebinario = allRows.filter(r => 
-      r.tab === 'p' &&
-      (parseFloat(r.valor) || 0) > 0 && 
-      nomesWeb.includes((r.aluno || "").trim().toLowerCase())
-  );
-  
-  var numComp = compradoresDoWebinario.length;
-  var numNaoComp = Math.max(0, totalWeb - numComp);
-  
-  var pct = totalWeb > 0 ? Math.round((numComp / totalWeb) * 100) : 0;
-  var pctN = totalWeb > 0 ? 100 - pct : 0;
+  var selDate   = document.getElementById('p-filter-date').value;
+  var webAttendees = allRows.filter(function(r){ return r.tab==='w' && (selDate==='all' || r.data===selDate); });
+  var totalWeb  = webAttendees.length;
+  var nomesWeb  = webAttendees.map(function(r){ return (r.aluno||"").trim().toLowerCase(); });
+  var compradoresDoWebinario = allRows.filter(function(r){
+      return r.tab==='p' && (parseFloat(r.valor)||0)>0 && nomesWeb.includes((r.aluno||"").trim().toLowerCase());
+  });
+  var numComp   = compradoresDoWebinario.length;
+  var numNaoComp= Math.max(0, totalWeb - numComp);
+  var pct       = totalWeb > 0 ? Math.round((numComp/totalWeb)*100) : 0;
+  var pctN      = totalWeb > 0 ? 100 - pct : 0;
 
-  document.getElementById('p-kpi-total').textContent   = pArr.length;
-  document.getElementById('p-kpi-compra').textContent  = comprou.length;
-  document.getElementById('p-kpi-receita').textContent = fmt(rev);
-  document.getElementById('p-kpi-ticket').textContent  = comprou.length ? fmt(rev/comprou.length) : '—';
-  
+  document.getElementById('p-kpi-total').textContent    = pArr.length;
+  document.getElementById('p-kpi-compra').textContent   = comprou.length;
+  document.getElementById('p-kpi-receita').textContent  = fmt(rev);
+  document.getElementById('p-kpi-ticket').textContent   = comprou.length ? fmt(rev/comprou.length) : '—';
   document.getElementById('p-kpi-web-conv').textContent = pct + '%';
   document.getElementById('p-kpi-web-sub').textContent  = numComp + ' de ' + totalWeb + ' compraram';
 
   mkChart('pCO','bar', ORIGENS, ORIGENS.map(function(l){ return cnt(pArr,'origem',l); }), '#2A7BCA');
-  mkChart('pCT','pie', TIPOS_P, TIPOS_P.map(function(l){   return cnt(pArr,'tipo',l);   }), ['#1C5D99','#1A7A4A','#6A1B9A']);
+  mkChart('pCT','pie', TIPOS_P, TIPOS_P.map(function(l){ return cnt(pArr,'tipo',l);   }), ['#1C5D99','#1A7A4A','#6A1B9A']);
   mkChart('pCP','bar', PRODS,   PRODS.map(function(l){   return cnt(pArr,'produto',l); }),'#1A7A4A');
   mkChart('pCW','pie', WEBS,    WEBS.map(function(l){    return cnt(pArr,'web',l);    }), ['#1A7A4A','#C55A11','#888']);
-  mkChart('pCWC','pie', [`Compraram (${pct}%)`, `Não Compraram (${pctN}%)`], [numComp, numNaoComp], ['#1A7A4A', '#C55A11']);
-
+  mkChart('pCWC','pie', ['Compraram ('+pct+'%)', 'Não Compraram ('+pctN+'%)'], [numComp, numNaoComp], ['#1A7A4A','#C55A11']);
 
   var tb = document.getElementById('p-tbody');
   if (!pArr.length) {
@@ -872,8 +929,7 @@ function renderPlataforma(pArr, allRows) {
   } else {
     var html = '';
     for (var i=0; i<pArr.length; i++) {
-      var r   = pArr[i];
-      var gi  = r._id; 
+      var r  = pArr[i]; var gi = r._id;
       html += '<tr id="row-'+gi+'">'
         + '<td class="chk-cell"><input type="checkbox" data-gi="'+gi+'" onchange="chkChange(\'p\')"></td>'
         + '<td class="nc">'+(r.aluno||'—')+'</td>'
@@ -893,7 +949,7 @@ function renderPlataforma(pArr, allRows) {
 }
 
 function renderWebinario(wArr, allRows) {
-  document.getElementById('w-kpi-total').textContent   = wArr.length;
+  document.getElementById('w-kpi-total').textContent = wArr.length;
 
   mkChart('wCO','bar', ORIGENS, ORIGENS.map(function(l){ return cnt(wArr,'origem',l); }), '#6A1B9A');
   mkChart('wCT','pie', TIPOS_W, TIPOS_W.map(function(l){ return cnt(wArr,'tipo',l);   }), ['#6A1B9A','#C55A11','#1C5D99']);
@@ -904,15 +960,13 @@ function renderWebinario(wArr, allRows) {
   } else {
     var html = '';
     for (var i=0; i<wArr.length; i++) {
-      var r  = wArr[i];
-      var gi = r._id; 
-      
-      var jaVendeu = allRows.some(x => x.tab === 'p' && (x.aluno || "").toLowerCase().trim() === (r.aluno || "").toLowerCase().trim() && (parseFloat(x.valor)||0) > 0);
-      
-      var btnLabel = jaVendeu ? '✅ Vendido' : 'Venda';
-      var btnStyle = jaVendeu ? 'opacity:.6;cursor:default;' : '';
-      var btnAction = jaVendeu ? '' : `onclick="transferToPlataforma('${gi}')"`;
-
+      var r  = wArr[i]; var gi = r._id;
+      var jaVendeu = allRows.some(function(x){
+          return x.tab==='p' && (x.aluno||"").toLowerCase().trim()===(r.aluno||"").toLowerCase().trim() && (parseFloat(x.valor)||0)>0;
+      });
+      var btnLabel  = jaVendeu ? '✅ Vendido' : 'Venda';
+      var btnStyle  = jaVendeu ? 'opacity:.6;cursor:default;' : '';
+      var btnAction = jaVendeu ? '' : 'onclick="transferToPlataforma(\''+gi+'\')"';
       html += '<tr id="row-'+gi+'">'
         + '<td class="chk-cell"><input type="checkbox" data-gi="'+gi+'" onchange="chkChange(\'w\')"></td>'
         + '<td class="nc">'+(r.aluno||'—')+'</td>'
@@ -937,19 +991,15 @@ function renderWebinario(wArr, allRows) {
 function transferToPlataforma(gi) {
     var r = dbData[gi];
     if(!r) return;
-    
-    document.getElementById('p-f-aluno').value = r.aluno || '';
+    document.getElementById('p-f-aluno').value  = r.aluno  || '';
     document.getElementById('p-f-origem').value = r.origem || '';
-    document.getElementById('p-f-tipo').value = r.tipo || '';
-    document.getElementById('p-f-data').value = new Date().toISOString().split('T')[0]; 
-    
+    document.getElementById('p-f-tipo').value   = r.tipo   || '';
+    document.getElementById('p-f-data').value   = new Date().toISOString().split('T')[0];
     document.getElementById('p-f-produto').value = '';
-    document.getElementById('p-f-web').value = 'Participou'; 
-    document.getElementById('p-f-valor').value = '';
-    
+    document.getElementById('p-f-web').value    = 'Participou';
+    document.getElementById('p-f-valor').value  = '';
     document.getElementById('ov-p').classList.add('open');
     document.getElementById('p-f-produto').focus();
-    
     switchTab('p');
 }
 
@@ -964,14 +1014,12 @@ function chkChange(pre) {
     if (tr) tr.classList.toggle('sel', boxes[i].checked);
     if (boxes[i].checked) sel++;
   }
-  var btn = document.getElementById(pre+'-del-btn');
-  if (sel > 0) btn.classList.add('vis'); else btn.classList.remove('vis');
+  document.getElementById(pre+'-del-btn').classList.toggle('vis', sel > 0);
 }
 
 function toggleAll(pre) {
   var master = document.getElementById(pre+'-chk-all');
-  var boxes  = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]');
-  for (var i=0; i<boxes.length; i++) boxes[i].checked = master.checked;
+  document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]').forEach(function(b){ b.checked = master.checked; });
   chkChange(pre);
 }
 
@@ -979,16 +1027,11 @@ function deleteSelected(pre) {
   var boxes = document.querySelectorAll('#'+pre+'-tbody input[type=checkbox]:checked');
   if (!boxes.length) return;
   var gis = [];
-  for (var i=0; i<boxes.length; i++) gis.push(boxes[i].getAttribute('data-gi'));
-  
+  boxes.forEach(function(b){ gis.push(b.getAttribute('data-gi')); });
   if (!confirm('Remover ' + gis.length + ' registro(s)?')) return;
-  
-  gis.forEach(id => {
-      delete dbData[id];
-  });
-  
+  gis.forEach(function(id){ delete dbData[id]; });
   saveToStorage();
-  updateDateFilter();
+  updateAllFilters();
   refresh();
   toast(gis.length + ' registro(s) removido(s).', true);
 }
@@ -1007,14 +1050,7 @@ function switchTab(t) {
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     var isDark = document.body.classList.contains('dark-mode');
-    
-    var icon = document.getElementById('theme-icon');
-    if (isDark) {
-        icon.textContent = 'light_mode'; 
-    } else {
-        icon.textContent = 'dark_mode'; 
-    }
-    
+    document.getElementById('theme-icon').textContent = isDark ? 'light_mode' : 'dark_mode';
     Object.values(charts).forEach(function(c){
         if(c.config.type === 'pie') {
             c.data.datasets[0].borderColor = isDark ? '#1e293b' : '#fff';
@@ -1022,7 +1058,7 @@ function toggleDarkMode() {
         } else if (c.config.type === 'bar') {
             c.options.scales.x.ticks.color = isDark ? '#94a3b8' : '#666';
             c.options.scales.y.ticks.color = isDark ? '#94a3b8' : '#666';
-            c.options.scales.y.grid.color = isDark ? '#334155' : '#F0F0EE';
+            c.options.scales.y.grid.color  = isDark ? '#334155' : '#F0F0EE';
         }
         c.update();
     });
@@ -1038,10 +1074,8 @@ function openModal(pre) {
 }
 function closeModal(pre) {
   document.getElementById('ov-'+pre).classList.remove('open');
-  var fields = pre==='p'
-    ? ['aluno','origem','tipo','produto','web','valor','data']
-    : ['aluno','origem','tipo','data'];
-  for (var i=0; i<fields.length; i++) document.getElementById(pre+'-f-'+fields[i]).value = '';
+  var fields = pre==='p' ? ['aluno','origem','tipo','produto','web','valor','data'] : ['aluno','origem','tipo','data'];
+  fields.forEach(function(f){ document.getElementById(pre+'-f-'+f).value = ''; });
 }
 function ovClick(e, pre) { if (e.target === document.getElementById('ov-'+pre)) closeModal(pre); }
 
@@ -1051,30 +1085,23 @@ function ovClick(e, pre) { if (e.target === document.getElementById('ov-'+pre)) 
 function addRow(pre) {
   var aluno = document.getElementById(pre+'-f-aluno').value.trim();
   if (!aluno) { document.getElementById(pre+'-f-aluno').focus(); return; }
-  
   var entry = {
-    tab:    pre,
-    aluno:  aluno,
+    tab: pre, aluno: aluno,
     origem: document.getElementById(pre+'-f-origem').value,
     tipo:   document.getElementById(pre+'-f-tipo').value,
     data:   document.getElementById(pre+'-f-data').value
   };
-  
   if (pre === 'p') {
     entry.produto = document.getElementById('p-f-produto').value;
     entry.web     = document.getElementById('p-f-web').value;
     entry.valor   = parseFloat(document.getElementById('p-f-valor').value) || 0;
   }
-  
-  // Cria SEMPRE um novo registro com um ID único baseado no timestamp
-  var newId = 'r' + Date.now() + Math.floor(Math.random() * 1000).toString(); 
+  var newId = 'r' + Date.now() + Math.floor(Math.random() * 1000).toString();
   dbData[newId] = entry;
-  
   toast('Aluno salvo com sucesso!');
-  
   saveToStorage();
   closeModal(pre);
-  updateDateFilter();
+  updateAllFilters();
   refresh();
 }
 
@@ -1086,21 +1113,18 @@ function exportExcel() {
   var pArr = rowsArray.filter(function(r){ return r.tab==='p'; });
   var wArr = rowsArray.filter(function(r){ return r.tab==='w'; });
   var wb   = XLSX.utils.book_new();
-
-  var wsP = XLSX.utils.aoa_to_sheet([
+  var wsP  = XLSX.utils.aoa_to_sheet([
     ['Aluno','Origem','Tipo','Produto','Webinário','Valor (R$)','Data da Venda'],
     ...pArr.map(function(r){ return [r.aluno,r.origem,r.tipo,r.produto||'',r.web||'',r.valor||0,r.data?r.data.split('-').reverse().join('/'):''] })
   ]);
   wsP['!cols'] = [28,14,22,18,18,14,13].map(function(w){ return {wch:w}; });
   XLSX.utils.book_append_sheet(wb, wsP, 'Plataforma');
-
   var wsW = XLSX.utils.aoa_to_sheet([
     ['Aluno','Origem','Tipo','Data do Webinário'],
     ...wArr.map(function(r){ return [r.aluno,r.origem,r.tipo,r.data?r.data.split('-').reverse().join('/'):''] })
   ]);
   wsW['!cols'] = [28,14,22,13].map(function(w){ return {wch:w}; });
   XLSX.utils.book_append_sheet(wb, wsW, 'Webinário');
-
   XLSX.writeFile(wb, 'FlatsAcademy_CRM_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.xlsx');
   toast('Excel exportado!');
 }
@@ -1111,8 +1135,8 @@ function exportExcel() {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal('p'); closeModal('w'); closeEditModal('p'); closeEditModal('w'); }
   if (e.key === 'Enter') {
-    if (document.getElementById('ov-p').classList.contains('open')) addRow('p');
-    if (document.getElementById('ov-w').classList.contains('open')) addRow('w');
+    if (document.getElementById('ov-p').classList.contains('open'))      addRow('p');
+    if (document.getElementById('ov-w').classList.contains('open'))      addRow('w');
     if (document.getElementById('ov-edit-p').classList.contains('open')) saveEdit('p');
     if (document.getElementById('ov-edit-w').classList.contains('open')) saveEdit('w');
   }
@@ -1122,9 +1146,8 @@ document.addEventListener('keydown', function(e) {
 //  EDITAR ALUNO
 // ══════════════════════════════════════════
 function openEditModal(pre, id) {
-    var r = dbData[id];
-    if (!r) return;
-    document.getElementById('edit-'+pre+'-id').value = id;
+    var r = dbData[id]; if (!r) return;
+    document.getElementById('edit-'+pre+'-id').value     = id;
     document.getElementById('edit-'+pre+'-aluno').value  = r.aluno  || '';
     document.getElementById('edit-'+pre+'-origem').value = r.origem || '';
     document.getElementById('edit-'+pre+'-tipo').value   = r.tipo   || '';
@@ -1138,35 +1161,26 @@ function openEditModal(pre, id) {
     document.getElementById('edit-'+pre+'-aluno').focus();
 }
 
-function closeEditModal(pre) {
-    document.getElementById('ov-edit-'+pre).classList.remove('open');
-}
-
-function ovClickEdit(e, pre) {
-    if (e.target === document.getElementById('ov-edit-'+pre)) closeEditModal(pre);
-}
+function closeEditModal(pre) { document.getElementById('ov-edit-'+pre).classList.remove('open'); }
+function ovClickEdit(e, pre) { if (e.target === document.getElementById('ov-edit-'+pre)) closeEditModal(pre); }
 
 function saveEdit(pre) {
     var id = document.getElementById('edit-'+pre+'-id').value;
     if (!id || !dbData[id]) return;
-    
     var aluno = document.getElementById('edit-'+pre+'-aluno').value.trim();
     if (!aluno) { document.getElementById('edit-'+pre+'-aluno').focus(); return; }
-    
     dbData[id].aluno  = aluno;
     dbData[id].origem = document.getElementById('edit-'+pre+'-origem').value;
     dbData[id].tipo   = document.getElementById('edit-'+pre+'-tipo').value;
     dbData[id].data   = document.getElementById('edit-'+pre+'-data').value;
-    
     if (pre === 'p') {
         dbData[id].produto = document.getElementById('edit-p-produto').value;
         dbData[id].web     = document.getElementById('edit-p-web').value;
         dbData[id].valor   = parseFloat(document.getElementById('edit-p-valor').value) || 0;
     }
-    
     saveToStorage();
     closeEditModal(pre);
-    updateDateFilter();
+    updateAllFilters();
     refresh();
     toast('Aluno atualizado com sucesso!');
 }
